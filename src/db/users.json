@@ -1,0 +1,58 @@
+{
+  "user1": {
+    "email": "user1@user1.com",
+    "username": "user1",
+    "uid": "jshdfkjsahdfksh",
+    "spWins": "2",
+    "spLoses": "10",
+    "olWins": "7",
+    "olLoses": "400",
+    "spGames": "12",
+    "olGames": "407",
+    "charUnlock1": false,
+    "charUnlock2": true,
+    "dmgDealt": 2000
+  },
+  "user2": {
+    "email": "user2@user2.com",
+    "username": "user2",
+    "uid": "lalalalalalala",
+    "spWins": "20",
+    "spLoses": "1",
+    "olWins": "700",
+    "olLoses": "23",
+    "spGames": "21",
+    "olGames": "723",
+    "charUnlock1": false,
+    "charUnlock2": true,
+    "dmgDealt": 35476
+  },
+  "user3": {
+    "email": "user3@user3.com",
+    "username": "user3",
+    "uid": "bababababababa",
+    "spWins": "324",
+    "spLoses": "101",
+    "olWins": "9",
+    "olLoses": "5",
+    "spGames": "425",
+    "olGames": "14",
+    "charUnlock1": false,
+    "charUnlock2": false,
+    "dmgDealt": 76554
+  },
+  "user4": {
+    "email": "user4@user4.com",
+    "username": "user1",
+    "uid": "tatatatatata",
+    "spWins": "73",
+    "spLoses": "73",
+    "olWins": "50",
+    "olLoses": "50",
+    "spGames": "146",
+    "olGames": "100",
+    "charUnlock1": true,
+    "charUnlock2": true,
+    "dmgDealt": 456893
+  }
+}
