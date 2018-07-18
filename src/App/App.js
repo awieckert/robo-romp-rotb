@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Route, BrowserRouter, Redirect, Switch}  from 'react-router-dom';
+import firebase from 'firebase';
+import firebaseConnection from '../firebaseRequests/connection.js';
 import Home from '../components/Home/Home.js';
 import Login from '../components/Login/Login.js';
 import Register from '../components/Register/Register.js';
@@ -8,6 +10,7 @@ import SelectionScreen from '../components/SelectionScreen/SelectionScreen.js';
 import FightArena from '../components/FightArena/FightArena.js';
 import WinnerScreen from '../components/WinnerScreen/WinnerScreen.js';
 import './App.css';
+firebaseConnection();
 
 const PublicRoute = ({component: Component, authed, ...rest}) => {
   return (
@@ -46,6 +49,20 @@ class App extends Component {
     userRobot: {},
     enemyProfile: {},
     enemyRobot: {},
+  }
+
+  componentDidMount () {
+    this.checkUserState = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({authed: true});
+      } else {
+        this.setState({authed: false});
+      }
+    });
+  }
+
+  componentWillUnmount () {
+    this.checkUserState();
   }
 
   render () {
