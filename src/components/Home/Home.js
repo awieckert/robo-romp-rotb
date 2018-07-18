@@ -15,6 +15,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <div className='container-fluid home-container'>
+          <h1>Robo-Romp: Revenge of the Bots</h1>
           <div className='row'>
             <div className='col-sm-6'>
               <div className='col-sm-10 col-xs-offset-1 enterFray'>
