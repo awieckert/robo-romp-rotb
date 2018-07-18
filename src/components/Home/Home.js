@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import './Home.css';
 
 class Home extends Component {
+
+  goToRegister = () => {
+    this.props.history.push('/register');
+  };
+
+  goToLogin = () => {
+    this.props.history.push('/login');
+  };
+
   render () {
     return (
       <div className="Home">
@@ -10,14 +19,14 @@ class Home extends Component {
             <div className='col-sm-6'>
               <div className='col-sm-10 col-xs-offset-1 enterFray'>
                 <div className='vertical-align'>
-                  <button className='btn btn-danger'>Enter the Fray</button>
+                  <button className='btn btn-danger' onClick={this.goToLogin}>Enter the Fray</button>
                 </div>
               </div>
             </div>
             <div className='col-sm-6'>
               <div className='col-sm-10 col-xs-offset-1 joinFight'>
                 <div className='vertical-align'>
-                  <button className='btn btn-danger'>Join the Fight</button>
+                  <button className='btn btn-danger' onClick={this.goToRegister}>Join the Fight</button>
                 </div>
               </div>
             </div>
