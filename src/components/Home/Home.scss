@@ -1,0 +1,31 @@
+.home-container {
+  margin-top: 4%;
+}
+
+.joinFight {
+  background-image: url('../../img/joinFight.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  border-radius: 10px;
+}
+
+.enterFray {
+  background-image: url('../../img/enterFray.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  border-radius: 10px;
+}
+
+.vertical-align {
+  padding-top: 200px;
+
+  button {
+    font-size: 20px;
+  }
+}
+
+h1 {
+  padding-bottom: 10px;
+}
