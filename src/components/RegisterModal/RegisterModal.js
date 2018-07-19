@@ -3,16 +3,41 @@ import {Modal, Button} from 'react-bootstrap';
 import './RegisterModal.css';
 
 class RegisterModal extends React.Component {
+  state = {
+    show: false,
+    userProfile: {
+      email: '',
+      username: '',
+      uid: '',
+      spWins: 0,
+      spLoses: 0,
+      olWins: 0,
+      olLoses: 1,
+      spGames: 0,
+      olGames: 0,
+      charUnlock1: false,
+      charUnlock2: false,
+      dmgDealt: 0,
+    },
+  };
+
   constructor (props, context) {
     super(props, context);
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
-    this.state = {
-      show: false,
-    };
+    // this.state = {
+    //   show: false,
+    // };
   }
+
+  registerEmailInfo = (e) => {
+    const userEmail = e.target.value;
+    const newUserProfile = {...this.state.userProfile};
+    newUserProfile.email = userEmail;
+    this.setState({userProfile: newUserProfile});
+  };
 
   handleClose () {
     this.setState({ show: false });
@@ -43,7 +68,7 @@ class RegisterModal extends React.Component {
                 <div className="form-group">
                   <label htmlFor="inputEmail" className="col-xs-3 control-label">Email</label>
                   <div className="col-xs-8">
-                    <input type="email" className="form-control" id="inputEmail" placeholder="Email"></input>
+                    <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={this.registerEmailInfo}></input>
                   </div>
                 </div>
                 <div className="form-group">

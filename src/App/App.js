@@ -12,13 +12,20 @@ import WinnerScreen from '../components/WinnerScreen/WinnerScreen.js';
 import './App.css';
 firebaseConnection();
 
-const PublicRoute = ({component: Component, authed, ...rest}) => {
+const renderMergedProps = (component, ...rest) => {
+  const finalProps = Object.assign({}, ...rest);
+  return (
+    React.createElement(component, finalProps)
+  );
+};
+
+const PublicRoute = ({component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
       render={props =>
         authed === false ? (
-          <Component {...props} />
+          renderMergedProps(component, props, rest)
         ) : (
           <Redirect to={{pathname: '/gamemode', state: {from: props.location}}} />
         )
@@ -27,13 +34,13 @@ const PublicRoute = ({component: Component, authed, ...rest}) => {
   );
 };
 
-const PrivateRoute = ({component: Component, authed, ...rest}) => {
+const PrivateRoute = ({component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
       render={props =>
         authed === true ? (
-          <Component {...props} />
+          renderMergedProps(component, props, rest)
         ) : (
           <Redirect to={{pathname: '/', state: {from: props.location}}} />
         )
@@ -45,7 +52,20 @@ const PrivateRoute = ({component: Component, authed, ...rest}) => {
 class App extends Component {
   state = {
     authed: false,
-    userProfile: {},
+    userProfile: {
+      email: '',
+      username: '',
+      uid: '',
+      spWins: 0,
+      spLoses: 0,
+      olWins: 0,
+      olLoses: 0,
+      spGames: 0,
+      olGames: 0,
+      charUnlock1: false,
+      charUnlock2: false,
+      dmgDealt: 0,
+    },
     userRobot: {},
     enemyProfile: {},
     enemyRobot: {},
@@ -71,7 +91,7 @@ class App extends Component {
         <BrowserRouter>
           <div className='container-fluid main-container'>
             <Switch>
-              <Route path='/' exact component={Home} />
+              <Route path='/' exact render={(props) => <Home {...props} />} />
               <PublicRoute path='/login' authed={this.state.authed} component={Login} />
               <PublicRoute path='/register' authed={this.state.authed} component={Register} />
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} />
