@@ -1,0 +1,19 @@
+.modal-row {
+  position: relative;
+}
+
+.registerImg {
+  background-image: url('./registerImg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 15px;
+}
+
+.register-form {
+  margin-left: 50.5%;
+  padding-top: 4rem;
+  padding-bottom: 2.5rem;
+}

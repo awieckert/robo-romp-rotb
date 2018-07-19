@@ -1,0 +1,20 @@
+.modal-row {
+  position: relative;
+  height: 35vh;
+}
+
+.loginImg {
+  background-image: url('./loginModal.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 15px;
+}
+
+.login-form {
+  margin-left: 50.5%;
+  padding-top: 8rem;
+  // padding-bottom: 2.5rem;
+}
