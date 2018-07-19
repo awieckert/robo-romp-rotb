@@ -39,21 +39,26 @@ class RegisterModal extends React.Component {
             <div className='col-xs-6 registerImg'>
             </div>
             <div className='col-xs-6 register-form'>
-              <h4>Text in a modal</h4>
-              <p>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
-
-              <h4>Popover in a modal</h4>
-
-              <h4>Tooltips in a modal</h4>
-
-              <h4>Overflowing text to show scroll behavior</h4>
-              <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-                ac consectetur ac, vestibulum at eros.
-              </p>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label htmlFor="inputEmail" className="col-xs-3 control-label">Email</label>
+                  <div className="col-xs-8">
+                    <input type="email" className="form-control" id="inputEmail" placeholder="Email"></input>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="inputUsername" className="col-xs-3 control-label">User Name</label>
+                  <div className="col-xs-8">
+                    <input type="userName" className="form-control" id="inputUsername" placeholder="User Name"></input>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="inputPassword" className="col-xs-3 control-label">Password</label>
+                  <div className="col-xs-8">
+                    <input type="password" className="form-control" id="inputPassword" placeholder="Password"></input>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
           {/* </Modal.Body> */}
