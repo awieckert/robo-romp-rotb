@@ -25,9 +25,9 @@ class GameMode extends Component {
 
   componentDidMount () {
     const currentUser = firebase.auth().currentUser;
-    const mainRef = firebase.database().ref('robo-romp-rotb');
+    const mainRef = firebase.database().ref();
     const usersRef = mainRef.child('users');
-    usersRef.orderByChild('spWins').on('child_added', function (snap) {
+    usersRef.orderByChild('uid').endAt(3).on('child_added', function (snap) {
       console.log(snap.val());
     });
     // console.error('leaders: ', leaders);
