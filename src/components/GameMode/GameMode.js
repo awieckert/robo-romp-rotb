@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import userRequests from '../../firebaseRequests/userRequests.js';
 import './GameMode.css';
 
 class GameMode extends Component {
@@ -22,6 +24,12 @@ class GameMode extends Component {
   };
 
   componentDidMount () {
+    const currentUser = firebase.auth().currentUser;
+    userRequests.getUser(currentUser.uid).then((activeUser) => {
+      this.setState({userProfile: activeUser});
+    }).catch((err) => {
+      console.error('Could not grab current user from firebase: ', err);
+    });
     // call firebase grab user account
     // Set GameMode state with user info from fire base
     // Set app state with the most current user info from GameMode state -- pass in a setState function from App
@@ -32,6 +40,8 @@ class GameMode extends Component {
   };
 
   render () {
+    // const activeUser = {...this.state.userProfile};
+    // this.props.setActiveUser(activeUser);
     return (
       <div className="GameMode">
         <h1 className="GameMode-title">GameMode</h1>

@@ -22,7 +22,7 @@ const renderMergedProps = (component, ...rest) => {
 const PublicRoute = ({component, authed, ...rest}) => {
   return (
     <Route
-      {...rest}
+      // {...rest}
       render={props =>
         authed === false ? (
           renderMergedProps(component, props, rest)
@@ -40,7 +40,7 @@ const PrivateRoute = ({component, authed, ...rest}) => {
       {...rest}
       render={props =>
         authed === true ? (
-          renderMergedProps(component, props, rest)
+          renderMergedProps(component, props, ...rest)
         ) : (
           <Redirect to={{pathname: '/', state: {from: props.location}}} />
         )
@@ -71,6 +71,10 @@ class App extends Component {
     enemyRobot: {},
   }
 
+  setActiveUser = (activeUser) => {
+    this.setState({userProfile: activeUser});
+  };
+
   componentDidMount () {
     this.checkUserState = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -93,8 +97,8 @@ class App extends Component {
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PublicRoute path='/login' authed={this.state.authed} component={Login} />
-              <PublicRoute path='/register' authed={this.state.authed} component={Register} />
-              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} />
+              <PublicRoute path='/register' authed={this.state.authed} component={Register} setActiveUser={this.setActiveUser}/>
+              <PrivateRoute path='/gamemode' authed={this.state.authed} render={(props) => <GameMode {...props} setActiveUser={this.setActiveUser}/>} />
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen}/>
