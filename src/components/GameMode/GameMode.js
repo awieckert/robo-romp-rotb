@@ -40,7 +40,8 @@ class GameMode extends Component {
   };
 
   render () {
-    // const activeUser = {...this.state.userProfile};
+    const activeUser = this.props.setActiveUser;
+    console.error(activeUser);
     // this.props.setActiveUser(activeUser);
     return (
       <div className="GameMode">
