@@ -25,8 +25,15 @@ class GameMode extends Component {
 
   componentDidMount () {
     const currentUser = firebase.auth().currentUser;
+    const mainRef = firebase.database().ref('robo-romp-rotb');
+    const usersRef = mainRef.child('users');
+    usersRef.orderByChild('spWins').on('child_added', function (snap) {
+      console.log(snap.val());
+    });
+    // console.error('leaders: ', leaders);
     userRequests.getUser(currentUser.uid).then((activeUser) => {
       this.setState({userProfile: activeUser});
+      this.props.setActiveUser(activeUser);
     }).catch((err) => {
       console.error('Could not grab current user from firebase: ', err);
     });
@@ -40,8 +47,8 @@ class GameMode extends Component {
   };
 
   render () {
-    const activeUser = this.props.setActiveUser;
-    console.error(activeUser);
+    // const activeUser = this.props.setActiveUser;
+    // console.error(activeUser);
     // this.props.setActiveUser(activeUser);
     return (
       <div className="GameMode">
