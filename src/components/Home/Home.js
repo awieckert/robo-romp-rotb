@@ -29,7 +29,7 @@ class Home extends Component {
             <div className='col-sm-6'>
               <div className='col-sm-10 col-xs-offset-1 joinFight'>
                 <div className='vertical-align'>
-                  <RegisterModal />
+                  <RegisterModal history={this.props.history} />
                 </div>
               </div>
             </div>
