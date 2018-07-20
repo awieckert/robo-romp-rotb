@@ -22,7 +22,7 @@ class Home extends Component {
             <div className='col-sm-6'>
               <div className='col-sm-10 col-xs-offset-1 enterFray'>
                 <div className='vertical-align'>
-                  <LoginModal />
+                  <LoginModal history={this.props.history} />
                 </div>
               </div>
             </div>
