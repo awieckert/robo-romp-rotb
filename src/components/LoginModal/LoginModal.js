@@ -1,8 +1,16 @@
 import React from 'react';
+import firebase from 'firebase';
 import {Modal, Button} from 'react-bootstrap';
 import './LoginModal.css';
 
 class LoginModal extends React.Component {
+  state = {
+    userSignIn: {
+      email: '',
+      password: '',
+    },
+  };
+
   constructor (props, context) {
     super(props, context);
 
@@ -12,6 +20,29 @@ class LoginModal extends React.Component {
     this.state = {
       show: false,
     };
+  }
+
+  loginEmailInfo = (e) => {
+    const userEmail = e.target.value;
+    const userToSignIn = {...this.state.userSignIn};
+    userToSignIn.email = userEmail;
+    this.setState({userSignIn: userToSignIn});
+  };
+
+  loginPasswordInfo = (e) => {
+    const userPassword = e.target.value;
+    const userToSignIn = {...this.state.userSignIn};
+    userToSignIn.password = userPassword;
+    this.setState({userSignIn: userToSignIn});
+  };
+
+  signIn = () => {
+    this.handleClose();
+    firebase.auth().signInWithEmailAndPassword(this.state.userSignIn.email, this.state.userSignIn.password).then(() => {
+      this.props.history.push('/gamemode');
+    }).catch((err) => {
+      console.error('Could not sign in user to firebase: ', err);
+    });
   }
 
   handleClose () {
@@ -43,13 +74,13 @@ class LoginModal extends React.Component {
                 <div className="form-group">
                   <label htmlFor="inputEmail" className="col-xs-3 control-label">Email</label>
                   <div className="col-xs-8">
-                    <input type="email" className="form-control" id="inputEmail" placeholder="Email"></input>
+                    <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={this.loginEmailInfo}></input>
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="inputPassword" className="col-xs-3 control-label">Password</label>
                   <div className="col-xs-8">
-                    <input type="password" className="form-control" id="inputPassword" placeholder="Password"></input>
+                    <input type="password" className="form-control" id="inputPassword" placeholder="Password" onChange={this.loginPasswordInfo}></input>
                   </div>
                 </div>
               </form>
@@ -58,7 +89,7 @@ class LoginModal extends React.Component {
           {/* </Modal.Body> */}
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
-            <Button bsStyle="primary" onClick={this.handleClose}>Log in</Button>
+            <Button bsStyle="primary" onClick={this.signIn}>Log in</Button>
           </Modal.Footer>
         </Modal>
       </div>
