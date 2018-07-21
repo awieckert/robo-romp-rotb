@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import LeaderBoard from '../LeaderBoard/LeaderBoard.js';
+import userRequests from '../../firebaseRequests/userRequests.js';
 import './GameMode.css';
 
 class GameMode extends Component {
@@ -17,24 +20,44 @@ class GameMode extends Component {
       charUnlock2: false,
       dmgDealt: 0,
     },
-    spLeaderBoard: {},
-    olLeaderBoard: {},
   };
 
+  toSelectionScreen = () => {
+    this.props.history.push('/selectionscreen');
+  }
+
   componentDidMount () {
-    // call firebase grab user account
-    // Set GameMode state with user info from fire base
-    // Set app state with the most current user info from GameMode state -- pass in a setState function from App
-    // get all info user info from firebase by spWins
-    // Filter by most first
-    // set leaderboard in state
-    // Generate leaderboard component from state
+    const currentUser = firebase.auth().currentUser;
+    userRequests.getUser(currentUser.uid).then((activeUser) => {
+      this.setState({userProfile: activeUser});
+      this.props.setActiveUser(activeUser);
+    }).catch((err) => {
+      console.error('Could not grab current user from firebase: ', err);
+    });
   };
 
   render () {
     return (
       <div className="GameMode">
         <h1 className="GameMode-title">GameMode</h1>
+        <div className='row'>
+          <div className='col-xs-6'>
+            <div className='row'>
+              <div className='col-xs-12'>
+                <button className='btn btn-danger' onClick={this.toSelectionScreen}>Single Player</button>
+              </div>
+            </div>
+            <div className='row'>
+              <div className='col-xs-12'>
+                <button className='btn btn-danger' onClick={this.toSelectionScreen} disabled>Online Game</button>
+              </div>
+            </div>
+          </div>
+          <div className='col-xs-6'>
+            <h2>Leader Boards</h2>
+            <LeaderBoard />
+          </div>
+        </div>
       </div>
     );
   }

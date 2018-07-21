@@ -71,6 +71,10 @@ class App extends Component {
     enemyRobot: {},
   }
 
+  setActiveUser = (activeUser) => {
+    this.setState({userProfile: activeUser});
+  };
+
   componentDidMount () {
     this.checkUserState = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -94,7 +98,7 @@ class App extends Component {
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PublicRoute path='/login' authed={this.state.authed} component={Login} />
               <PublicRoute path='/register' authed={this.state.authed} component={Register} />
-              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} />
+              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setActiveUser={this.setActiveUser}/>
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen}/>
