@@ -58,7 +58,7 @@ class LoginModal extends React.Component {
     return (
       <div>
         <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
-          Join the Fight
+          Enter the Fray
         </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose} bsSize="large" aria-labelledby="contained-modal-title-lg">
