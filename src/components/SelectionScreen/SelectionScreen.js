@@ -8,7 +8,12 @@ class SelectionScreen extends Component {
   state = {
     allRobots: [],
     largeBot: {},
+    disableSmallBots: false,
   };
+
+  disableSmallBots = () => {
+    this.setState({disableSmallBots: true});
+  }
 
   setLargeBot = (selectedBot) => {
     this.setState({largeBot: selectedBot});
@@ -26,10 +31,10 @@ class SelectionScreen extends Component {
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
-        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot}/>
+        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} disableSmallBots={this.disableSmallBots}/>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>
-            <SmallBot bots={this.state.allRobots} setLargeBot={this.setLargeBot} />
+            <SmallBot bots={this.state.allRobots} setLargeBot={this.setLargeBot} smallBotsDisabled={this.state.disableSmallBots} />
           </div>
         </div>
       </div>

@@ -4,10 +4,12 @@ import './SmallBot.css';
 class SmallBot extends Component {
 
   setBot = (e) => {
-    const target = e.target.id;
-    const bots = [...this.props.bots];
-    const currentBot = bots.find(bot => bot.name === target);
-    this.props.setLargeBot(currentBot);
+    if (this.props.smallBotsDisabled === false) {
+      const target = e.target.id;
+      const bots = [...this.props.bots];
+      const currentBot = bots.find(bot => bot.name === target);
+      this.props.setLargeBot(currentBot);
+    }
   }
 
   render () {
