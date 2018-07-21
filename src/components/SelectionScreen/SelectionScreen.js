@@ -6,6 +6,13 @@ import './SelectionScreen.css';
 class SelectionScreen extends Component {
   state = {
     allRobots: [],
+    largeBot: {
+      item: 1,
+    },
+  };
+
+  setLargeBot = (selectedBot) => {
+    this.setState({largeBot: selectedBot});
   };
 
   componentDidMount () {
@@ -22,7 +29,7 @@ class SelectionScreen extends Component {
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>
-            <SmallBot bots={this.state.allRobots} />
+            <SmallBot bots={this.state.allRobots} setLargeBot={this.setLargeBot} />
           </div>
         </div>
       </div>
