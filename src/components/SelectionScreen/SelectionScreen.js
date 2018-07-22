@@ -8,6 +8,7 @@ class SelectionScreen extends Component {
   state = {
     allRobots: [],
     largeBot: {},
+    computerBot: {},
     disableSmallBots: false,
   };
 
@@ -42,6 +43,7 @@ class SelectionScreen extends Component {
       const computerSelectedBot = computerBots[randomBot];
       computerSelectedBot.computer = true;
       computerBot = <LargeBot bot={computerSelectedBot} />;
+      this.setState({computerBot: computerSelectedBot});
     }
     return (
       <div className="SelectionScreen">
