@@ -10,6 +10,15 @@ class SelectionScreen extends Component {
     largeBot: {},
     computerBot: {},
     disableSmallBots: false,
+    completed: false,
+  };
+
+  goToFightArena = () => {
+    const toArena = () => {
+      this.props.history.push('/fightarena');
+    };
+
+    window.setTimeout(toArena, 3000);
   };
 
   disableSmallBots = () => {
@@ -28,6 +37,13 @@ class SelectionScreen extends Component {
     });
   };
 
+  componentDidUpdate () {
+    if (this.state.completed) {
+      // this.goToFightArena();
+      this.props.history.push('/fightarena');
+    }
+  }
+
   render () {
     let computerBot = '';
     if (this.state.disableSmallBots) {
@@ -44,7 +60,10 @@ class SelectionScreen extends Component {
       computerSelectedBot.computer = true;
       computerBot = <LargeBot bot={computerSelectedBot} />;
       this.setState({computerBot: computerSelectedBot});
+      this.props.setEnemyRobot(computerSelectedBot);
+      this.setState({completed: true});
     }
+
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
