@@ -112,7 +112,7 @@ class App extends Component {
               <PublicRoute path='/register' authed={this.state.authed} component={Register} />
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setActiveUser={this.setActiveUser}/>
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot}/>
-              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} />
+              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen}/>
             </Switch>
           </div>
