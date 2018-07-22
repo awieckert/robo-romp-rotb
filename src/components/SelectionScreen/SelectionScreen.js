@@ -28,10 +28,26 @@ class SelectionScreen extends Component {
   };
 
   render () {
+    let computerBot = '';
+    if (this.state.disableSmallBots) {
+      const computerBots = [];
+      const playerBot = {...this.state.largeBot};
+      const allBots = [...this.state.allRobots];
+      allBots.forEach((bot) => {
+        if (bot.name !== playerBot.name) {
+          computerBots.push(bot);
+        }
+      });
+      const randomBot = Math.floor(Math.random() * Math.floor(computerBots.length));
+      const computerSelectedBot = computerBots[randomBot];
+      computerSelectedBot.computer = true;
+      computerBot = <LargeBot bot={computerSelectedBot} />;
+    }
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
         <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} disableSmallBots={this.disableSmallBots}/>
+        {computerBot}
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>
             <SmallBot bots={this.state.allRobots} setLargeBot={this.setLargeBot} smallBotsDisabled={this.state.disableSmallBots} />

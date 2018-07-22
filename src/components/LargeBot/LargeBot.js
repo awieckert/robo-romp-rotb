@@ -16,7 +16,7 @@ class LargeBot extends Component {
   render () {
     const bot = {...this.props.bot};
     let botToPrint = '';
-    if (bot.name && (this.state.isSelected === false)) {
+    if ((bot.name && (this.state.isSelected === false)) && !bot.computer) {
       botToPrint =  <div>
         <div className='info col-xs-6'>
           <h4>{bot.name}</h4>
@@ -33,7 +33,7 @@ class LargeBot extends Component {
           <button className='btn btn-danger' onClick={this.setUserBot}>Confirm Selection</button>
         </div>
       </div>;
-    } else if (bot.name && (this.state.isSelected)) {
+    } else if ((bot.name && (this.state.isSelected)) || bot.computer) {
       botToPrint = <div>
         <div className='large-bot-image col-xs-6'>
           <img src={bot.img} alt='bigRobot'/>
