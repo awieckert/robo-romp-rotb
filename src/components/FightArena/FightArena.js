@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BattleBot from '../BattleBot/BattleBot.js';
+import AttackResult from '../AttackResult/AttackResult.js';
 import './FightArena.css';
 
 class FightArena extends Component {
@@ -11,9 +12,16 @@ class FightArena extends Component {
     userStaticRobot: {},
     enemyStaticRobot: {},
     turn: 'user',
+    attackDamage: '',
+    isCritical: false,
+    evaded: false,
+    attacking: false,
   };
 
   userAttack = () => {
+    if (!this.state.attacking) {
+      this.setState({attacking: true});
+    }
     const {userRobot} = {...this.state};
     const {enemyRobot} = {...this.state};
     const enemyEvasion = Math.floor(Math.random() * 101);
@@ -21,9 +29,18 @@ class FightArena extends Component {
     let damageDealt = 0;
     if (enemyEvasion > enemyRobot.evasion) {
       damageDealt = (attackDamage - enemyRobot.armor);
+      this.setState({evaded: false});
+      this.setState({isCritical: false});
+      if (attackDamage > userRobot.attack) {
+        this.setState({isCritical: true});
+      }
+    } else {
+      this.setState({isCritical: false});
+      this.setState({evaded: true});
     }
     enemyRobot.health = (enemyRobot.health - damageDealt);
     userRobot.attackCount += 1;
+    this.setState({attackDamage: damageDealt});
     this.setState({userRobot: userRobot});
     this.setState({enemyRobot: enemyRobot});
     if (enemyRobot.health <= 0) {
@@ -44,6 +61,14 @@ class FightArena extends Component {
     let damageDealt = 0;
     if (userEvasion > userRobot.evasion) {
       damageDealt = (attackDamage - userRobot.armor);
+      this.setState({evaded: false});
+      this.setState({isCritical: false});
+      if (attackDamage > enemyRobot.attack) {
+        this.setState({isCritical: true});
+      }
+    } else {
+      this.setState({isCritical: false});
+      this.setState({evaded: true});
     }
     userRobot.health = (userRobot.health - damageDealt);
     enemyRobot.attackCount += 1;
@@ -65,6 +90,16 @@ class FightArena extends Component {
     } else if ((this.state.turn === 'user') && e.code === 'KeyS') {
       this.userSpecialAttack();
     };
+  };
+
+  displayDamage = () => {
+    let displayDamage = {};
+    if (this.state.attacking) {
+      displayDamage = <AttackResult attackDamage={this.state.attackDamage} evaded={this.state.evaded} isCritical={this.state.isCritical}/>;
+    } else {
+      displayDamage = <div></div>;
+    }
+    return displayDamage;
   };
 
   componentDidMount () {
@@ -104,9 +139,17 @@ class FightArena extends Component {
   };
 
   render () {
+    const attackDamage = this.displayDamage();
     return (
       <div className="FightArena" onKeyPress={this.attackFunction}>
         <h1 className="FightArena-title">FightArena</h1>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <div className='col-xs-4 col-offset-xs-4'>
+              {attackDamage}
+            </div>
+          </div>
+        </div>
         <div className='row'>
           <BattleBot bot={this.state.userRobot} staticBot={this.state.userStaticRobot} />
           <BattleBot bot={this.state.enemyRobot} staticBot={this.state.enemyStaticRobot} />
