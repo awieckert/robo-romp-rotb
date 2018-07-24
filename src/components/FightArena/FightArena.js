@@ -5,17 +5,19 @@ import './FightArena.css';
 
 class FightArena extends Component {
   state = {
-    userProfile: {},
-    enemyProfile: {},
-    userRobot: {},
-    enemyRobot: {},
-    userStaticRobot: {},
-    enemyStaticRobot: {},
-    turn: 'user',
-    attackDamage: '',
-    isCritical: false,
-    evaded: false,
-    attacking: false,
+    gameObject: {
+      userProfile: {},
+      enemyProfile: {},
+      userRobot: {},
+      enemyRobot: {},
+      userStaticRobot: {},
+      enemyStaticRobot: {},
+      turn: 'user',
+      attackDamage: '',
+      isCritical: false,
+      evaded: false,
+      attacking: false,
+    },
   };
 
   userAttack = () => {
@@ -141,7 +143,7 @@ class FightArena extends Component {
   render () {
     const attackDamage = this.displayDamage();
     return (
-      <div className="FightArena" onKeyPress={this.attackFunction}>
+      <div className="FightArena">
         <h1 className="FightArena-title">FightArena</h1>
         <div className='row'>
           <div className='col-xs-12'>
