@@ -22,7 +22,7 @@ class LeaderBoard extends Component {
     const spLeaderBoard = spLeaders.map((player) => {
       const percentage = (player.spWins / player.spGames) * 100;
       return (
-        <div className="panel-body">
+        <div key={player.id} data-id={player.id} className="panel-body">
           <div className='col-xs-2'>{player.username}</div>
           <div className='col-xs-2'>{player.spWins}</div>
           <div className='col-xs-2'>{percentage.toFixed(1)}%</div>
@@ -33,7 +33,7 @@ class LeaderBoard extends Component {
     const olLeaderBoard = olLeaders.map((player) => {
       const percentage = (player.olWins / player.olGames) * 100;
       return (
-        <div className="panel-body">
+        <div key={player.id} data-id={player.id} className="panel-body">
           <div className='col-xs-2'>{player.username}</div>
           <div className='col-xs-2'>{player.olWins}</div>
           <div className='col-xs-2'>{percentage.toFixed(1)}%</div>

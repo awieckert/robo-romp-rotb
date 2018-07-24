@@ -23,9 +23,9 @@ class BattleBot extends Component {
 
     for (let i = 1; i <= bot.specialCount; i++) {
       if (bot.attackCount >= i) {
-        specialBars.push(<SpecialBar bar={fullBar}/>);
+        specialBars.push(<SpecialBar key={i} bar={fullBar}/>);
       } else {
-        specialBars.push(<SpecialBar bar={emptyBar}/>);
+        specialBars.push(<SpecialBar key={i} bar={emptyBar}/>);
       }
     }
     return specialBars;

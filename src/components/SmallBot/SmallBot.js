@@ -16,7 +16,7 @@ class SmallBot extends Component {
     const bots = [...this.props.bots];
     const printBots = bots.map((bot) => {
       return (
-        <div className='col-xs-1'>
+        <div key={bot.id} data-id={bot.id} className='col-xs-1'>
           <img src={bot.img} alt='robots' id={bot.name} onClick={this.setBot}/>
           <p>{bot.name}</p>
         </div>
