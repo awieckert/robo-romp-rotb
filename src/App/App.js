@@ -69,6 +69,8 @@ class App extends Component {
     userRobot: {},
     enemyProfile: {},
     enemyRobot: {},
+    winnerProfile: {},
+    winnerBot: {},
   }
 
   setActiveUser = (activeUser) => {
@@ -85,6 +87,14 @@ class App extends Component {
 
   setEnemyRobot = (robot) => {
     this.setState({enemyRobot: robot});
+  };
+
+  setWinnerProfile = (winner) => {
+    this.setState({winnerProfile: winner});
+  };
+
+  setWinnerBot = (bot) => {
+    this.setState({winnerBot: bot});
   };
 
   componentDidMount () {
@@ -110,10 +120,10 @@ class App extends Component {
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PublicRoute path='/login' authed={this.state.authed} component={Login} />
               <PublicRoute path='/register' authed={this.state.authed} component={Register} />
-              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setActiveUser={this.setActiveUser}/>
+              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} />
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot}/>
-              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} />
-              <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen}/>
+              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile}setWinnerBot={this.setWinnerBot} />
+              <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
             </Switch>
           </div>
         </BrowserRouter>

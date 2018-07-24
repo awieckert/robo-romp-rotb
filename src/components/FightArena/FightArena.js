@@ -4,16 +4,14 @@ import './FightArena.css';
 
 class FightArena extends Component {
   state = {
+    userProfile: {},
+    enemyProfile: {},
     userRobot: {},
     enemyRobot: {},
     userStaticRobot: {},
     enemyStaticRobot: {},
     turn: 'user',
   };
-
-  // timedEnemyAttack = () => {
-
-  // };
 
   userAttack = () => {
     const {userRobot} = {...this.state};
@@ -28,8 +26,13 @@ class FightArena extends Component {
     userRobot.attackCount += 1;
     this.setState({userRobot: userRobot});
     this.setState({enemyRobot: enemyRobot});
+    if (enemyRobot.health <= 0) {
+      this.props.setWinnerProfile(this.state.userProfile);
+      this.props.setWinnerBot(this.state.userRobot);
+      this.props.history.push('/winnerscreen');
+    }
     this.setState({turn: 'enemy'});
-    window.setTimeout(this.enemyAttack, 3000);
+    window.setTimeout(this.enemyAttack, 1000);
   };
 
   enemyAttack = () => {
@@ -45,6 +48,11 @@ class FightArena extends Component {
     enemyRobot.attackCount += 1;
     this.setState({userRobot: userRobot});
     this.setState({enemyRobot: enemyRobot});
+    if (userRobot.health <= 0) {
+      this.props.setWinnerProfile(this.state.enemyProfile);
+      this.props.setWinnerBot(this.state.enemyRobot);
+      this.props.history.push('/winnerscreen');
+    }
     this.setState({turn: 'user'});
   };
 
@@ -58,6 +66,8 @@ class FightArena extends Component {
   };
 
   componentDidMount () {
+    const {userProfile} = {...this.props};
+    const {enemyProfile} = {...this.props};
     const {userRobot} = {...this.props};
     const {enemyRobot} = {...this.props};
     const userStaticRobot = {...this.props.userRobot};
@@ -82,6 +92,8 @@ class FightArena extends Component {
     this.setState({userStaticRobot: userStaticRobot});
     this.setState({enemyRobot: enemyRobot});
     this.setState({enemyStaticRobot: enemyStaticRobot});
+    this.setState({userProfile: userProfile});
+    this.setState({enemyProfile: enemyProfile});
     window.addEventListener('keypress', this.attackFunction);
   };
 
