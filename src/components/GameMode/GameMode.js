@@ -22,8 +22,13 @@ class GameMode extends Component {
     },
   };
 
-  toSelectionScreen = () => {
+  toSinglePlayerSelectionScreen = () => {
     this.props.history.push('/selectionscreen');
+    userRequests.getUser('Mackiller').then((computer) => {
+      this.props.setEnemyProfile(computer);
+    }).catch((err) => {
+      console.error('Could not grab the computer profile from firebase: ', err);
+    });
   }
 
   componentDidMount () {
@@ -44,7 +49,7 @@ class GameMode extends Component {
           <div className='col-xs-6'>
             <div className='row'>
               <div className='col-xs-12'>
-                <button className='btn btn-danger' onClick={this.toSelectionScreen}>Single Player</button>
+                <button className='btn btn-danger' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
               </div>
             </div>
             <div className='row'>

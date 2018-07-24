@@ -54,5 +54,13 @@
     "charUnlock1": true,
     "charUnlock2": true,
     "dmgDealt": 456893
+  },
+  "computer": {
+    "email": "pawnyou@itsover.com",
+    "username": "CPU",
+    "uid": "Mackiller",
+    "spWins": 0,
+    "spLoses": 0,
+    "spGames": 0
   }
 }
