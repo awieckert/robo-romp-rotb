@@ -34,6 +34,7 @@ const getUsersBySpWins = () => {
     axios.get(`${constants.firebaseConfig.databaseURL}/userData.json?orderBy="spWins"&limitToLast=5`).then((data) => {
       if (data !== null) {
         Object.keys(data.data).forEach((key) => {
+          data.data[key].id = key;
           leaders.push(data.data[key]);
         });
       }
@@ -53,6 +54,7 @@ const getUsersByOlWins = () => {
     axios.get(`${constants.firebaseConfig.databaseURL}/userData.json?orderBy="olWins"&limitToLast=5`).then((data) => {
       if (data !== null) {
         Object.keys(data.data).forEach((key) => {
+          data.data[key].id = key;
           leaders.push(data.data[key]);
         });
       }

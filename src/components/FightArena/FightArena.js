@@ -11,13 +11,17 @@ class FightArena extends Component {
     turn: 'user',
   };
 
+  // timedEnemyAttack = () => {
+
+  // };
+
   userAttack = () => {
     const {userRobot} = {...this.state};
     const {enemyRobot} = {...this.state};
-    const enemyEvasion = Math.floor(Math.random * 101);
+    const enemyEvasion = Math.floor(Math.random() * 101);
     const attackDamage = userRobot.swing();
     let damageDealt = 0;
-    if (enemyRobot.evasion >= enemyEvasion) {
+    if (enemyEvasion > enemyRobot.evasion) {
       damageDealt = (attackDamage - enemyRobot.armor);
     }
     enemyRobot.health = (enemyRobot.health - damageDealt);
@@ -25,15 +29,16 @@ class FightArena extends Component {
     this.setState({userRobot: userRobot});
     this.setState({enemyRobot: enemyRobot});
     this.setState({turn: 'enemy'});
+    window.setTimeout(this.enemyAttack, 3000);
   };
 
   enemyAttack = () => {
     const {userRobot} = {...this.state};
     const {enemyRobot} = {...this.state};
-    const userEvasion = Math.floor(Math.random * 101);
+    const userEvasion = Math.floor(Math.random() * 101);
     const attackDamage = enemyRobot.swing();
     let damageDealt = 0;
-    if (userRobot.evasion >= userEvasion) {
+    if (userEvasion > userRobot.evasion) {
       damageDealt = (attackDamage - userRobot.armor);
     }
     userRobot.health = (userRobot.health - damageDealt);
@@ -45,18 +50,19 @@ class FightArena extends Component {
 
   attackFunction = (e) => {
     console.log(e);
-    const turn = this.state.turn;
-    if (turn === 'user') {
+    if ((this.state.turn === 'user') && e.code === 'KeyA') {
       this.userAttack();
-    } else if (turn === 'enemy') {
-      this.enemyAttack();
-    }
+    } else if ((this.state.turn === 'user') && e.code === 'KeyS') {
+      this.userSpecialAttack();
+    };
   };
 
   componentDidMount () {
     const {userRobot} = {...this.props};
     const {enemyRobot} = {...this.props};
-    const swing = () => {
+    const userStaticRobot = {...this.props.userRobot};
+    const enemyStaticRobot = {...this.props.enemyRobot};
+    userRobot.swing = function () {
       const isCritical = Math.floor((Math.random() * 101));
       if (isCritical <= this.critChance) {
         return (this.attack * this.critMulti);
@@ -64,12 +70,23 @@ class FightArena extends Component {
         return this.attack;
       }
     };
-    userRobot.swing = swing();
-    enemyRobot.swing = swing();
+    enemyRobot.swing = function () {
+      const isCritical = Math.floor((Math.random() * 101));
+      if (isCritical <= this.critChance) {
+        return (this.attack * this.critMulti);
+      } else {
+        return this.attack;
+      }
+    };
     this.setState({userRobot: userRobot});
-    this.setState({userStaticRobot: userRobot});
+    this.setState({userStaticRobot: userStaticRobot});
     this.setState({enemyRobot: enemyRobot});
-    this.setState({enemyStaticRobot: enemyRobot});
+    this.setState({enemyStaticRobot: enemyStaticRobot});
+    window.addEventListener('keypress', this.attackFunction);
+  };
+
+  componentWillUnmount () {
+    window.removeEventListener('keypress', this.attackFunction);
   };
 
   render () {

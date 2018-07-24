@@ -7,6 +7,7 @@ const getRobots = () => {
     axios.get(`${constants.firebaseConfig.databaseURL}/robots.json`).then((data) => {
       if (data !== null) {
         Object.keys(data.data).forEach((key) => {
+          data.data[key].id = key;
           allRobots.push(data.data[key]);
         });
       }

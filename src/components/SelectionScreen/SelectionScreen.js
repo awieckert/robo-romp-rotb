@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import robotRequests from '../../firebaseRequests/robotRequests.js';
 import SmallBot from '../SmallBot/SmallBot.js';
 import LargeBot from '../LargeBot/LargeBot.js';
@@ -38,15 +39,7 @@ class SelectionScreen extends Component {
   };
 
   componentDidUpdate () {
-    if (this.state.completed) {
-      // this.goToFightArena();
-      this.props.history.push('/fightarena');
-    }
-  }
-
-  render () {
-    let computerBot = '';
-    if (this.state.disableSmallBots) {
+    if (this.state.disableSmallBots && !this.state.completed) {
       const computerBots = [];
       const playerBot = {...this.state.largeBot};
       const allBots = [...this.state.allRobots];
@@ -58,17 +51,24 @@ class SelectionScreen extends Component {
       const randomBot = Math.floor(Math.random() * Math.floor(computerBots.length));
       const computerSelectedBot = computerBots[randomBot];
       computerSelectedBot.computer = true;
-      computerBot = <LargeBot bot={computerSelectedBot} />;
+      const computerBotComponent = <LargeBot bot={computerSelectedBot} />;
+      ReactDOM.render(computerBotComponent, document.getElementById('computerRobot'));
       this.setState({computerBot: computerSelectedBot});
       this.props.setEnemyRobot(computerSelectedBot);
       this.setState({completed: true});
     }
 
+    if (this.state.completed) {
+      this.goToFightArena();
+    }
+  }
+
+  render () {
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
         <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} disableSmallBots={this.disableSmallBots}/>
-        {computerBot}
+        <div id='computerRobot'></div>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>
             <SmallBot bots={this.state.allRobots} setLargeBot={this.setLargeBot} smallBotsDisabled={this.state.disableSmallBots} />
