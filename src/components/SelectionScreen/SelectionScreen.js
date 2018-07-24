@@ -10,7 +10,6 @@ class SelectionScreen extends Component {
     allRobots: [],
     largeBot: {},
     computerBot: {},
-    computerBotComponent: {},
     disableSmallBots: false,
     completed: false,
   };
@@ -54,16 +53,13 @@ class SelectionScreen extends Component {
       computerSelectedBot.computer = true;
       const computerBotComponent = <LargeBot bot={computerSelectedBot} />;
       ReactDOM.render(computerBotComponent, document.getElementById('computerRobot'));
-      this.setState({computerBotComponent: computerBotComponent});
       this.setState({computerBot: computerSelectedBot});
       this.props.setEnemyRobot(computerSelectedBot);
       this.setState({completed: true});
     }
 
     if (this.state.completed) {
-      console.log('if is happening');
       this.goToFightArena();
-      // this.props.history.push('/fightarena');
     }
   }
 

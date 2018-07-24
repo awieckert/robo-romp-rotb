@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SpecialBar from '../SpecialBar/SpecialBar.js';
 import './BattleBot.css';
 
 class BattleBot extends Component {
@@ -12,20 +13,19 @@ class BattleBot extends Component {
   };
 
   setSpecialBar = (bot) => {
-    let specialBars = '';
+    const specialBars = [];
+    const fullBar = {
+      width: '100%',
+    };
+    const emptyBar = {
+      width: '0%',
+    };
+
     for (let i = 1; i <= bot.specialCount; i++) {
       if (bot.attackCount >= i) {
-        specialBars += `<div className="progress col-xs-2">
-          <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-            <span className="sr-only">60% Complete</span>
-          </div>
-        </div>`;
+        specialBars.push(<SpecialBar bar={fullBar}/>);
       } else {
-        specialBars += `<div className="progress col-xs-2">
-          <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-            <span className="sr-only">60% Complete</span>
-          </div>
-        </div>`;
+        specialBars.push(<SpecialBar bar={emptyBar}/>);
       }
     }
     return specialBars;
@@ -44,7 +44,7 @@ class BattleBot extends Component {
           </div>
         </div>
         <img src={bot.img} alt="robot"/>
-        <div dangerouslySetInnerHTML={{__html: specialBar}}></div>
+        {specialBar}
       </div>
     );
   }
