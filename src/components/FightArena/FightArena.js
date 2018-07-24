@@ -30,9 +30,10 @@ class FightArena extends Component {
       this.props.setWinnerProfile(this.state.userProfile);
       this.props.setWinnerBot(this.state.userRobot);
       this.props.history.push('/winnerscreen');
+    } else {
+      this.setState({turn: 'enemy'});
+      window.setTimeout(this.enemyAttack, 1000);
     }
-    this.setState({turn: 'enemy'});
-    window.setTimeout(this.enemyAttack, 1000);
   };
 
   enemyAttack = () => {
@@ -52,8 +53,9 @@ class FightArena extends Component {
       this.props.setWinnerProfile(this.state.enemyProfile);
       this.props.setWinnerBot(this.state.enemyRobot);
       this.props.history.push('/winnerscreen');
+    } else {
+      this.setState({turn: 'user'});
     }
-    this.setState({turn: 'user'});
   };
 
   attackFunction = (e) => {
