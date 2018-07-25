@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BattleBot from '../BattleBot/BattleBot.js';
 import AttackResult from '../AttackResult/AttackResult.js';
+import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
 
 class FightArena extends Component {
@@ -51,9 +52,20 @@ class FightArena extends Component {
     gameObject.enemyRobot = enemyRobot;
     if (enemyRobot.health <= 0) {
       gameObject.userProfile.spWins += 1;
+      gameObject.userProfile.spGames += 1;
+      gameObject.enemyProfile.spLoses += 1;
+      gameObject.enemyProfile.spGames += 1;
       this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.userProfile);
       this.props.setWinnerBot(this.state.userRobot);
+      userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
+        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then().catch((err) => {
+          console.error('Failed to update enemy profile: ', err);
+        }
+        );
+      }).catch((err) => {
+        console.error('Failed to update firebase user profile: ', err);
+      });
       this.props.history.push('/winnerscreen');
     } else {
       gameObject.turn = 'enemy';
@@ -89,9 +101,20 @@ class FightArena extends Component {
     gameObject.enemyRobot = enemyRobot;
     if (userRobot.health <= 0) {
       gameObject.enemyProfile.spWins += 1;
+      gameObject.enemyProfile.spGames += 1;
+      gameObject.userProfile.spLoses += 1;
+      gameObject.userProfile.spGames += 1;
       this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+      userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
+        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then().catch((err) => {
+          console.error('Failed to update enemy profile: ', err);
+        }
+        );
+      }).catch((err) => {
+        console.error('Failed to update firebase user profile: ', err);
+      });
       this.props.history.push('/winnerscreen');
     } else {
       gameObject.turn = 'user';

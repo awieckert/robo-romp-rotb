@@ -68,4 +68,14 @@ const getUsersByOlWins = () => {
   });
 };
 
-export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins};
+const updateUserProfile = (profileId, userProfile) => {
+  return new Promise ((resolve, reject) => {
+    axios.put(`${constants.firebaseConfig.databaseURL}/userData/${profileId}.json`, userProfile).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  })
+};
+
+export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile};
