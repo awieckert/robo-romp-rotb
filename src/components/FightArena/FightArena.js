@@ -1,80 +1,132 @@
 import React, { Component } from 'react';
 import BattleBot from '../BattleBot/BattleBot.js';
+import AttackResult from '../AttackResult/AttackResult.js';
 import './FightArena.css';
 
 class FightArena extends Component {
   state = {
-    userProfile: {},
-    enemyProfile: {},
-    userRobot: {},
-    enemyRobot: {},
-    userStaticRobot: {},
-    enemyStaticRobot: {},
-    turn: 'user',
+    gameObject: {
+      userProfile: {},
+      enemyProfile: {},
+      userRobot: {},
+      enemyRobot: {},
+      userStaticRobot: {},
+      enemyStaticRobot: {},
+      turn: 'user',
+      attackDamage: '',
+      isCritical: false,
+      evaded: false,
+      attacking: false,
+    },
   };
 
   userAttack = () => {
-    const {userRobot} = {...this.state};
-    const {enemyRobot} = {...this.state};
+    const {gameObject} = {...this.state};
+    if (!this.state.gameObject.attacking) {
+      gameObject.attacking = true;
+    }
+    const {userRobot} = {...gameObject};
+    const {enemyRobot} = {...gameObject};
     const enemyEvasion = Math.floor(Math.random() * 101);
     const attackDamage = userRobot.swing();
     let damageDealt = 0;
     if (enemyEvasion > enemyRobot.evasion) {
       damageDealt = (attackDamage - enemyRobot.armor);
+      gameObject.evaded = false;
+      gameObject.isCritical = false;
+      if (attackDamage > userRobot.attack) {
+        gameObject.isCritical = true;
+        gameObject.evaded = false;
+      }
+    } else {
+      gameObject.isCritical = false;
+      gameObject.evaded = true;
     }
+    damageDealt.toFixed(1);
+    gameObject.userProfile.dmgDealt += damageDealt;
     enemyRobot.health = (enemyRobot.health - damageDealt);
     userRobot.attackCount += 1;
-    this.setState({userRobot: userRobot});
-    this.setState({enemyRobot: enemyRobot});
+    gameObject.attackDamage = damageDealt;
+    gameObject.userRobot = userRobot;
+    gameObject.enemyRobot = enemyRobot;
     if (enemyRobot.health <= 0) {
+      gameObject.userProfile.spWins += 1;
+      this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.userProfile);
       this.props.setWinnerBot(this.state.userRobot);
       this.props.history.push('/winnerscreen');
     } else {
-      this.setState({turn: 'enemy'});
+      gameObject.turn = 'enemy';
+      this.setState({gameObject: gameObject});
       window.setTimeout(this.enemyAttack, 1000);
     }
   };
 
   enemyAttack = () => {
-    const {userRobot} = {...this.state};
-    const {enemyRobot} = {...this.state};
+    const {gameObject} = {...this.state};
+    const {userRobot} = {...gameObject};
+    const {enemyRobot} = {...gameObject};
     const userEvasion = Math.floor(Math.random() * 101);
     const attackDamage = enemyRobot.swing();
     let damageDealt = 0;
     if (userEvasion > userRobot.evasion) {
       damageDealt = (attackDamage - userRobot.armor);
+      gameObject.evaded = false;
+      gameObject.isCritical = false;
+      if (attackDamage > enemyRobot.attack) {
+        gameObject.isCritical = true;
+        gameObject.evaded = false;
+      }
+    } else {
+      gameObject.isCritical = false;
+      gameObject.evaded = true;
     }
+    damageDealt.toFixed(1);
     userRobot.health = (userRobot.health - damageDealt);
     enemyRobot.attackCount += 1;
-    this.setState({userRobot: userRobot});
-    this.setState({enemyRobot: enemyRobot});
+    gameObject.attackDamage = damageDealt;
+    gameObject.userRobot = userRobot;
+    gameObject.enemyRobot = enemyRobot;
     if (userRobot.health <= 0) {
-      this.props.setWinnerProfile(this.state.enemyProfile);
-      this.props.setWinnerBot(this.state.enemyRobot);
+      gameObject.enemyProfile.spWins += 1;
+      this.setState({gameObject: gameObject});
+      this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
+      this.props.setWinnerBot(this.state.gameObject.enemyRobot);
       this.props.history.push('/winnerscreen');
     } else {
-      this.setState({turn: 'user'});
+      gameObject.turn = 'user';
+      this.setState({gameObject: gameObject});
     }
   };
 
   attackFunction = (e) => {
     console.log(e);
-    if ((this.state.turn === 'user') && e.code === 'KeyA') {
+    if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
       this.userAttack();
-    } else if ((this.state.turn === 'user') && e.code === 'KeyS') {
+    } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyS') {
       this.userSpecialAttack();
     };
   };
 
+  displayDamage = () => {
+    let displayDamage = {};
+    if (this.state.gameObject.attacking) {
+      displayDamage = <AttackResult attackDamage={this.state.gameObject.attackDamage} evaded={this.state.gameObject.evaded} isCritical={this.state.gameObject.isCritical}/>;
+    } else {
+      displayDamage = <div></div>;
+    }
+    return displayDamage;
+  };
+
   componentDidMount () {
-    const {userProfile} = {...this.props};
-    const {enemyProfile} = {...this.props};
-    const {userRobot} = {...this.props};
-    const {enemyRobot} = {...this.props};
-    const userStaticRobot = {...this.props.userRobot};
-    const enemyStaticRobot = {...this.props.enemyRobot};
-    userRobot.swing = function () {
+    const gameObject = {...this.state.gameObject};
+    gameObject.userProfile = {...this.props.userProfile};
+    gameObject.enemyProfile = {...this.props.enemyProfile};
+    gameObject.userRobot = {...this.props.userRobot};
+    gameObject.enemyRobot = {...this.props.enemyRobot};
+    gameObject.userStaticRobot = {...this.props.userRobot};
+    gameObject.enemyStaticRobot = {...this.props.enemyRobot};
+    gameObject.userRobot.swing = function () {
       const isCritical = Math.floor((Math.random() * 101));
       if (isCritical <= this.critChance) {
         return (this.attack * this.critMulti);
@@ -82,7 +134,7 @@ class FightArena extends Component {
         return this.attack;
       }
     };
-    enemyRobot.swing = function () {
+    gameObject.enemyRobot.swing = function () {
       const isCritical = Math.floor((Math.random() * 101));
       if (isCritical <= this.critChance) {
         return (this.attack * this.critMulti);
@@ -90,12 +142,7 @@ class FightArena extends Component {
         return this.attack;
       }
     };
-    this.setState({userRobot: userRobot});
-    this.setState({userStaticRobot: userStaticRobot});
-    this.setState({enemyRobot: enemyRobot});
-    this.setState({enemyStaticRobot: enemyStaticRobot});
-    this.setState({userProfile: userProfile});
-    this.setState({enemyProfile: enemyProfile});
+    this.setState({gameObject: gameObject});
     window.addEventListener('keypress', this.attackFunction);
   };
 
@@ -104,12 +151,20 @@ class FightArena extends Component {
   };
 
   render () {
+    const attackDamage = this.displayDamage();
     return (
-      <div className="FightArena" onKeyPress={this.attackFunction}>
+      <div className="FightArena">
         <h1 className="FightArena-title">FightArena</h1>
         <div className='row'>
-          <BattleBot bot={this.state.userRobot} staticBot={this.state.userStaticRobot} />
-          <BattleBot bot={this.state.enemyRobot} staticBot={this.state.enemyStaticRobot} />
+          <div className='col-xs-12'>
+            <div className='col-xs-4 col-sm-offset-4 text-center'>
+              {attackDamage}
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <BattleBot bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
+          <BattleBot bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
         </div>
       </div>
     );
