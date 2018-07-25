@@ -21,7 +21,7 @@ class AttackResult extends React.Component {
   render () {
     const correctResult = this.displayCorrectResult();
     return (
-      <div>
+      <div className='col-xs-12 text-center'>
         {correctResult}
       </div>
     );
