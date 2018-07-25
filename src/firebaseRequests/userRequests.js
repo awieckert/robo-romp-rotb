@@ -75,7 +75,7 @@ const updateUserProfile = (profileId, userProfile) => {
     }).catch((err) => {
       reject(err);
     });
-  })
+  });
 };
 
 export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile};

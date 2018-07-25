@@ -43,7 +43,7 @@ class FightArena extends Component {
       gameObject.isCritical = false;
       gameObject.evaded = true;
     }
-    damageDealt.toFixed(1);
+    damageDealt = damageDealt.toFixed(1);
     gameObject.userProfile.dmgDealt += damageDealt;
     enemyRobot.health = (enemyRobot.health - damageDealt);
     userRobot.attackCount += 1;
@@ -56,17 +56,18 @@ class FightArena extends Component {
       gameObject.enemyProfile.spLoses += 1;
       gameObject.enemyProfile.spGames += 1;
       this.setState({gameObject: gameObject});
-      this.props.setWinnerProfile(this.state.userProfile);
-      this.props.setWinnerBot(this.state.userRobot);
+      this.props.setWinnerProfile(this.state.gameObject.userProfile);
+      this.props.setWinnerBot(this.state.gameObject.userRobot);
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
-        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then().catch((err) => {
+        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
+          this.props.history.push('/winnerscreen');
+        }).catch((err) => {
           console.error('Failed to update enemy profile: ', err);
         }
         );
       }).catch((err) => {
         console.error('Failed to update firebase user profile: ', err);
       });
-      this.props.history.push('/winnerscreen');
     } else {
       gameObject.turn = 'enemy';
       this.setState({gameObject: gameObject});
@@ -93,7 +94,7 @@ class FightArena extends Component {
       gameObject.isCritical = false;
       gameObject.evaded = true;
     }
-    damageDealt.toFixed(1);
+    damageDealt = damageDealt.toFixed(1);
     userRobot.health = (userRobot.health - damageDealt);
     enemyRobot.attackCount += 1;
     gameObject.attackDamage = damageDealt;
@@ -108,14 +109,15 @@ class FightArena extends Component {
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
-        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then().catch((err) => {
+        userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
+          this.props.history.push('/winnerscreen');
+        }).catch((err) => {
           console.error('Failed to update enemy profile: ', err);
         }
         );
       }).catch((err) => {
         console.error('Failed to update firebase user profile: ', err);
       });
-      this.props.history.push('/winnerscreen');
     } else {
       gameObject.turn = 'user';
       this.setState({gameObject: gameObject});
@@ -123,7 +125,6 @@ class FightArena extends Component {
   };
 
   attackFunction = (e) => {
-    console.log(e);
     if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
       this.userAttack();
     } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyS') {
