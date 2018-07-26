@@ -9,6 +9,7 @@ import GameMode from '../components/GameMode/GameMode.js';
 import SelectionScreen from '../components/SelectionScreen/SelectionScreen.js';
 import FightArena from '../components/FightArena/FightArena.js';
 import WinnerScreen from '../components/WinnerScreen/WinnerScreen.js';
+import UserProfile from '../components/UserProfile/UserProfile.js';
 import './App.css';
 firebaseConnection();
 
@@ -124,6 +125,7 @@ class App extends Component {
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile}setWinnerBot={this.setWinnerBot} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
+              <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} />
             </Switch>
           </div>
         </BrowserRouter>
