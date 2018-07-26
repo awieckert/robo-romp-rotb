@@ -8,10 +8,16 @@ class LeaderBoard extends Component {
     olLeaderBoard: [],
   };
 
+  componentWillUnmount () {
+    console.log('Leaderboard unmounted, need this console maybe?');
+  }
+
   componentDidMount () {
+    console.log('Leaderboard mounted on win screen');
     Promise.all([userRequests.getUsersBySpWins(), userRequests.getUsersByOlWins()]).then((leaderBoards) => {
       this.setState({spLeaderBoard: leaderBoards[0]});
       this.setState({olLeaderBoard: leaderBoards[1]});
+      console.log('Leaderboard promise finished');
     });
   };
 
@@ -60,7 +66,7 @@ class LeaderBoard extends Component {
         <div className="LeaderBoard">
           <div className="panel panel-default">
             <div className="panel-heading flex-header">
-              <h3 className="panel-title">Single Player Champions</h3>
+              <h3 className="panel-title">Online Play Champions</h3>
               <div className=''>
                 <h5 className='header-line'>Wins</h5>
               </div>
