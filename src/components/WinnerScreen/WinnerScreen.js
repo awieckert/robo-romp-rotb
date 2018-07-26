@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import userRequests from '../../firebaseRequests/userRequests.js';
+import {Button} from 'react-bootstrap';
 import LeaderBoard from '../LeaderBoard/LeaderBoard.js';
 import WinnerBot from '../WinnerBot/WinnerBot.js';
 import './WinnerScreen.css';
@@ -9,12 +9,12 @@ class WinnerScreen extends Component {
     spLeaderBoard: [],
   };
 
+  sendToGameMode = () => {
+    this.props.history.push('/gamemode');
+  };
+
   componentDidMount () {
-    // userRequests.getUsersBySpWins().then((leaders) => {
-    //   this.setState({spLeaderBoard: leaders});
-    // }).catch((err) => {
-    //   console.error('Failed to get users by wins from firebase: ', err);
-    // });
+
   };
 
   render () {
@@ -22,6 +22,9 @@ class WinnerScreen extends Component {
       <div className="WinnerScreen">
         <h1 className="WinnerScreen-title">WinnerScreen</h1>
         <div className='row'>
+          <div className='col-xs-4 col-sm-offset-4'>
+            <Button onClick={this.sendToGameMode}>Select Game Mode</Button>
+          </div>
           <div className='col-xs-6'>
             <WinnerBot winnerBot={this.props.winnerBot} winnerProfile={this.props.winnerProfile}/>
           </div>
