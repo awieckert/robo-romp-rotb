@@ -31,6 +31,10 @@ class GameMode extends Component {
     });
   }
 
+  toUserProfile = () => {
+    this.props.history.push('/userprofile');
+  };
+
   componentDidMount () {
     const currentUser = firebase.auth().currentUser;
     userRequests.getUser(currentUser.uid).then((activeUser) => {
@@ -45,6 +49,9 @@ class GameMode extends Component {
     return (
       <div className="GameMode">
         <h1 className="GameMode-title">GameMode</h1>
+        <div>
+          <button className='btn btn-primary' onClick={this.toUserProfile}>User Profile</button>
+        </div>
         <div className='row'>
           <div className='col-xs-6'>
             <div className='row'>

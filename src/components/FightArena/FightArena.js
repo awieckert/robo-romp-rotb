@@ -43,7 +43,7 @@ class FightArena extends Component {
       gameObject.isCritical = false;
       gameObject.evaded = true;
     }
-    damageDealt = damageDealt.toFixed(1);
+    damageDealt = (damageDealt.toFixed(1) * 1);
     gameObject.userProfile.dmgDealt += damageDealt;
     enemyRobot.health = (enemyRobot.health - damageDealt);
     userRobot.attackCount += 1;
@@ -94,7 +94,7 @@ class FightArena extends Component {
       gameObject.isCritical = false;
       gameObject.evaded = true;
     }
-    damageDealt = damageDealt.toFixed(1);
+    damageDealt = (damageDealt.toFixed(1) * 1);
     userRobot.health = (userRobot.health - damageDealt);
     enemyRobot.attackCount += 1;
     gameObject.attackDamage = damageDealt;
