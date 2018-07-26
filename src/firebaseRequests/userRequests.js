@@ -78,4 +78,14 @@ const updateUserProfile = (profileId, userProfile) => {
   });
 };
 
-export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile};
+const reallyDeleteTheAccount = (uid) => {
+  return new Promise ((resolve, reject) => {
+    axios.delete(`${constants.firebaseConfig.databaseURL}/userData/${uid}.json`).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+};
+
+export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile, reallyDeleteTheAccount};
