@@ -25,6 +25,17 @@ class RegisterModal extends React.Component {
       charUnlock2: false,
       dmgDealt: 0,
     },
+    favoriteBots: {
+      uid: '',
+      GoliathATV: 0,
+      MerlinATV: 0,
+      Gryphon: 0,
+      Stinger: 0,
+      CombatRogue: 0,
+      AssassinationRogue: 0,
+      PaladinDrone: 0,
+      SuperAwesomeBot: 0,
+    },
   };
 
   constructor (props, context) {
@@ -63,7 +74,13 @@ class RegisterModal extends React.Component {
       newUserProfile.uid = data.user.uid;
       this.setState({userProfile: newUserProfile});
       userRequests.createUser(this.state.userProfile).then(() => {
-        this.props.history.push('/gamemode');
+        const {favoriteBots} = {...this.state};
+        favoriteBots.uid = data.user.uid;
+        userRequests.createFavorites(favoriteBots).then(() => {
+          this.props.history.push('/gamemode');
+        }).catch((err) => {
+          console.error('Failed to create favorites: ', err);
+        });
       }).catch((err) => {
         console.error('Failed to create new user: ', err);
       });
