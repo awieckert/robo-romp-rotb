@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import './LargeBot.css';
 
 class LargeBot extends Component {
   state = {
     userProfile: {},
+    favoriteBots: {},
     isSelected: false,
   };
 
@@ -12,11 +14,24 @@ class LargeBot extends Component {
     const bot = {...this.props.bot};
     this.props.setUserRobot(bot);
     this.props.disableSmallBots();
+    this.findFavoriteBot(bot);
+  };
+
+  findFavoriteBot = (robot) => {
+    const favoriteBots = {...this.state.favoriteBots};
+    Object.keys(favoriteBots).forEach((key) => {
+      if (key === robot.id) {
+        favoriteBots[key] += 1;
+      }
+    });
+    favoriteRequests.updateUserFavorites(favoriteBots.id ,favoriteBots).then().catch((err) => {
+      console.error('Unable to update users favorite robots: ', err);
+    });
   };
 
   componentDidMount () {
-    const userProfile = {...this.props.activeUser};
-    this.setState({userProfile: userProfile});
+    const favoriteBots = {...this.props.favoriteBots};
+    this.setState({favoriteBots: favoriteBots});
   };
 
   render () {
