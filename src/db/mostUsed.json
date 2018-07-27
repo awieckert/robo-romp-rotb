@@ -25,10 +25,10 @@
   },
   "PaladinDrone": {
     "used": 0,
-    "img": ""
+    "img": "../../img/bender.gif"
   },
   "SuperAwesomeBot": {
-    "img": "",
+    "img": "../../img/awesomeo.jpeg",
     "used": 0
   }
 }
