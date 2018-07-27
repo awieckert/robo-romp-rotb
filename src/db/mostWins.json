@@ -1,26 +1,34 @@
 {
-  "Goliath-ATV": {
+  "GoliathATV": {
+    "img": "../../img/goliath.jpg",
     "wins": 0
   },
-  "Merlin-ATV": {
+  "MerlinATV": {
+    "img": "../../img/merlin.png",
     "wins": 0
   },
   "Gryphon": {
+    "img": "../../img/gryphon2.jpg",
     "wins": 0
   },
   "Stinger": {
+    "img": "../../img/stinger.jpg",
     "wins": 0
   },
-  "Combat-Rogue": {
+  "CombatRogue": {
+    "img": "../../img/combat-rogue.jpg",
     "wins": 0
   },
-  "Assassination-Rogue": {
+  "AssassinationRogue": {
+    "img": "../../img/assass-rogue.jpg",
     "wins": 0
   },
-  "Paladin-Drone": {
-    "wins": 0
+  "PaladinDrone": {
+    "wins": 0,
+    "img": ""
   },
-  "SuperAwesome-Bot": {
+  "SuperAwesomeBot": {
+    "img": "",
     "wins": 0
   }
 }

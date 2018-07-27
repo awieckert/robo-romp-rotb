@@ -72,7 +72,12 @@ class App extends Component {
     enemyRobot: {},
     winnerProfile: {},
     winnerBot: {},
+    favoriteBots: {},
   }
+
+  setFavoriteBots = (favorites) => {
+    this.setState({favoriteBots: favorites});
+  };
 
   setActiveUser = (activeUser) => {
     this.setState({userProfile: activeUser});
@@ -125,8 +130,8 @@ class App extends Component {
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PublicRoute path='/login' authed={this.state.authed} component={Login} />
               <PublicRoute path='/register' authed={this.state.authed} component={Register} />
-              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} />
-              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot}/>
+              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} />
+              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile}setWinnerBot={this.setWinnerBot} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
               <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} setAuthedFalse={this.setAuthedFalse}/>

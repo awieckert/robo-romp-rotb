@@ -2,19 +2,32 @@ import React, { Component } from 'react';
 import {Button} from 'react-bootstrap';
 import LeaderBoard from '../LeaderBoard/LeaderBoard.js';
 import WinnerBot from '../WinnerBot/WinnerBot.js';
+import WinningBots from '../WinningBots/WinningBots.js';
+import UsedBots from '../UsedBots/UsedBots.js';
+import robotRequests from '../../firebaseRequests/robotRequests.js';
 import './WinnerScreen.css';
 
 class WinnerScreen extends Component {
   state = {
-    spLeaderBoard: [],
+    robotStats: {
+      mostUsedBots: [],
+      mostWinsBots: [],
+    },
   };
 
   sendToGameMode = () => {
     this.props.history.push('/gamemode');
   };
 
-  componentDidMount () {
-
+  componentWillMount () {
+    const robotStats = {...this.state.robotStats};
+    Promise.all([robotRequests.getMostUsedBots(), robotRequests.getMostWinningBots()]).then((arrayOfUsedNWinningBots) => {
+      robotStats.mostUsedBots = arrayOfUsedNWinningBots[0];
+      robotStats.mostWinsBots = arrayOfUsedNWinningBots[1];
+      this.setState({robotStats: robotStats});
+    }).catch((err) => {
+      console.error('Failed to get the used and winning robots: ', err);
+    });
   };
 
   render () {
@@ -27,6 +40,12 @@ class WinnerScreen extends Component {
           </div>
           <div className='col-xs-6'>
             <WinnerBot winnerBot={this.props.winnerBot} winnerProfile={this.props.winnerProfile}/>
+            <div className='col-xs-10 col-xs-offset-1'>
+              <UsedBots mostUsedBots={this.state.robotStats.mostUsedBots}/>
+            </div>
+            <div className='col-xs-10 col-xs-offset-1'>
+              <WinningBots winningBots={this.state.robotStats.mostWinsBots} />
+            </div>
           </div>
           <div className='col-xs-6'>
             <LeaderBoard />

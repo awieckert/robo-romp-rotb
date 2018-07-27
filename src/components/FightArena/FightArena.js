@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import BattleBot from '../BattleBot/BattleBot.js';
 import AttackResult from '../AttackResult/AttackResult.js';
 import userRequests from '../../firebaseRequests/userRequests.js';
@@ -58,6 +59,12 @@ class FightArena extends Component {
       this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.gameObject.userProfile);
       this.props.setWinnerBot(this.state.gameObject.userRobot);
+
+      const userWin = firebase.database().ref(`mostWins/${gameObject.userRobot.id}/wins`);
+      userWin.transaction(function (wins) {
+        return wins + 1;
+      });
+
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
           this.props.history.push('/winnerscreen');
@@ -108,6 +115,12 @@ class FightArena extends Component {
       this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+
+      const enemyWins = firebase.database().ref(`mostWins/${gameObject.enemyRobot.id}/wins`);
+      enemyWins.transaction(function (wins) {
+        return wins + 1;
+      });
+
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
           this.props.history.push('/winnerscreen');
@@ -167,6 +180,17 @@ class FightArena extends Component {
       }
     };
     this.setState({gameObject: gameObject});
+
+    const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
+    userUsed.transaction(function (used) {
+      return used + 1;
+    });
+
+    const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
+    enemyUsed.transaction(function (used) {
+      return used + 1;
+    });
+
     window.addEventListener('keypress', this.attackFunction);
   };
 
