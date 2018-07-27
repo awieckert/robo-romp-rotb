@@ -4,7 +4,7 @@ import './UsedBots.css';
 class UsedBots extends React.Component {
 
   render () {
-    const bots = this.props.mostUsedBots;
+    const bots = [...this.props.mostUsedBots];
     const botsToPrint = bots.map((bot) => {
       return (
         <div className='col-xs-4'>

@@ -60,7 +60,7 @@ class FightArena extends Component {
       this.props.setWinnerProfile(this.state.gameObject.userProfile);
       this.props.setWinnerBot(this.state.gameObject.userRobot);
 
-      const userWin = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/wins`);
+      const userWin = firebase.database().ref(`mostWins/${gameObject.userRobot.id}/wins`);
       userWin.transaction(function (wins) {
         return wins + 1;
       });
@@ -116,7 +116,7 @@ class FightArena extends Component {
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
 
-      const enemyWins = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/wins`);
+      const enemyWins = firebase.database().ref(`mostWins/${gameObject.enemyRobot.id}/wins`);
       enemyWins.transaction(function (wins) {
         return wins + 1;
       });

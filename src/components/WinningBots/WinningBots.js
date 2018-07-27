@@ -4,7 +4,7 @@ import './WinningBots.css';
 class WinningBots extends React.Component {
 
   render () {
-    const bots = this.props.winningBots;
+    const bots = [...this.props.winningBots];
     const botsToPrint = bots.map((bot) => {
       return (
         <div className='col-xs-4'>
@@ -14,7 +14,9 @@ class WinningBots extends React.Component {
       );
     });
     return (
-      {botsToPrint}
+      <div>
+        {botsToPrint}
+      </div>
     );
   };
 };
