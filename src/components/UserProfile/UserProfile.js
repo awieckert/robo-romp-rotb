@@ -1,11 +1,14 @@
 import React from 'react';
 import userRequests from '../../firebaseRequests/userRequests.js';
+import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import firebase from 'firebase';
+import FavoriteBots from '../FavoriteBots/FavoriteBots.js';
 import './UserProfile.css';
 
 class UserProfile extends React.Component {
   state = {
     userProfile: {},
+    sortedFavoriteBots: [],
   };
 
   deleteAccount = () => {
@@ -25,8 +28,28 @@ class UserProfile extends React.Component {
     }
   };
 
+  toGameMode = () => {
+    this.props.history.push('/gamemode');
+  };
+
+  componentWillMount () {
+    const {userProfile} = {...this.props};
+    const uid = firebase.auth().currentUser.uid;
+    favoriteRequests.getUserSortedFavorites(uid).then((sortedBots) => {
+      this.setState({userProfile: userProfile, sortedFavoriteBots: sortedBots});
+    }).catch((err) => {
+      console.error('Could not get sorted favorites: ', err);
+    });
+  }
+
   componentDidMount () {
-    this.setState({userProfile: this.props.userProfile});
+    // const {userProfile} = {...this.props};
+    // const uid = firebase.auth().currentUser.uid;
+    // favoriteRequests.getUserFavorites(uid).then((favorites) => {
+    //   this.setState({favoriteBots: favorites, userProfile: userProfile});
+    // }).catch((err) => {
+    //   console.error('Could not get favorites from firebase: ', err);
+    // });
   };
 
   render () {
@@ -35,6 +58,7 @@ class UserProfile extends React.Component {
     return (
       <div className='container'>
         <div className='row'>
+          <button className='btn btn-primary' onClick={this.toGameMode}>Back</button>
           <div className='col-sm-12 text-center'>
             <h2>{userProfile.username}</h2>
             <h3>Single Player Stats</h3>
@@ -50,6 +74,7 @@ class UserProfile extends React.Component {
             <h3>Global Stats</h3>
             <h4>Total Damage Dealt: {damage.toFixed(1)}</h4>
             <br/>
+            <FavoriteBots favoriteBots={this.state.sortedFavoriteBots} />
             <button className='btn btn-danger' onClick={this.deleteAccount}>Delete Account</button>
           </div>
         </div>

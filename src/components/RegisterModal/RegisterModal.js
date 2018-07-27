@@ -27,14 +27,54 @@ class RegisterModal extends React.Component {
     },
     favoriteBots: {
       uid: '',
-      GoliathATV: 0,
-      MerlinATV: 0,
-      Gryphon: 0,
-      Stinger: 0,
-      CombatRogue: 0,
-      AssassinationRogue: 0,
-      PaladinDrone: 0,
-      SuperAwesomeBot: 0,
+      GoliathATV: {
+        'id': 'GoliathATV',
+        'name': 'Goliath-ATV',
+        img: '../../img/goliath.jpg',
+        used: 0,
+      },
+      MerlinATV: {
+        'id': 'MerlinATV',
+        'name': 'Merlin-ATV',
+        img: '../../img/merlin.png',
+        used: 0,
+      },
+      Gryphon: {
+        'id': 'Gryphon',
+        'name': 'Gryphon',
+        img: '../../img/gryphon2.jpg',
+        used: 0,
+      },
+      Stinger: {
+        'id': 'Stinger',
+        'name': 'Stinger',
+        img: '../../img/stinger.jpg',
+        used: 0,
+      },
+      CombatRogue: {
+        'id': 'CombatRogue',
+        'name': 'Combat-Rogue',
+        img: '../../img/combat-rogue.jpg',
+        used: 0,
+      },
+      AssassinationRogue: {
+        'id': 'AssassinationRogue',
+        'name': 'Assassinsation-Rogue',
+        img: '../../img/assass-rogue.jpg',
+        used: 0,
+      },
+      PaladinDrone: {
+        'id': 'PaladinDrone',
+        'name': 'Paladin-Drone',
+        img: '../../img/bender.gif',
+        used: 0,
+      },
+      SuperAwesomeBot: {
+        id: 'SuperAwesomeBot',
+        name: 'SuperAwesome-Bot',
+        img: '../../img/awesomeo.jpeg',
+        used: 0,
+      },
     },
   };
 
@@ -101,36 +141,36 @@ class RegisterModal extends React.Component {
 
     return (
       <div>
-        <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
+        <Button bsStyle='danger' bsSize='large' onClick={this.handleShow}>
           Join the Fight
         </Button>
 
-        <Modal show={this.state.show} onHide={this.handleClose} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <Modal show={this.state.show} onHide={this.handleClose} bsSize='large' aria-labelledby='contained-modal-title-lg'>
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">Battle Account Creation</Modal.Title>
+            <Modal.Title id='contained-modal-title-lg'>Battle Account Creation</Modal.Title>
           </Modal.Header>
           {/* <Modal.Body> */}
           <div className='row modal-row'>
             <div className='col-xs-6 registerImg'>
             </div>
             <div className='col-xs-6 register-form'>
-              <form className="form-horizontal">
-                <div className="form-group">
-                  <label htmlFor="inputEmail" className="col-xs-3 control-label">Email</label>
-                  <div className="col-xs-8">
-                    <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={this.registerEmailInfo}></input>
+              <form className='form-horizontal'>
+                <div className='form-group'>
+                  <label htmlFor='inputEmail' className='col-xs-3 control-label'>Email</label>
+                  <div className='col-xs-8'>
+                    <input type='email' className='form-control' id='inputEmail' placeholder='Email' onChange={this.registerEmailInfo}></input>
                   </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="inputUsername" className="col-xs-3 control-label">User Name</label>
-                  <div className="col-xs-8">
-                    <input type="userName" className="form-control" id="inputUsername" placeholder="User Name" onChange={this.registerUserNameInfo}></input>
+                <div className='form-group'>
+                  <label htmlFor='inputUsername' className='col-xs-3 control-label'>User Name</label>
+                  <div className='col-xs-8'>
+                    <input type='userName' className='form-control' id='inputUsername' placeholder='User Name' onChange={this.registerUserNameInfo}></input>
                   </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="inputPassword" className="col-xs-3 control-label">Password</label>
-                  <div className="col-xs-8">
-                    <input type="password" className="form-control" id="inputPassword" placeholder="Password" onChange={this.registerPasswordInfo}></input>
+                <div className='form-group'>
+                  <label htmlFor='inputPassword' className='col-xs-3 control-label'>Password</label>
+                  <div className='col-xs-8'>
+                    <input type='password' className='form-control' id='inputPassword' placeholder='Password' onChange={this.registerPasswordInfo}></input>
                   </div>
                 </div>
               </form>
@@ -139,7 +179,7 @@ class RegisterModal extends React.Component {
           {/* </Modal.Body> */}
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
-            <Button bsStyle="primary" onClick={this.createUserAccount}>Create Account</Button>
+            <Button bsStyle='primary' onClick={this.createUserAccount}>Create Account</Button>
           </Modal.Footer>
         </Modal>
       </div>

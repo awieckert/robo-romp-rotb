@@ -20,11 +20,11 @@ class LargeBot extends Component {
   findFavoriteBot = (robot) => {
     const favoriteBots = {...this.state.favoriteBots};
     Object.keys(favoriteBots).forEach((key) => {
-      if (key === robot.id) {
-        favoriteBots[key] += 1;
+      if (favoriteBots[key].id === robot.id) {
+        favoriteBots[key].used += 1;
       }
     });
-    favoriteRequests.updateUserFavorites(favoriteBots.id ,favoriteBots).then().catch((err) => {
+    favoriteRequests.updateUserFavorites(favoriteBots.id, favoriteBots).then().catch((err) => {
       console.error('Unable to update users favorite robots: ', err);
     });
   };
