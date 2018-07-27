@@ -1,5 +1,6 @@
 import React from 'react';
 import userRequests from '../../firebaseRequests/userRequests.js';
+import firebase from 'firebase';
 import './UserProfile.css';
 
 class UserProfile extends React.Component {
@@ -11,8 +12,13 @@ class UserProfile extends React.Component {
     const areYouSure = prompt('Are you sure you want to delete? If so type YES');
     if (areYouSure === 'YES') {
       userRequests.reallyDeleteTheAccount(this.state.userProfile.id).then(() => {
-        this.props.setAuthedFalse();
-        this.props.history.push('/');
+        const currentUser = firebase.auth().currentUser;
+        currentUser.delete().then(() => {
+          this.props.setAuthedFalse();
+          this.props.history.push('/');
+        }).catch((err) => {
+          console.error('Could not delete the user from firebase: ', err);
+        });
       }).catch((err) => {
         console.error('Failed to delete the user account');
       });

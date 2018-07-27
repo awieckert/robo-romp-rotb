@@ -11,6 +11,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": true,
+    "id": "GoliathATV",
     "img": "../../img/goliath.jpg",
     "description": "The Goliath-ATV is a slow monstrosity of a machine. Otherwise known as `Beef Eater` this ATV has loads of health, tough armor and moderate attack damage."
   },
@@ -26,6 +27,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": true,
+    "id": "MerlinATV",
     "img": "../../img/merlin.png",
     "description": "The Merlin-ATV is a glass cannon. Expect high damage output from this ATV, but keep your distance these ATVs have lower health and even lower resistance to attacks."
   },
@@ -41,6 +43,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": true,
+    "id": "Gryphon",
     "img": "../../img/gryphon2.jpg",
     "description": "The Gryphon, AKA Mr. Generic. This flying robot is your standard front line soldier. Solid across all stats. Expect steady damage output, moderate armor and substantial health. Slightly higher crit chance than they Goliath-ATV"
   },
@@ -57,6 +60,7 @@
     "specialActive": false,
     "available": true,
     "img": "../../img/stinger.jpg",
+    "id": "Stinger",
     "description": "The Stinger is a nimble, lightly armored flying bot. Above average base attack and crit chance. These bots have relatively low health but can devastate the battle field"
   },
   "combatRogue": {
@@ -71,6 +75,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": true,
+    "id": "CombatRogue",
     "img": "../../img/combat-rogue.jpg",
     "description": "The Combat-Rogue wields two swords. Fast and in your face. Rogue's don't have much armor and the lowest base attack of any bot class but crit regularly. Combat-Rogues have higher base attack than Assassination-Rogues but crit slightly less."
   },
@@ -86,6 +91,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": true,
+    "id": "AssassinationRogue",
     "img": "../../img/assass-rogue.jpg",
     "description": "The Assassination-Rogue unleashes devastating flurries of attacks with his two daggers. Lowest base attack but highest crit chance and crit multiplier of any bot. Take a chance...it may pay off."
   },
@@ -104,6 +110,7 @@
     "specialActive": false,
     "available": false,
     "img": "",
+    "id": "PaladinDrone",
     "description": "The steadfast Paladin-Drone has built in nano-tech that can repair the Paladin in times of need. These drones are built to weather the storm instead of bring the heat."
   },
   "superawesome": {
@@ -118,6 +125,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": false,
+    "id": "SuperAwesomeBot",
     "img": "../../img/enterFray.jpg",
     "description": "This bot is awesome...enough said."
   }

@@ -3,6 +3,7 @@ import './LargeBot.css';
 
 class LargeBot extends Component {
   state = {
+    userProfile: {},
     isSelected: false,
   };
 
@@ -11,6 +12,11 @@ class LargeBot extends Component {
     const bot = {...this.props.bot};
     this.props.setUserRobot(bot);
     this.props.disableSmallBots();
+  };
+
+  componentDidMount () {
+    const userProfile = {...this.props.activeUser};
+    this.setState({userProfile: userProfile});
   };
 
   render () {

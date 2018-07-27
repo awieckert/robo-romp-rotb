@@ -98,4 +98,24 @@ const createFavorites = (favoriteBots) => {
   });
 };
 
-export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile, reallyDeleteTheAccount, createFavorites};
+const getUserFavorites = (uid) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${constants.firebaseConfig.databaseURL}/favoriteBot.json?orderBy="uid"&equalTo="${uid}"`)
+      .then(res => {
+        let favorites = {};
+        if (res.data !== null) {
+          Object.keys(res.data).forEach(fbKey => {
+            res.data[fbKey].id = fbKey;
+            favorites = (res.data[fbKey]);
+          });
+        }
+        resolve(favorites);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+export default {createUser, getUser, getUsersBySpWins, getUsersByOlWins, updateUserProfile, reallyDeleteTheAccount, createFavorites, getUserFavorites};

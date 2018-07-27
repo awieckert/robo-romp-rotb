@@ -40,6 +40,11 @@ class GameMode extends Component {
     userRequests.getUser(currentUser.uid).then((activeUser) => {
       this.setState({userProfile: activeUser});
       this.props.setActiveUser(activeUser);
+      userRequests.getUserFavorites(currentUser.uid).then((favorites) => {
+        this.props.setFavoriteBots(favorites);
+      }).catch((err) => {
+        console.error('Unable to get favorites from firebase: ', err);
+      });
     }).catch((err) => {
       console.error('Could not grab current user from firebase: ', err);
     });
