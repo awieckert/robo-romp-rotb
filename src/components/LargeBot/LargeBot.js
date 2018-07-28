@@ -12,6 +12,7 @@ class LargeBot extends Component {
   setUserBot = () => {
     this.setState({isSelected: true});
     const bot = {...this.props.bot};
+    bot.user = 'user1';
     this.props.setUserRobot(bot);
     this.props.disableSmallBots();
     this.findFavoriteBot(bot);

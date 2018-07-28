@@ -45,6 +45,7 @@ class SelectionScreen extends Component {
       const allBots = [...this.state.allRobots];
       allBots.forEach((bot) => {
         if (bot.name !== playerBot.name) {
+          bot.user = 'user2';
           computerBots.push(bot);
         }
       });
