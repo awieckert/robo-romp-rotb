@@ -22,31 +22,6 @@ class FightArena extends Component {
     },
   };
 
-  specialAttack = (attackingRobot, defendingRobot, gameObject) => {
-    defendingRobot.armor = 0;
-    defendingRobot.health = (defendingRobot.health - 10);
-    defendingRobot.debuff = 2;
-
-    attackingRobot.attackCount = 0;
-    gameObject.evaded = false;
-    gameObject.isCritical = false;
-    if (gameObject.turn === 'user') {
-      gameObject.userProfile.dmgDealt += 10;
-      gameObject.turn = 'enemy';
-    } else if (gameObject.turn === 'enemy') {
-      gameObject.enemyProfile.dmgDealt += 10;
-      gameObject.turn = 'user';
-    }
-    if (attackingRobot.user === 'user1') {
-      gameObject.userRobot = attackingRobot;
-      gameObject.enemyRobot = defendingRobot;
-    } else {
-      gameObject.userRobot = defendingRobot;
-      gameObject.enemyRobot = attackingRobot;
-    }
-    return gameObject;
-  };
-
   useSpecialAttack = () => {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
