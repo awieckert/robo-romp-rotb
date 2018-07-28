@@ -1,4 +1,5 @@
 import React from 'react';
+import './FavoriteBots.css';
 
 class FavoriteBots extends React.Component {
   state = {
@@ -6,16 +7,18 @@ class FavoriteBots extends React.Component {
   };
 
   filterFunction = () => {
-    const sortedBots = [...this.state.favoriteBots];
+    const sortedBots = [...this.props.favoriteBots];
     const arrayToMap = [];
-    for (let i = 0; i < 3; i++) {
-      arrayToMap.push(sortedBots[i]);
-    }
+    sortedBots[0].forEach((item, i) => {
+      if (i < 3) {
+        arrayToMap.push(item);
+      }
+    });
     return arrayToMap;
   };
 
   componentDidMount () {
-    const favoriteBots = {...this.props.favoriteBots};
+    const favoriteBots = [...this.props.favoriteBots];
     this.setState({favoriteBots: favoriteBots});
   };
 
@@ -30,7 +33,7 @@ class FavoriteBots extends React.Component {
       );
     });
     return (
-      <div className=''>
+      <div className='favorite-bots'>
         {botsToPrint}
       </div>
     );

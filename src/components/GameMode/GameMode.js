@@ -43,6 +43,11 @@ class GameMode extends Component {
       this.props.setActiveUser(activeUser);
       favoriteRequests.getUserFavorites(currentUser.uid).then((favorites) => {
         this.props.setFavoriteBots(favorites);
+        favoriteRequests.getUserSortedFavorites(currentUser.uid).then((sortedFavorites) => {
+          this.props.setSortedFavorites(sortedFavorites);
+        }).catch((err) => {
+          console.error('Could not get the sorted favorites from firebase: ', err);
+        });
       }).catch((err) => {
         console.error('Unable to get favorites from firebase: ', err);
       });

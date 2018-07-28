@@ -1,6 +1,5 @@
 import React from 'react';
 import userRequests from '../../firebaseRequests/userRequests.js';
-import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import firebase from 'firebase';
 import FavoriteBots from '../FavoriteBots/FavoriteBots.js';
 import './UserProfile.css';
@@ -34,22 +33,12 @@ class UserProfile extends React.Component {
 
   componentWillMount () {
     const {userProfile} = {...this.props};
-    const uid = firebase.auth().currentUser.uid;
-    favoriteRequests.getUserSortedFavorites(uid).then((sortedBots) => {
-      this.setState({userProfile: userProfile, sortedFavoriteBots: sortedBots});
-    }).catch((err) => {
-      console.error('Could not get sorted favorites: ', err);
-    });
+    const sortedFavoriteBots = [...this.props.sortedFavorites];
+    this.setState({userProfile: userProfile, sortedFavoriteBots: sortedFavoriteBots});
   }
 
   componentDidMount () {
-    // const {userProfile} = {...this.props};
-    // const uid = firebase.auth().currentUser.uid;
-    // favoriteRequests.getUserFavorites(uid).then((favorites) => {
-    //   this.setState({favoriteBots: favorites, userProfile: userProfile});
-    // }).catch((err) => {
-    //   console.error('Could not get favorites from firebase: ', err);
-    // });
+
   };
 
   render () {
