@@ -64,8 +64,8 @@ class FightArena extends Component {
         updatedGameObject.enemyProfile.spWins += 1;
         updatedGameObject.enemyProfile.spGames += 1;
         this.setState({gameObject: updatedGameObject});
-        this.props.setWinnerProfile(this.state.gameObject.userProfile);
-        this.props.setWinnerBot(this.state.gameObject.userRobot);
+        this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
+        this.props.setWinnerBot(this.state.gameObject.enemyRobot);
 
         const userWin = firebase.database().ref(`mostWins/${updatedGameObject.enemyRobot.id}/wins`);
         userWin.transaction(function (wins) {
