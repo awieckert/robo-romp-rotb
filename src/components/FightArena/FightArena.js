@@ -59,7 +59,7 @@ class FightArena extends Component {
     } else {
       const updatedGameObject = enemyRobot.specialAttack(enemyRobot, userRobot, gameObject);
       if (updatedGameObject.userRobot.health <= 0) {
-        updatedGameObject.userProfile.sploses += 1;
+        updatedGameObject.userProfile.spLoses += 1;
         updatedGameObject.userProfile.spGames += 1;
         updatedGameObject.enemyProfile.spWins += 1;
         updatedGameObject.enemyProfile.spGames += 1;
