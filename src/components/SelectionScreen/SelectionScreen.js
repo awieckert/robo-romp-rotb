@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import robotRequests from '../../firebaseRequests/robotRequests.js';
 import SmallBot from '../SmallBot/SmallBot.js';
 import LargeBot from '../LargeBot/LargeBot.js';
+import specialAttacks from '../../specialAttacks.js';
 import './SelectionScreen.css';
 
 class SelectionScreen extends Component {
@@ -32,6 +33,9 @@ class SelectionScreen extends Component {
 
   componentDidMount () {
     robotRequests.getRobots().then((robots) => {
+      robots.forEach((robot) => {
+        robot.specialAttack = specialAttacks[robot.id];
+      });
       this.setState({allRobots: robots});
     }).catch((err) => {
       console.error('Could not get robots from firebase: ', err);
@@ -45,6 +49,7 @@ class SelectionScreen extends Component {
       const allBots = [...this.state.allRobots];
       allBots.forEach((bot) => {
         if (bot.name !== playerBot.name) {
+          bot.user = 'user2';
           computerBots.push(bot);
         }
       });

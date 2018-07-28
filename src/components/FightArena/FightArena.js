@@ -22,6 +22,97 @@ class FightArena extends Component {
     },
   };
 
+  specialAttack = (attackingRobot, defendingRobot, gameObject) => {
+    defendingRobot.armor = 0;
+    defendingRobot.health = (defendingRobot.health - 10);
+    defendingRobot.debuff = 2;
+
+    attackingRobot.attackCount = 0;
+    gameObject.evaded = false;
+    gameObject.isCritical = false;
+    if (gameObject.turn === 'user') {
+      gameObject.userProfile.dmgDealt += 10;
+      gameObject.turn = 'enemy';
+    } else if (gameObject.turn === 'enemy') {
+      gameObject.enemyProfile.dmgDealt += 10;
+      gameObject.turn = 'user';
+    }
+    if (attackingRobot.user === 'user1') {
+      gameObject.userRobot = attackingRobot;
+      gameObject.enemyRobot = defendingRobot;
+    } else {
+      gameObject.userRobot = defendingRobot;
+      gameObject.enemyRobot = attackingRobot;
+    }
+    return gameObject;
+  };
+
+  useSpecialAttack = () => {
+    const {gameObject} = {...this.state};
+    const {userRobot} = {...gameObject};
+    const {enemyRobot} = {...gameObject};
+    if (gameObject.turn === 'user') {
+      const updatedGameObject =  userRobot.specialAttack(userRobot, enemyRobot, gameObject);
+      if (updatedGameObject.enemyRobot.health <= 0) {
+        updatedGameObject.userProfile.spWins += 1;
+        updatedGameObject.userProfile.spGames += 1;
+        updatedGameObject.enemyProfile.spLoses += 1;
+        updatedGameObject.enemyProfile.spGames += 1;
+        this.setState({gameObject: updatedGameObject});
+        this.props.setWinnerProfile(this.state.gameObject.userProfile);
+        this.props.setWinnerBot(this.state.gameObject.userRobot);
+
+        const userWin = firebase.database().ref(`mostWins/${updatedGameObject.userRobot.id}/wins`);
+        userWin.transaction(function (wins) {
+          return wins + 1;
+        });
+
+        userRequests.updateUserProfile(gameObject.userProfile.id, updatedGameObject.userProfile).then(() => {
+          userRequests.updateUserProfile(updatedGameObject.enemyProfile.id, updatedGameObject.enemyProfile).then(() => {
+            this.props.history.push('/winnerscreen');
+          }).catch((err) => {
+            console.error('Failed to update enemy profile: ', err);
+          }
+          );
+        }).catch((err) => {
+          console.error('Failed to update firebase user profile: ', err);
+        });
+      } else {
+        this.setState({gameObject: updatedGameObject});
+        window.setTimeout(this.enemyAttack, 1000);
+      }
+    } else {
+      const updatedGameObject = enemyRobot.specialAttack(enemyRobot, userRobot, gameObject);
+      if (updatedGameObject.userRobot.health <= 0) {
+        updatedGameObject.userProfile.sploses += 1;
+        updatedGameObject.userProfile.spGames += 1;
+        updatedGameObject.enemyProfile.spWins += 1;
+        updatedGameObject.enemyProfile.spGames += 1;
+        this.setState({gameObject: updatedGameObject});
+        this.props.setWinnerProfile(this.state.gameObject.userProfile);
+        this.props.setWinnerBot(this.state.gameObject.userRobot);
+
+        const userWin = firebase.database().ref(`mostWins/${updatedGameObject.enemyRobot.id}/wins`);
+        userWin.transaction(function (wins) {
+          return wins + 1;
+        });
+
+        userRequests.updateUserProfile(gameObject.userProfile.id, updatedGameObject.userProfile).then(() => {
+          userRequests.updateUserProfile(updatedGameObject.enemyProfile.id, updatedGameObject.enemyProfile).then(() => {
+            this.props.history.push('/winnerscreen');
+          }).catch((err) => {
+            console.error('Failed to update enemy profile: ', err);
+          }
+          );
+        }).catch((err) => {
+          console.error('Failed to update firebase user profile: ', err);
+        });
+      } else {
+        this.setState({gameObject: updatedGameObject});
+      }
+    }
+  };
+
   userAttack = (e) => {
     const {gameObject} = {...this.state};
     if (!this.state.gameObject.attacking) {
@@ -29,6 +120,16 @@ class FightArena extends Component {
     }
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    const {enemyStaticRobot} = {...gameObject};
+    if (enemyRobot.debuff === 0) {
+      enemyRobot.armor = enemyStaticRobot.armor;
+      enemyRobot.evasion = enemyStaticRobot.evasion;
+      enemyRobot.attack = enemyStaticRobot.attack;
+      enemyRobot.critChance = enemyStaticRobot.critChance;
+      enemyRobot.critMulti = enemyStaticRobot.critMulti;
+    } else {
+      enemyRobot.debuff -= 1;
+    }
     const enemyEvasion = Math.floor(Math.random() * 101);
     const attackDamage = userRobot.swing();
     let damageDealt = 0;
@@ -89,6 +190,20 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    if (enemyRobot.attackCount === enemyRobot.specialCount) {
+      this.useSpecialAttack();
+      return;
+    }
+    const {userStaticRobot} = {...gameObject};
+    if (userRobot.debuff === 0) {
+      userRobot.armor = userStaticRobot.armor;
+      userRobot.evasion = userStaticRobot.evasion;
+      userRobot.attack = userStaticRobot.attack;
+      userRobot.critChance = userStaticRobot.critChance;
+      userRobot.critMulti = userStaticRobot.critMulti;
+    } else {
+      userRobot.debuff -= 1;
+    }
     const userEvasion = Math.floor(Math.random() * 101);
     const attackDamage = enemyRobot.swing();
     let damageDealt = 0;
@@ -141,10 +256,11 @@ class FightArena extends Component {
   };
 
   attackFunction = (e) => {
+    const {userRobot} = {...this.state.gameObject};
     if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
-      this.userAttack();
-    } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyS') {
-      this.userSpecialAttack();
+      this.userAttack(e);
+    } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount === userRobot.specialCount)) {
+      this.useSpecialAttack();
     } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
       this.userAttack(e);
     };
