@@ -3,8 +3,6 @@ import {Route, BrowserRouter, Redirect, Switch}  from 'react-router-dom';
 import firebase from 'firebase';
 import firebaseConnection from '../firebaseRequests/connection.js';
 import Home from '../components/Home/Home.js';
-// import Login from '../components/Login/Login.js';
-// import Register from '../components/Register/Register.js';
 import GameMode from '../components/GameMode/GameMode.js';
 import SelectionScreen from '../components/SelectionScreen/SelectionScreen.js';
 import FightArena from '../components/FightArena/FightArena.js';
@@ -19,21 +17,6 @@ const renderMergedProps = (component, ...rest) => {
     React.createElement(component, finalProps)
   );
 };
-
-// const PublicRoute = ({component, authed, ...rest}) => {
-//   return (
-//     <Route
-//       {...rest}
-//       render={props =>
-//         authed === false ? (
-//           renderMergedProps(component, props, rest)
-//         ) : (
-//           <Redirect to={{pathname: '/gamemode', state: {from: props.location}}} />
-//         )
-//       }
-//     />
-//   );
-// };
 
 const PrivateRoute = ({component, authed, ...rest}) => {
   return (
@@ -133,8 +116,6 @@ class App extends Component {
           <div className='container-fluid main-container'>
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
-              {/* <PublicRoute path='/login' authed={this.state.authed} component={Login} />
-              <PublicRoute path='/register' authed={this.state.authed} component={Register} /> */}
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} />
               <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} />
