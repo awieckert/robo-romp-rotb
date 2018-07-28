@@ -165,7 +165,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
-    if (enemyRobot.attackCount === enemyRobot.specialCount) {
+    if (enemyRobot.attackCount >= enemyRobot.specialCount) {
       this.useSpecialAttack();
       return;
     }
@@ -234,7 +234,7 @@ class FightArena extends Component {
     const {userRobot} = {...this.state.gameObject};
     if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
       this.userAttack(e);
-    } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount === userRobot.specialCount)) {
+    } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount >= userRobot.specialCount)) {
       this.useSpecialAttack();
     } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
       this.userAttack(e);
