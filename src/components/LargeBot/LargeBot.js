@@ -48,6 +48,7 @@ class LargeBot extends Component {
           <h5>Crit Chance: {bot.critChance}%</h5>
           <h5>Evasion: {bot.evasion}%</h5>
           <h5>Attacks for Special: {bot.specialCount}</h5>
+          <h5>Special Attack: {bot.superDescription}</h5>
           <p>{bot.description}</p>
         </div>
         <div className='large-bot-image col-xs-6'>

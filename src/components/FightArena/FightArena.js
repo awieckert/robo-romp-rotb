@@ -52,7 +52,7 @@ class FightArena extends Component {
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
     if (gameObject.turn === 'user') {
-      const updatedGameObject =  this.specialAttack(userRobot, enemyRobot, gameObject);
+      const updatedGameObject =  userRobot.specialAttack(userRobot, enemyRobot, gameObject);
       if (updatedGameObject.enemyRobot.health <= 0) {
         updatedGameObject.userProfile.spWins += 1;
         updatedGameObject.userProfile.spGames += 1;
@@ -82,7 +82,7 @@ class FightArena extends Component {
         window.setTimeout(this.enemyAttack, 1000);
       }
     } else {
-      const updatedGameObject = this.specialAttack(enemyRobot, userRobot, gameObject);
+      const updatedGameObject = enemyRobot.specialAttack(enemyRobot, userRobot, gameObject);
       if (updatedGameObject.userRobot.health <= 0) {
         updatedGameObject.userProfile.sploses += 1;
         updatedGameObject.userProfile.spGames += 1;
@@ -126,6 +126,7 @@ class FightArena extends Component {
       enemyRobot.evasion = enemyStaticRobot.evasion;
       enemyRobot.attack = enemyStaticRobot.attack;
       enemyRobot.critChance = enemyStaticRobot.critChance;
+      enemyRobot.critMulti = enemyStaticRobot.critMulti;
     } else {
       enemyRobot.debuff -= 1;
     }
@@ -199,6 +200,7 @@ class FightArena extends Component {
       userRobot.evasion = userStaticRobot.evasion;
       userRobot.attack = userStaticRobot.attack;
       userRobot.critChance = userStaticRobot.critChance;
+      userRobot.critMulti = userStaticRobot.critMulti;
     } else {
       userRobot.debuff -= 1;
     }
