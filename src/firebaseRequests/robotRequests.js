@@ -46,7 +46,7 @@ const getMostWinningBots = () => {
         });
       }
       const sortedWinningRobots = winningRobots.sort(function (a, b) {
-        return b.used - a.used;
+        return b.wins - a.wins;
       });
       resolve(sortedWinningRobots);
     }).catch((err) => {
