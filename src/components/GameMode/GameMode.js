@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import LeaderBoard from '../LeaderBoard/LeaderBoard.js';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './GameMode.css';
+import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 
 class GameMode extends Component {
   state = {
@@ -40,8 +41,13 @@ class GameMode extends Component {
     userRequests.getUser(currentUser.uid).then((activeUser) => {
       this.setState({userProfile: activeUser});
       this.props.setActiveUser(activeUser);
-      userRequests.getUserFavorites(currentUser.uid).then((favorites) => {
+      favoriteRequests.getUserFavorites(currentUser.uid).then((favorites) => {
         this.props.setFavoriteBots(favorites);
+        favoriteRequests.getUserSortedFavorites(currentUser.uid).then((sortedFavorites) => {
+          this.props.setSortedFavorites(sortedFavorites);
+        }).catch((err) => {
+          console.error('Could not get the sorted favorites from firebase: ', err);
+        });
       }).catch((err) => {
         console.error('Unable to get favorites from firebase: ', err);
       });

@@ -1,46 +1,175 @@
 {
   "item1": {
-    "uid": "jshdfkjsahdfksh",
-    "GoliathATV": 0,
-    "MerlinATV": 0,
-    "Gryphon": 0,
-    "Stinger": 0,
-    "CombatRogue": 0,
-    "AssassinationRogue": 0,
-    "PaladinDrone": 0,
-    "SuperAwesomeBot": 0
+    "uid": "lalalalalalala",
+    "GoliathATV": {
+      "img": "../../img/goliath.jpg",
+      "used": 0
+    },
+    "MerlinATV": {
+      "img": "../../img/merlin.png",
+      "used": 0
+    },
+    "Gryphon": {
+      "img": "../../img/gryphon2.jpg",
+      "used": 0
+    },
+    "Stinger": {
+      "img": "../../img/stinger.jpg",
+      "used": 0
+    },
+    "CombatRogue": {
+      "img": "../../img/combat-rogue.jpg",
+      "used": 0
+    },
+    "AssassinationRogue": {
+      "img": "../../img/assass-rogue.jpg",
+      "used": 0
+    },
+    "PaladinDrone": {
+      "used": 0,
+      "img": "../../img/bender.gif"
+    },
+    "SuperAwesomeBot": {
+      "img": "../../img/awesomeo.jpeg",
+      "used": 0
+    }
   },
   "item2": {
     "uid": "lalalalalalala",
-    "GoliathATV": 0,
-    "MerlinATV": 0,
-    "Gryphon": 0,
-    "Stinger": 0,
-    "CombatRogue": 0,
-    "AssassinationRogue": 0,
-    "PaladinDrone": 0,
-    "SuperAwesomeBot": 0
+    "GoliathATV": {
+      "img": "../../img/goliath.jpg",
+      "used": 0
+    },
+    "MerlinATV": {
+      "img": "../../img/merlin.png",
+      "used": 0
+    },
+    "Gryphon": {
+      "img": "../../img/gryphon2.jpg",
+      "used": 0
+    },
+    "Stinger": {
+      "img": "../../img/stinger.jpg",
+      "used": 0
+    },
+    "CombatRogue": {
+      "img": "../../img/combat-rogue.jpg",
+      "used": 0
+    },
+    "AssassinationRogue": {
+      "img": "../../img/assass-rogue.jpg",
+      "used": 0
+    },
+    "PaladinDrone": {
+      "used": 0,
+      "img": "../../img/bender.gif"
+    },
+    "SuperAwesomeBot": {
+      "img": "../../img/awesomeo.jpeg",
+      "used": 0
+    }
   },
   "item3": {
-    "uid": "bababababababa",
-    "GoliathATV": 0,
-    "MerlinATV": 0,
-    "Gryphon": 0,
-    "Stinger": 0,
-    "CombatRogue": 0,
-    "AssassinationRogue": 0,
-    "PaladinDrone": 0,
-    "SuperAwesomeBot": 0
+    "uid": "lalalalalalala",
+    "GoliathATV": {
+      "id": "GoliathATV",
+      "name": "Goliath-ATV",
+      "img": "../../img/goliath.jpg",
+      "used": 0
+    },
+    "MerlinATV": {
+      "id": "MerlinATV",
+      "name": "Merlin-ATV",
+      "img": "../../img/merlin.png",
+      "used": 0
+    },
+    "Gryphon": {
+      "id": "Gryphon",
+      "name": "Gryphon",
+      "img": "../../img/gryphon2.jpg",
+      "used": 0
+    },
+    "Stinger": {
+      "id": "Stinger",
+      "name": "Stinger",
+      "img": "../../img/stinger.jpg",
+      "used": 0
+    },
+    "CombatRogue": {
+      "id": "CombatRogue",
+      "name": "Combat-Rogue",
+      "img": "../../img/combat-rogue.jpg",
+      "used": 0
+    },
+    "AssassinationRogue": {
+      "id": "AssassinationRogue",
+      "name": "Assassinsation-Rogue",
+      "img": "../../img/assass-rogue.jpg",
+      "used": 0
+    },
+    "PaladinDrone": {
+      "id": "PaladinDrone",
+      "name": "Paladin-Drone",
+      "used": 0,
+      "img": "../../img/bender.gif"
+    },
+    "SuperAwesomeBot": {
+      "id": "SuperAwesomeBot",
+      "name": "SuperAwesome-Bot",
+      "img": "../../img/awesomeo.jpeg",
+      "used": 0
+    }
   },
-  "item4": {
-    "uid": "tatatatatata",
-    "GoliathATV": 0,
-    "MerlinATV": 0,
-    "Gryphon": 0,
-    "Stinger": 0,
-    "CombatRogue": 0,
-    "AssassinationRogue": 0,
-    "PaladinDrone": 0,
-    "SuperAwesomeBot": 0
+  "-LIO3HJe5GFBZH0Glc64": {
+    "id": "-LIO3HJe5GFBZH0Glc64",
+    "uid": "37tdyB5M3ZVJjeDMuBe2HjPJLTp2",
+    "GoliathATV": {
+      "id": "GoliathATV",
+      "name": "Goliath-ATV",
+      "img": "../../img/goliath.jpg",
+      "used": 1
+    },
+    "MerlinATV": {
+      "id": "MerlinATV",
+      "name": "Merlin-ATV",
+      "img": "../../img/merlin.png",
+      "used": 10
+    },
+    "Gryphon": {
+      "id": "Gryphon",
+      "name": "Gryphon",
+      "img": "../../img/gryphon2.jpg",
+      "used": 4
+    },
+    "Stinger": {
+      "id": "Stinger",
+      "name": "Stinger",
+      "img": "../../img/stinger.jpg",
+      "used": 0
+    },
+    "CombatRogue": {
+      "id": "CombatRogue",
+      "name": "Combat-Rogue",
+      "img": "../../img/combat-rogue.jpg",
+      "used": 0
+    },
+    "AssassinationRogue": {
+      "id": "AssassinationRogue",
+      "name": "Assassinsation-Rogue",
+      "img": "../../img/assass-rogue.jpg",
+      "used": 0
+    },
+    "PaladinDrone": {
+      "id": "PaladinDrone",
+      "name": "Paladin-Drone",
+      "used": 0,
+      "img": "../../img/bender.gif"
+    },
+    "SuperAwesomeBot": {
+      "id": "SuperAwesomeBot",
+      "name": "SuperAwesome-Bot",
+      "img": "../../img/awesomeo.jpeg",
+      "used": 0
+    }
   }
 }

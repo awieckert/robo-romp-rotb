@@ -22,7 +22,7 @@ class FightArena extends Component {
     },
   };
 
-  userAttack = () => {
+  userAttack = (e) => {
     const {gameObject} = {...this.state};
     if (!this.state.gameObject.attacking) {
       gameObject.attacking = true;
@@ -51,6 +51,9 @@ class FightArena extends Component {
     gameObject.attackDamage = damageDealt;
     gameObject.userRobot = userRobot;
     gameObject.enemyRobot = enemyRobot;
+    if (e.code === 'KeyW') {
+      enemyRobot.health = 0;
+    }
     if (enemyRobot.health <= 0) {
       gameObject.userProfile.spWins += 1;
       gameObject.userProfile.spGames += 1;
@@ -142,6 +145,8 @@ class FightArena extends Component {
       this.userAttack();
     } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyS') {
       this.userSpecialAttack();
+    } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
+      this.userAttack(e);
     };
   };
 

@@ -109,7 +109,7 @@
     "attackCount": 0,
     "specialActive": false,
     "available": false,
-    "img": "",
+    "img": "../../img/bender.gif",
     "id": "PaladinDrone",
     "description": "The steadfast Paladin-Drone has built in nano-tech that can repair the Paladin in times of need. These drones are built to weather the storm instead of bring the heat."
   },
@@ -126,7 +126,7 @@
     "specialActive": false,
     "available": false,
     "id": "SuperAwesomeBot",
-    "img": "../../img/enterFray.jpg",
+    "img": "../../img/awesomeo.jpeg",
     "description": "This bot is awesome...enough said."
   }
 }
