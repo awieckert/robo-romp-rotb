@@ -9,6 +9,7 @@ import FightArena from '../components/FightArena/FightArena.js';
 import WinnerScreen from '../components/WinnerScreen/WinnerScreen.js';
 import UserProfile from '../components/UserProfile/UserProfile.js';
 import './App.css';
+// This is a comment is to identify that my MVP is done, and that this branch can be rolled back to
 firebaseConnection();
 
 const renderMergedProps = (component, ...rest) => {
