@@ -37,7 +37,10 @@ class LeaderBoard extends Component {
     });
 
     const olLeaderBoard = olLeaders.map((player) => {
-      const percentage = (player.olWins / player.olGames) * 100;
+      let percentage = (player.olWins / player.olGames) * 100;
+      if (isNaN(percentage)) {
+        percentage = 0;
+      }
       return (
         <div key={player.id} data-id={player.id} className="panel-body">
           <div className='col-xs-2'>{player.username}</div>

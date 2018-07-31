@@ -43,8 +43,12 @@ class BattleBot extends Component {
             <span className="sr-only">60% Complete</span>
           </div>
         </div>
-        <img src={bot.img} alt="robot"/>
-        {specialBar}
+        <img className='robot-img' src={bot.img} alt="robot"/>
+        <h3>Special Gauge</h3>
+        <div className='special-bar'>
+
+          {specialBar}
+        </div>
       </div>
     );
   }

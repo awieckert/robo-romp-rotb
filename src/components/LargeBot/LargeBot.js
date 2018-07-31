@@ -51,9 +51,14 @@ class LargeBot extends Component {
           <h5>Special Attack: {bot.superDescription}</h5>
           <p>{bot.description}</p>
         </div>
-        <div className='large-bot-image col-xs-6'>
-          <img src={bot.img} alt='bigRobot'/>
-          <button className='btn btn-danger' onClick={this.setUserBot}>Confirm Selection</button>
+        <div className='col-xs-6'>
+          <div className='flex-center'>
+            <img src={bot.img} alt='bigRobot'/>
+          </div>
+          <div className='flex-center'>
+            <button className='btn btn-danger btn-margin-top' onClick={this.setUserBot}>Confirm Selection</button>
+          </div>
+
         </div>
       </div>;
     } else if ((bot.name && (this.state.isSelected)) || bot.computer) {

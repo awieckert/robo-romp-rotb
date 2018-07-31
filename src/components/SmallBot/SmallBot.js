@@ -23,7 +23,7 @@ class SmallBot extends Component {
       );
     });
     return (
-      <div>
+      <div className='smallbots-flex'>
         {printBots}
       </div>
     );

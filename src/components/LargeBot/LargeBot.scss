@@ -9,6 +9,12 @@
   display: inline-block;
 }
 
-.large-bot-image {
-  display: inline-block;
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+
+.btn-margin-top {
+  margin-top: 10px;
 }
