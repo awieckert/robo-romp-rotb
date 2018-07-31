@@ -38,16 +38,16 @@ class WinnerScreen extends Component {
           <div className='col-xs-4 col-sm-offset-4'>
             <Button onClick={this.sendToGameMode}>Select Game Mode</Button>
           </div>
-          <div className='col-xs-6'>
+          <div className='col-xs-6 margin-top'>
             <WinnerBot winnerBot={this.props.winnerBot} winnerProfile={this.props.winnerProfile}/>
-            <div className='col-xs-10 col-xs-offset-1'>
+            <div className='col-xs-10 col-xs-offset-1 margin-top'>
               <UsedBots mostUsedBots={this.state.robotStats.mostUsedBots}/>
             </div>
-            <div className='col-xs-10 col-xs-offset-1'>
+            <div className='col-xs-10 col-xs-offset-1 margin-top'>
               <WinningBots winningBots={this.state.robotStats.mostWinsBots} />
             </div>
           </div>
-          <div className='col-xs-6'>
+          <div className='col-xs-6 margin-top'>
             <LeaderBoard />
           </div>
         </div>
