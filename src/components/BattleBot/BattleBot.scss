@@ -1,0 +1,21 @@
+.BattleBot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  img {
+    height: 200px;
+    width: 200px;
+  }
+}
+
+.special-bar {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.robot-img {
+  align-self: center;
+}
