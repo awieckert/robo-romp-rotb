@@ -1,4 +1,22 @@
 .flex-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.flex-panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-user {
+  align-items: flex-start;
+}
+
+.flex-wins {
+  align-self: center;
+}
+
+.flex-percent {
+  align-self: flex-end;
 }

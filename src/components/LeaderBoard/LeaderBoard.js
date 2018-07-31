@@ -26,12 +26,15 @@ class LeaderBoard extends Component {
     const olLeaders = [...this.state.olLeaderBoard];
 
     const spLeaderBoard = spLeaders.map((player) => {
-      const percentage = (player.spWins / player.spGames) * 100;
+      let percentage = (player.spWins / player.spGames) * 100;
+      if (isNaN(percentage)) {
+        percentage = 0;
+      }
       return (
-        <div key={player.id} data-id={player.id} className="panel-body">
-          <div className='col-xs-2'>{player.username}</div>
-          <div className='col-xs-2'>{player.spWins}</div>
-          <div className='col-xs-2'>{percentage.toFixed(1)}%</div>
+        <div key={player.id} data-id={player.id} className="panel-body flex-panel">
+          <div className='col-xs-2 flex-user'>{player.username}</div>
+          <div className='col-xs-2 flex-wins'>{player.spWins}</div>
+          <div className='col-xs-2 flex-percent'>{percentage.toFixed(1)}%</div>
         </div>
       );
     });
@@ -42,10 +45,10 @@ class LeaderBoard extends Component {
         percentage = 0;
       }
       return (
-        <div key={player.id} data-id={player.id} className="panel-body">
-          <div className='col-xs-2'>{player.username}</div>
-          <div className='col-xs-2'>{player.olWins}</div>
-          <div className='col-xs-2'>{percentage.toFixed(1)}%</div>
+        <div key={player.id} data-id={player.id} className="panel-body flex-panel">
+          <div className='col-xs-2 flex-user'>{player.username}</div>
+          <div className='col-xs-2 flex-wins'>{player.olWins}</div>
+          <div className='col-xs-2 flex-percent'>{percentage.toFixed(1)}%</div>
         </div>
       );
     });
