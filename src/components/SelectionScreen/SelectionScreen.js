@@ -13,6 +13,7 @@ class SelectionScreen extends Component {
     computerBot: {},
     disableSmallBots: false,
     completed: false,
+    onlinePlay: false,
   };
 
   goToFightArena = () => {
@@ -32,17 +33,22 @@ class SelectionScreen extends Component {
   };
 
   componentDidMount () {
+    const onlinePlay = this.props.onlinePlay;
     robotRequests.getRobots().then((robots) => {
       robots.forEach((robot) => {
         robot.specialAttack = specialAttacks[robot.id];
       });
-      this.setState({allRobots: robots});
+      this.setState({allRobots: robots, onlinePlay: onlinePlay});
     }).catch((err) => {
       console.error('Could not get robots from firebase: ', err);
     });
   };
 
   componentDidUpdate () {
+    if (this.state.disableSmallBots && this.state.onlinePlay) {
+      // update the online game object, need to check which user I am so I know which profile and robot to update
+      this.goToFightArena();
+    }
     if (this.state.disableSmallBots && !this.state.completed) {
       const computerBots = [];
       const playerBot = {...this.state.largeBot};
