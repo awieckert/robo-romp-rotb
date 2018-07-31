@@ -66,13 +66,13 @@ class GameMode extends Component {
         <div className='row'>
           <div className='col-xs-6'>
             <div className='row'>
-              <div className='col-xs-12'>
+              <div className='col-xs-12 button-container'>
                 <button className='btn btn-danger' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
               </div>
             </div>
             <div className='row'>
               <div className='col-xs-12'>
-                <button className='btn btn-danger' onClick={this.toSelectionScreen} disabled>Online Game</button>
+                <button className='btn btn-danger button-container' onClick={this.toSelectionScreen} disabled>Online Game</button>
               </div>
             </div>
           </div>
