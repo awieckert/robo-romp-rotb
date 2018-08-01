@@ -81,7 +81,7 @@ class SelectionScreen extends Component {
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
-        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} currentOnlineMatch={this.props.currentOnlineMatch}/>
+        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} currentOnlineMatch={this.props.currentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady}/>
         <div id='computerRobot'></div>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>

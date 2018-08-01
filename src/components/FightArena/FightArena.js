@@ -295,6 +295,7 @@ class FightArena extends Component {
   };
 
   render () {
+    // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
     return (
       <div className="FightArena">

@@ -60,7 +60,16 @@ class App extends Component {
     sortedFavorites: [],
     currentOnlineMatch: {},
     onlinePlay: false,
+    playersReady: false,
   }
+
+  setPlayersReady = () => {
+    this.setState({playersReady: true});
+  };
+
+  setPlayersNotReady = () => {
+    this.setState({playersReady: false});
+  };
 
   setOnlinePlay = () => {
     this.setState({onlinePlay: true});
@@ -128,8 +137,8 @@ class App extends Component {
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setOnlinePlay={this.setOnlinePlay} />
-              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} />
-              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} />
+              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady} />
+              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} playersReady={this.state.playersReady} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
               <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} setAuthedFalse={this.setAuthedFalse} sortedFavorites={this.state.sortedFavorites} />
             </Switch>
