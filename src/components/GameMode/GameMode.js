@@ -52,10 +52,13 @@ class GameMode extends Component {
       attacking: false,
       online: true,
     };
-    onlineMatchRequests.createOnlineMatch(gameObject).then(() => {
+    onlineMatchRequests.createOnlineMatch(gameObject).then((uniqueId) => {
       onlineMatchRequests.getOnlineMatches().then((onlineMatches) => {
+        const onlineGameObject = onlineMatches.find((x) => {
+          return x.id === uniqueId;
+        });
         this.setState({onlineMatches: onlineMatches});
-        this.props.setCurrentOnlineMatch(gameObject);
+        this.props.setCurrentOnlineMatch(onlineGameObject[0]);
         this.props.setOnlinePlay();
         this.props.history.push('/selectionscreen');
       }).catch((err) => {

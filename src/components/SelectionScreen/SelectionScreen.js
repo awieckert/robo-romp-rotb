@@ -11,6 +11,7 @@ class SelectionScreen extends Component {
     allRobots: [],
     largeBot: {},
     computerBot: {},
+    currentOnlineMatch: {},
     disableSmallBots: false,
     completed: false,
     onlinePlay: false,
@@ -32,13 +33,15 @@ class SelectionScreen extends Component {
     this.setState({largeBot: selectedBot});
   };
 
+  // I have the most up-to-date currentOnlineMatch coming into selectionScreen and being set in state that way we can update firebase from there.
   componentDidMount () {
+    const {currentOnlineMatch} = {...this.props.currentOnlineMatch};
     const onlinePlay = this.props.onlinePlay;
     robotRequests.getRobots().then((robots) => {
       robots.forEach((robot) => {
         robot.specialAttack = specialAttacks[robot.id];
       });
-      this.setState({allRobots: robots, onlinePlay: onlinePlay});
+      this.setState({allRobots: robots, onlinePlay: onlinePlay, currentOnlineMatch: currentOnlineMatch});
     }).catch((err) => {
       console.error('Could not get robots from firebase: ', err);
     });
@@ -78,7 +81,7 @@ class SelectionScreen extends Component {
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
-        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots}/>
+        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} currentOnlineMatch={this.props.currentOnlineMatch}/>
         <div id='computerRobot'></div>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>
