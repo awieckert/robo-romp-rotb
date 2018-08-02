@@ -4,6 +4,7 @@ import BattleBot from '../BattleBot/BattleBot.js';
 import AttackResult from '../AttackResult/AttackResult.js';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
+import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 
 class FightArena extends Component {
   state = {
@@ -261,32 +262,54 @@ class FightArena extends Component {
       gameObject.enemyRobot = {...this.props.enemyRobot};
       gameObject.userStaticRobot = {...this.props.userRobot};
       gameObject.enemyStaticRobot = {...this.props.enemyRobot};
+      gameObject.userRobot.swing = function () {
+        const isCritical = Math.floor((Math.random() * 101));
+        if (isCritical <= this.critChance) {
+          return (this.attack * this.critMulti);
+        } else {
+          return this.attack;
+        }
+      };
+      gameObject.enemyRobot.swing = function () {
+        const isCritical = Math.floor((Math.random() * 101));
+        if (isCritical <= this.critChance) {
+          return (this.attack * this.critMulti);
+        } else {
+          return this.attack;
+        }
+      };
+      this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
       gameObject = {...this.props.currentOnlineMatch};
-      const rootRef = firebase.database();
-      const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
-      gameRef.on('value', function (snapshot) {
-        console.log(snapshot.val());
+      gameObject.userRobot.swing = function () {
+        const isCritical = Math.floor((Math.random() * 101));
+        if (isCritical <= this.critChance) {
+          return (this.attack * this.critMulti);
+        } else {
+          return this.attack;
+        }
+      };
+      gameObject.enemyRobot.swing = function () {
+        const isCritical = Math.floor((Math.random() * 101));
+        if (isCritical <= this.critChance) {
+          return (this.attack * this.critMulti);
+        } else {
+          return this.attack;
+        }
+      };
+      onlineMatchRequests.joinGame(gameObject.id, gameObject).then(() => {
+        const rootRef = firebase.database();
+        const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
+        gameRef.on('value', (snapshot) => {
+          console.log(snapshot.val());
+          this.setState({gameObject: snapshot.val()});
+        });
+      }).catch((err) => {
+        console.error('Failed to updated firebase gameobject: ', err);
       });
     }
 
-    gameObject.userRobot.swing = function () {
-      const isCritical = Math.floor((Math.random() * 101));
-      if (isCritical <= this.critChance) {
-        return (this.attack * this.critMulti);
-      } else {
-        return this.attack;
-      }
-    };
-    gameObject.enemyRobot.swing = function () {
-      const isCritical = Math.floor((Math.random() * 101));
-      if (isCritical <= this.critChance) {
-        return (this.attack * this.critMulti);
-      } else {
-        return this.attack;
-      }
-    };
-    this.setState({gameObject: gameObject});
+    // Issue! Cannot send functions to firebase, will need to figure out a way to have the swing and special attacks added to the robots everytime
 
     const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
     userUsed.transaction(function (used) {
@@ -308,7 +331,7 @@ class FightArena extends Component {
   render () {
     // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
-    if (!this.props.onlinePlay || (this.props.onlinePlay && this.props.playersReady)) {
+    if (!this.props.onlinePlay || (this.state.gameObject.userProfile.uid && this.state.gameObject.enemyProfile.uid)) {
       return (
         <div className="FightArena">
           <h1 className="FightArena-title">FightArena</h1>
