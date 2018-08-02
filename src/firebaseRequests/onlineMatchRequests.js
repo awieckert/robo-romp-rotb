@@ -40,7 +40,7 @@ const joinGame = (gameId, gameObject) => {
 
 const getCurrentOnlineMatch = (matchId) => {
   return new Promise ((resolve, reject) => {
-    axios.get(`${constants.firebaseConfig.databaseURL}/onlineMatches/${matchId}.json"`).then((data) => {
+    axios.get(`${constants.firebaseConfig.databaseURL}/onlineMatches/${matchId}.json`).then((data) => {
       resolve(data.data);
     }).catch((err) => {
       reject(err);

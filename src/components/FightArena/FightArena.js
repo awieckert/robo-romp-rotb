@@ -252,13 +252,19 @@ class FightArena extends Component {
   };
 
   componentDidMount () {
-    const gameObject = {...this.state.gameObject};
-    gameObject.userProfile = {...this.props.userProfile};
-    gameObject.enemyProfile = {...this.props.enemyProfile};
-    gameObject.userRobot = {...this.props.userRobot};
-    gameObject.enemyRobot = {...this.props.enemyRobot};
-    gameObject.userStaticRobot = {...this.props.userRobot};
-    gameObject.enemyStaticRobot = {...this.props.enemyRobot};
+    let gameObject = {};
+    if (!this.props.onlinePlay) {
+      gameObject = {...this.state.gameObject};
+      gameObject.userProfile = {...this.props.userProfile};
+      gameObject.enemyProfile = {...this.props.enemyProfile};
+      gameObject.userRobot = {...this.props.userRobot};
+      gameObject.enemyRobot = {...this.props.enemyRobot};
+      gameObject.userStaticRobot = {...this.props.userRobot};
+      gameObject.enemyStaticRobot = {...this.props.enemyRobot};
+    } else if (this.props.onlinePlay) {
+      gameObject = {...this.props.currentOnlineMatch};
+    }
+
     gameObject.userRobot.swing = function () {
       const isCritical = Math.floor((Math.random() * 101));
       if (isCritical <= this.critChance) {
@@ -297,22 +303,30 @@ class FightArena extends Component {
   render () {
     // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
-    return (
-      <div className="FightArena">
-        <h1 className="FightArena-title">FightArena</h1>
-        <div className='row'>
-          <div className='col-xs-12'>
-            <div className='col-xs-4 col-sm-offset-4 text-center'>
-              {attackDamage}
+    if (!this.props.onlinePlay || (this.props.onlinePlay && this.props.playersReady)) {
+      return (
+        <div className="FightArena">
+          <h1 className="FightArena-title">FightArena</h1>
+          <div className='row'>
+            <div className='col-xs-12'>
+              <div className='col-xs-4 col-sm-offset-4 text-center'>
+                {attackDamage}
+              </div>
             </div>
           </div>
+          <div className='row'>
+            <BattleBot bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
+            <BattleBot bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
+          </div>
         </div>
-        <div className='row'>
-          <BattleBot bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
-          <BattleBot bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
+      );
+    } else {
+      return (
+        <div className='FightArena'>
+          <h1>Waiting on other player!</h1>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

@@ -52,7 +52,7 @@ class SelectionScreen extends Component {
       // update the online game object, need to check which user I am so I know which profile and robot to update
       this.goToFightArena();
     }
-    if (this.state.disableSmallBots && !this.state.completed) {
+    if ((this.state.disableSmallBots && !this.state.completed) && !this.state.onlinePlay) {
       const computerBots = [];
       const playerBot = {...this.state.largeBot};
       const allBots = [...this.state.allRobots];
@@ -81,7 +81,7 @@ class SelectionScreen extends Component {
     return (
       <div className="SelectionScreen">
         <h1 className="SelectionScreen-title">SelectionScreen</h1>
-        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} currentOnlineMatch={this.props.currentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady}/>
+        <LargeBot bot={this.state.largeBot} setUserRobot={this.props.setUserRobot} activeUser={this.props.activeUser} disableSmallBots={this.disableSmallBots} favoriteBots={this.props.favoriteBots} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} currentOnlineMatch={this.props.currentOnlineMatch} setPlayersReady={this.props.setPlayersReady} setPlayersNotReady={this.props.setPlayersNotReady} onlinePlay={this.props.onlinePlay}/>
         <div id='computerRobot'></div>
         <div className='row navbar-fixed-bottom'>
           <div className='col-xs-12 row'>

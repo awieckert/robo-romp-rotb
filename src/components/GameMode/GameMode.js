@@ -55,11 +55,11 @@ class GameMode extends Component {
     onlineMatchRequests.createOnlineMatch(gameObject).then((uniqueId) => {
       onlineMatchRequests.getOnlineMatches().then((onlineMatches) => {
         const onlineGameObject = onlineMatches.find((x) => {
-          return x.id === uniqueId;
+          return x.id === uniqueId.data.name;
         });
-        this.setState({onlineMatches: onlineMatches});
-        this.props.setCurrentOnlineMatch(onlineGameObject[0]);
+        this.props.setCurrentOnlineMatch(onlineGameObject);
         this.props.setOnlinePlay();
+        this.setState({onlineMatches: onlineMatches});
         this.props.history.push('/selectionscreen');
       }).catch((err) => {
         console.error('Failed to get online matches from firebase: ', err);

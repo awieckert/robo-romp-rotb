@@ -30,7 +30,7 @@ class LargeBot extends Component {
         currentOnlineMatch.enemyStaticRobot = bot;
       }
       onlineMatchRequests.joinGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
-        onlineMatchRequests.getCurrentOnlineMatch().then((onlineMatch) => {
+        onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
           this.props.setCurrentOnlineMatch(onlineMatch);
           if (onlineMatch.userProfile.uid && onlineMatch.enemyProfile.uid) {
             this.props.setPlayersReady();
