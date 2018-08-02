@@ -263,6 +263,11 @@ class FightArena extends Component {
       gameObject.enemyStaticRobot = {...this.props.enemyRobot};
     } else if (this.props.onlinePlay) {
       gameObject = {...this.props.currentOnlineMatch};
+      const rootRef = firebase.database();
+      const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
+      gameRef.on('value', function (snapshot) {
+        console.log(snapshot.val());
+      });
     }
 
     gameObject.userRobot.swing = function () {
