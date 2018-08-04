@@ -36,8 +36,8 @@ class FightArena extends Component {
         updatedGameObject.enemyProfile.spLoses += 1;
         updatedGameObject.enemyProfile.spGames += 1;
         this.setState({gameObject: updatedGameObject});
-        this.props.setWinnerProfile(this.state.gameObject.userProfile);
-        this.props.setWinnerBot(this.state.gameObject.userRobot);
+        this.props.setWinnerProfile(updatedGameObject.userProfile);
+        this.props.setWinnerBot(updatedGameObject.userRobot);
 
         const userWin = firebase.database().ref(`mostWins/${updatedGameObject.userRobot.id}/wins`);
         userWin.transaction(function (wins) {
@@ -46,7 +46,14 @@ class FightArena extends Component {
 
         userRequests.updateUserProfile(gameObject.userProfile.id, updatedGameObject.userProfile).then(() => {
           userRequests.updateUserProfile(updatedGameObject.enemyProfile.id, updatedGameObject.enemyProfile).then(() => {
-            this.props.history.push('/winnerscreen');
+            if (this.props.onlinePlay) {
+              onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
+                this.setState({gameObject: updatedGameObject});
+                this.props.history.push('/winnerscreen');
+              }).catch((err) => {
+                console.error('Failed to updated online game: ', err);
+              });
+            }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
           }
@@ -55,8 +62,16 @@ class FightArena extends Component {
           console.error('Failed to update firebase user profile: ', err);
         });
       } else {
-        this.setState({gameObject: updatedGameObject});
-        window.setTimeout(this.enemyAttack, 1000);
+        if (this.props.onlinePlay) {
+          onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
+            this.setState({gameObject: updatedGameObject});
+          }).catch((err) => {
+            console.error('Failed to updated online game: ', err);
+          });
+        } else {
+          this.setState({gameObject: updatedGameObject});
+          window.setTimeout(this.enemyAttack, 1000);
+        }
       }
     } else {
       const updatedGameObject = enemyRobot.specialAttack(enemyRobot, userRobot, gameObject);
@@ -65,9 +80,9 @@ class FightArena extends Component {
         updatedGameObject.userProfile.spGames += 1;
         updatedGameObject.enemyProfile.spWins += 1;
         updatedGameObject.enemyProfile.spGames += 1;
-        this.setState({gameObject: updatedGameObject});
-        this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
-        this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+
+        this.props.setWinnerProfile(updatedGameObject.enemyProfile);
+        this.props.setWinnerBot(updatedGameObject.enemyRobot);
 
         const userWin = firebase.database().ref(`mostWins/${updatedGameObject.enemyRobot.id}/wins`);
         userWin.transaction(function (wins) {
@@ -76,7 +91,17 @@ class FightArena extends Component {
 
         userRequests.updateUserProfile(gameObject.userProfile.id, updatedGameObject.userProfile).then(() => {
           userRequests.updateUserProfile(updatedGameObject.enemyProfile.id, updatedGameObject.enemyProfile).then(() => {
-            this.props.history.push('/winnerscreen');
+            if (this.props.onlinePlay) {
+              onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
+                this.setState({gameObject: updatedGameObject});
+                this.props.history.push('/winnerscreen');
+              }).catch((err) => {
+                console.error('Failed to update online game: ', err);
+              });
+            } else {
+              this.setState({gameObject: updatedGameObject});
+              this.props.history.push('/winnerscreen');
+            }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
           }
@@ -85,7 +110,15 @@ class FightArena extends Component {
           console.error('Failed to update firebase user profile: ', err);
         });
       } else {
-        this.setState({gameObject: updatedGameObject});
+        if (this.props.onlinePlay) {
+          onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
+            this.setState({gameObject: updatedGameObject});
+          }).catch((err) => {
+            console.error('Failed to updated online game: ', err);
+          });
+        } else {
+          this.setState({gameObject: updatedGameObject});
+        }
       }
     }
   };
