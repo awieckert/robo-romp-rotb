@@ -98,27 +98,6 @@ class GameMode extends Component {
       console.error('Failed to get all user info and online matches form firebase: ', err);
     });
 
-    // userRequests.getUser(currentUser).then((activeUser) => {
-    //   this.setState({userProfile: activeUser});
-    //   this.props.setActiveUser(activeUser);
-    //   favoriteRequests.getUserFavorites(currentUser).then((favorites) => {
-    //     this.props.setFavoriteBots(favorites);
-    //     favoriteRequests.getUserSortedFavorites(currentUser).then((sortedFavorites) => {
-    //       this.props.setSortedFavorites(sortedFavorites);
-    //       onlineMatchRequests.getOnlineMatches().then((allMatches) => {
-    //         this.setState({onlineMatches: allMatches});
-    //       }).catch((err) => {
-    //         console.error('Failed to get all the online matches from firebase: ', err);
-    //       });
-    //     }).catch((err) => {
-    //       console.error('Could not get the sorted favorites from firebase: ', err);
-    //     });
-    //   }).catch((err) => {
-    //     console.error('Unable to get favorites from firebase: ', err);
-    //   });
-    // }).catch((err) => {
-    //   console.error('Could not grab current user from firebase: ', err);
-    // });
   };
 
   render () {
