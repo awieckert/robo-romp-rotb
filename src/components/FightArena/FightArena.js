@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import BattleBot from '../BattleBot/BattleBot.js';
 import AttackResult from '../AttackResult/AttackResult.js';
+import specialAttacks from '../../specialAttacks.js';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
@@ -147,7 +148,16 @@ class FightArena extends Component {
 
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
-          this.props.history.push('/winnerscreen');
+          if (this.props.onlinePlay) {
+            onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then(() => {
+              this.props.history.push('/winnerscreen');
+            }).catch((err) => {
+              console.error('Failed to update online game: ', err);
+            });
+          } else {
+            this.setState({gameObject: gameObject});
+            this.props.history.push('/winnerscreen');
+          }
         }).catch((err) => {
           console.error('Failed to update enemy profile: ', err);
         }
@@ -155,10 +165,17 @@ class FightArena extends Component {
       }).catch((err) => {
         console.error('Failed to update firebase user profile: ', err);
       });
+
     } else {
       gameObject.turn = 'enemy';
-      this.setState({gameObject: gameObject});
-      window.setTimeout(this.enemyAttack, 1000);
+      if (this.props.onlinePlay) {
+        onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then().catch((err) => {
+          console.error('Failed to update online game: ', err);
+        });
+      } else {
+        this.setState({gameObject: gameObject});
+        window.setTimeout(this.enemyAttack, 1000);
+      }
     }
   };
 
@@ -166,7 +183,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
-    if (enemyRobot.attackCount >= enemyRobot.specialCount) {
+    if (!this.props.onlinePlay && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
       this.useSpecialAttack();
       return;
     }
@@ -206,7 +223,6 @@ class FightArena extends Component {
       gameObject.enemyProfile.spGames += 1;
       gameObject.userProfile.spLoses += 1;
       gameObject.userProfile.spGames += 1;
-      this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
 
@@ -217,7 +233,16 @@ class FightArena extends Component {
 
       userRequests.updateUserProfile(gameObject.userProfile.id ,gameObject.userProfile).then(() => {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
-          this.props.history.push('/winnerscreen');
+          if (this.props.onlinePlay) {
+            onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then(() => {
+              this.props.history.push('/winnerscreen');
+            }).catch((err) => {
+              console.error('Failed to update online game: ', err);
+            });
+          } else {
+            this.setState({gameObject: gameObject});
+            this.props.history.push('/winnerscreen');
+          }
         }).catch((err) => {
           console.error('Failed to update enemy profile: ', err);
         }
@@ -225,21 +250,50 @@ class FightArena extends Component {
       }).catch((err) => {
         console.error('Failed to update firebase user profile: ', err);
       });
+
     } else {
       gameObject.turn = 'user';
-      this.setState({gameObject: gameObject});
+      if (this.props.onlinePlay) {
+        onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then().catch((err) => {
+          console.error('Failed to update online game: ', err);
+        });
+      } else {
+        this.setState({gameObject: gameObject});
+      }
     }
   };
 
   attackFunction = (e) => {
+    const {gameObject} = {...this.state};
+    const {userProfile} = {...this.state.gameObject};
+    const {enemyProfile} = {...this.state.gameObject};
     const {userRobot} = {...this.state.gameObject};
-    if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
-      this.userAttack(e);
-    } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount >= userRobot.specialCount)) {
-      this.useSpecialAttack();
-    } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
-      this.userAttack(e);
-    };
+    const {enemyRobot} = {...this.state.gameObject};
+    const currentUid = firebase.auth().currentUser.uid;
+
+    if (this.props.onlinePlay) {
+      if ((gameObject.turn === 'user') && (e.code === 'KeyA') && (currentUid === userProfile.uid)) {
+        this.userAttack();
+      } else if ((gameObject.turn === 'user') && (e.code === 'KeyS') && (currentUid === userProfile.uid) && (userRobot.attackCount >= userRobot.specialCount)) {
+        this.useSpecialAttack();
+      } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyA') && (currentUid === enemyProfile.uid)) {
+        this.enemyAttack();
+      } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyS') && (currentUid === enemyProfile.uid) && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
+        this.useSpecialAttack();
+      }
+    } else {
+      if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
+        this.userAttack(e);
+      } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount >= userRobot.specialCount)) {
+        this.useSpecialAttack();
+      } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
+        this.userAttack(e);
+      } else if ((this.state.gameObject.turn === 'enemy') && e.code === 'KeyA') {
+        this.enemyAttack();
+      } else if ((this.state.gameObject.turn === 'enemy') && (e.code === 'KeyS') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
+        this.useSpecialAttack();
+      }
+    }
   };
 
   displayDamage = () => {
@@ -281,28 +335,35 @@ class FightArena extends Component {
       this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
       gameObject = {...this.props.currentOnlineMatch};
-      gameObject.userRobot.swing = function () {
-        const isCritical = Math.floor((Math.random() * 101));
-        if (isCritical <= this.critChance) {
-          return (this.attack * this.critMulti);
-        } else {
-          return this.attack;
-        }
-      };
-      gameObject.enemyRobot.swing = function () {
-        const isCritical = Math.floor((Math.random() * 101));
-        if (isCritical <= this.critChance) {
-          return (this.attack * this.critMulti);
-        } else {
-          return this.attack;
-        }
-      };
       onlineMatchRequests.joinGame(gameObject.id, gameObject).then(() => {
         const rootRef = firebase.database();
         const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
         gameRef.on('value', (snapshot) => {
-          console.log(snapshot.val());
-          this.setState({gameObject: snapshot.val()});
+          const newGameObject = snapshot.val();
+          newGameObject.userRobot.swing = function () {
+            const isCritical = Math.floor((Math.random() * 101));
+            if (isCritical <= this.critChance) {
+              return (this.attack * this.critMulti);
+            } else {
+              return this.attack;
+            }
+          };
+          newGameObject.enemyRobot.swing = function () {
+            const isCritical = Math.floor((Math.random() * 101));
+            if (isCritical <= this.critChance) {
+              return (this.attack * this.critMulti);
+            } else {
+              return this.attack;
+            }
+          };
+          Object.keys(specialAttacks).forEach((key) => {
+            if (key === newGameObject.userRobot.id) {
+              newGameObject.userRobot.specialAttack = specialAttacks[key];
+            } else if (key === newGameObject.enemyRobot.id) {
+              newGameObject.enemyRobot.specialAttack = specialAttacks[key];
+            }
+          });
+          this.setState({gameObject: newGameObject});
         });
       }).catch((err) => {
         console.error('Failed to updated firebase gameobject: ', err);

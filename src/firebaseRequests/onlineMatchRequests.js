@@ -38,6 +38,16 @@ const joinGame = (gameId, gameObject) => {
   });
 };
 
+const updateOnlineGame = (gameId, gameObject) => {
+  return new Promise ((resolve, reject) => {
+    axios.put(`${constants.firebaseConfig.databaseURL}/onlineMatches/${gameId}.json`, gameObject).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+};
+
 const getCurrentOnlineMatch = (matchId) => {
   return new Promise ((resolve, reject) => {
     axios.get(`${constants.firebaseConfig.databaseURL}/onlineMatches/${matchId}.json`).then((data) => {
@@ -48,4 +58,4 @@ const getCurrentOnlineMatch = (matchId) => {
   });
 };
 
-export default {createOnlineMatch, getOnlineMatches, joinGame, getCurrentOnlineMatch};
+export default {createOnlineMatch, getOnlineMatches, joinGame, getCurrentOnlineMatch, updateOnlineGame};
