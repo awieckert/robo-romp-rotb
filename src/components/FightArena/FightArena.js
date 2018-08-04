@@ -273,11 +273,11 @@ class FightArena extends Component {
 
     if (this.props.onlinePlay) {
       if ((gameObject.turn === 'user') && (e.code === 'KeyA') && (currentUid === userProfile.uid)) {
-        this.userAttack();
+        this.userAttack(e);
       } else if ((gameObject.turn === 'user') && (e.code === 'KeyS') && (currentUid === userProfile.uid) && (userRobot.attackCount >= userRobot.specialCount)) {
         this.useSpecialAttack();
       } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyA') && (currentUid === enemyProfile.uid)) {
-        this.enemyAttack();
+        this.enemyAttack(e);
       } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyS') && (currentUid === enemyProfile.uid) && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
         this.useSpecialAttack();
       }
@@ -289,7 +289,7 @@ class FightArena extends Component {
       } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
         this.userAttack(e);
       } else if ((this.state.gameObject.turn === 'enemy') && e.code === 'KeyA') {
-        this.enemyAttack();
+        this.enemyAttack(e);
       } else if ((this.state.gameObject.turn === 'enemy') && (e.code === 'KeyS') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
         this.useSpecialAttack();
       }
