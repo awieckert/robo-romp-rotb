@@ -32,11 +32,18 @@ class FightArena extends Component {
     if (gameObject.turn === 'user') {
       const updatedGameObject =  userRobot.specialAttack(userRobot, enemyRobot, gameObject);
       if (updatedGameObject.enemyRobot.health <= 0) {
-        updatedGameObject.userProfile.spWins += 1;
-        updatedGameObject.userProfile.spGames += 1;
-        updatedGameObject.enemyProfile.spLoses += 1;
-        updatedGameObject.enemyProfile.spGames += 1;
-        this.setState({gameObject: updatedGameObject});
+        if (this.props.onlinePlay) {
+          updatedGameObject.userProfile.olWins += 1;
+          updatedGameObject.userProfile.olGames += 1;
+          updatedGameObject.enemyProfile.olLoses += 1;
+          updatedGameObject.enemyProfile.olGames += 1;
+        } else {
+          updatedGameObject.userProfile.spWins += 1;
+          updatedGameObject.userProfile.spGames += 1;
+          updatedGameObject.enemyProfile.spLoses += 1;
+          updatedGameObject.enemyProfile.spGames += 1;
+        }
+
         this.props.setWinnerProfile(updatedGameObject.userProfile);
         this.props.setWinnerBot(updatedGameObject.userRobot);
 
@@ -77,10 +84,17 @@ class FightArena extends Component {
     } else {
       const updatedGameObject = enemyRobot.specialAttack(enemyRobot, userRobot, gameObject);
       if (updatedGameObject.userRobot.health <= 0) {
-        updatedGameObject.userProfile.spLoses += 1;
-        updatedGameObject.userProfile.spGames += 1;
-        updatedGameObject.enemyProfile.spWins += 1;
-        updatedGameObject.enemyProfile.spGames += 1;
+        if (this.props.onlinePlay) {
+          updatedGameObject.userProfile.olLoses += 1;
+          updatedGameObject.userProfile.olGames += 1;
+          updatedGameObject.enemyProfile.olWins += 1;
+          updatedGameObject.enemyProfile.olGames += 1;
+        } else {
+          updatedGameObject.userProfile.spLoses += 1;
+          updatedGameObject.userProfile.spGames += 1;
+          updatedGameObject.enemyProfile.spWins += 1;
+          updatedGameObject.enemyProfile.spGames += 1;
+        }
 
         this.props.setWinnerProfile(updatedGameObject.enemyProfile);
         this.props.setWinnerBot(updatedGameObject.enemyRobot);
@@ -164,10 +178,18 @@ class FightArena extends Component {
       enemyRobot.health = 0;
     }
     if (enemyRobot.health <= 0) {
-      gameObject.userProfile.spWins += 1;
-      gameObject.userProfile.spGames += 1;
-      gameObject.enemyProfile.spLoses += 1;
-      gameObject.enemyProfile.spGames += 1;
+      if (this.props.onlinePlay) {
+        gameObject.userProfile.olWins += 1;
+        gameObject.userProfile.olGames += 1;
+        gameObject.enemyProfile.olLoses += 1;
+        gameObject.enemyProfile.olGames += 1;
+      } else {
+        gameObject.userProfile.spWins += 1;
+        gameObject.userProfile.spGames += 1;
+        gameObject.enemyProfile.spLoses += 1;
+        gameObject.enemyProfile.spGames += 1;
+      }
+
       this.setState({gameObject: gameObject});
       this.props.setWinnerProfile(this.state.gameObject.userProfile);
       this.props.setWinnerBot(this.state.gameObject.userRobot);
@@ -250,10 +272,18 @@ class FightArena extends Component {
     gameObject.userRobot = userRobot;
     gameObject.enemyRobot = enemyRobot;
     if (userRobot.health <= 0) {
-      gameObject.enemyProfile.spWins += 1;
-      gameObject.enemyProfile.spGames += 1;
-      gameObject.userProfile.spLoses += 1;
-      gameObject.userProfile.spGames += 1;
+      if (this.props.onlinePlay) {
+        gameObject.enemyProfile.olWins += 1;
+        gameObject.enemyProfile.olGames += 1;
+        gameObject.userProfile.olLoses += 1;
+        gameObject.userProfile.olGames += 1;
+      } else {
+        gameObject.enemyProfile.spWins += 1;
+        gameObject.enemyProfile.spGames += 1;
+        gameObject.userProfile.spLoses += 1;
+        gameObject.userProfile.spGames += 1;
+      }
+
       this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
       this.props.setWinnerBot(this.state.gameObject.enemyRobot);
 
@@ -416,7 +446,7 @@ class FightArena extends Component {
   render () {
     // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
-    if (!this.props.onlinePlay || (this.state.gameObject.userRobot.name && this.state.gameObject.enemyRobot.name)) {
+    if (!this.props.onlinePlay || (this.state.gameObject.userProfile.uid && this.state.gameObject.enemyProfile.uid)) {
       return (
         <div className="FightArena">
           <h1 className="FightArena-title">FightArena</h1>
