@@ -4,6 +4,7 @@ import robotRequests from '../../firebaseRequests/robotRequests.js';
 import SmallBot from '../SmallBot/SmallBot.js';
 import LargeBot from '../LargeBot/LargeBot.js';
 import specialAttacks from '../../specialAttacks.js';
+import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import './SelectionScreen.css';
 
 class SelectionScreen extends Component {
@@ -36,15 +37,20 @@ class SelectionScreen extends Component {
   // I have the most up-to-date currentOnlineMatch coming into selectionScreen and being set in state that way we can update firebase from there.
   componentDidMount () {
     const {currentOnlineMatch} = {...this.props.currentOnlineMatch};
-    const onlinePlay = this.props.onlinePlay;
-    robotRequests.getRobots().then((robots) => {
-      robots.forEach((robot) => {
-        robot.specialAttack = specialAttacks[robot.id];
+    onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
+      const onlinePlay = this.props.onlinePlay;
+      robotRequests.getRobots().then((robots) => {
+        robots.forEach((robot) => {
+          robot.specialAttack = specialAttacks[robot.id];
+        });
+        this.setState({allRobots: robots, onlinePlay: onlinePlay, currentOnlineMatch: onlineMatch});
+      }).catch((err) => {
+        console.error('Could not get robots from firebase: ', err);
       });
-      this.setState({allRobots: robots, onlinePlay: onlinePlay, currentOnlineMatch: currentOnlineMatch});
     }).catch((err) => {
-      console.error('Could not get robots from firebase: ', err);
+      console.error('Failed to get current online match in selection screen: ', err);
     });
+
   };
 
   componentDidUpdate () {

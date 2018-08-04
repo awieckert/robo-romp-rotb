@@ -10,20 +10,23 @@ class OnlineMatches extends React.Component {
   joinGame = (e) => {
     const gameToTarget = e.target.id;
     const {userProfile} = {...this.props};
-    const onlineMatches = [...this.props.onlineMatches];
-    let matchToJoin = {};
-    onlineMatches.forEach((match) => {
-      if (match.id === gameToTarget) {
-        match.enemyProfile = userProfile;
-        matchToJoin = match;
-      }
-    });
-    onlineMatchRequests.joinGame(gameToTarget, matchToJoin).then(() => {
-      this.props.setCurrentOnlineMatch(matchToJoin);
-      this.props.setOnlinePlay();
-      this.props.history.push('/selectionscreen');
+    onlineMatchRequests.getOnlineMatches().then((allOnlineMatches) => {
+      let matchToJoin = {};
+      allOnlineMatches.forEach((match) => {
+        if (match.id === gameToTarget) {
+          match.enemyProfile = userProfile;
+          matchToJoin = match;
+        }
+      });
+      onlineMatchRequests.joinGame(gameToTarget, matchToJoin).then(() => {
+        this.props.setCurrentOnlineMatch(matchToJoin);
+        this.props.setOnlinePlay();
+        this.props.history.push('/selectionscreen');
+      }).catch((err) => {
+        console.error('Failed to join the game: ', err);
+      });
     }).catch((err) => {
-      console.error('Failed to join the game: ', err);
+      console.error('Failed to get all online matches: ', err);
     });
   };
 

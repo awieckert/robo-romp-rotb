@@ -384,43 +384,50 @@ class FightArena extends Component {
 
       this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
-      gameObject = {...this.props.currentOnlineMatch};
-      onlineMatchRequests.joinGame(gameObject.id, gameObject).then(() => {
+      const gameObjectId = this.props.currentOnlineMatch.id;
+      // I think the below two requests are redundant now because I am updated firebase with the largebot confirmation
+      onlineMatchRequests.getCurrentOnlineMatch(gameObjectId).then((currentOnlineMatchObject) => {
+        gameObject = currentOnlineMatchObject;
+        onlineMatchRequests.updateOnlineGame(gameObjectId, gameObject).then(() => {
 
-        const rootRef = firebase.database();
-        const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
-        gameRef.on('value', (snapshot) => {
-          const newGameObject = snapshot.val();
+          const rootRef = firebase.database();
+          const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
 
-          newGameObject.userRobot.swing = basicAttack.swing;
-          newGameObject.enemyRobot.swing = basicAttack.swing;
+          gameRef.on('value', (snapshot) => {
+            const newGameObject = snapshot.val();
 
-          Object.keys(specialAttacks).forEach((key) => {
-            if (key === newGameObject.userRobot.id) {
-              newGameObject.userRobot.specialAttack = specialAttacks[key];
-            } else if (key === newGameObject.enemyRobot.id) {
-              newGameObject.enemyRobot.specialAttack = specialAttacks[key];
+            newGameObject.userRobot.swing = basicAttack.swing;
+            newGameObject.enemyRobot.swing = basicAttack.swing;
+
+            Object.keys(specialAttacks).forEach((key) => {
+              if (key === newGameObject.userRobot.id) {
+                newGameObject.userRobot.specialAttack = specialAttacks[key];
+              } else if (key === newGameObject.enemyRobot.id) {
+                newGameObject.enemyRobot.specialAttack = specialAttacks[key];
+              }
+            });
+
+            // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and able to play again.
+
+            if (newGameObject.userRobot.health <= 0) {
+              this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
+              this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+              this.setState({gameObject: newGameObject});
+              this.props.history.push('/winnerscreen');
+            } else if (newGameObject.enemyRobot.health <= 0) {
+              this.props.setWinnerProfile(this.state.gameObject.userProfile);
+              this.props.setWinnerBot(this.state.gameObject.userRobot);
+              this.setState({gameObject: newGameObject});
+              this.props.history.push('/winnerscreen');
+            } else {
+              this.setState({gameObject: newGameObject});
             }
           });
-
-          // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and able to play again.
-
-          if (newGameObject.userRobot.health <= 0) {
-            this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
-            this.props.setWinnerBot(this.state.gameObject.enemyRobot);
-            this.setState({gameObject: newGameObject});
-            this.props.history.push('/winnerscreen');
-          } else if (newGameObject.enemyRobot.health <= 0) {
-            this.props.setWinnerProfile(this.state.gameObject.userProfile);
-            this.props.setWinnerBot(this.state.gameObject.userRobot);
-            this.setState({gameObject: newGameObject});
-            this.props.history.push('/winnerscreen');
-          } else {
-            this.setState({gameObject: newGameObject});
-          }
+        }).catch((err) => {
+          console.error('Failed to updated firebase gameobject: ', err);
         });
       }).catch((err) => {
-        console.error('Failed to updated firebase gameobject: ', err);
+        console.error('Faield to get the online game object Fightarena componentDidMount: ', err);
       });
     }
 

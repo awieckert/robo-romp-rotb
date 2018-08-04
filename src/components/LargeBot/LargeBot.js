@@ -12,7 +12,13 @@ class LargeBot extends Component {
   };
 
   setUserBot = () => {
-    const {currentOnlineMatch} = {...this.props};
+    const onlineMatchId = this.props.currentOnlineMatch.id;
+    let currentOnlineMatch = {};
+    onlineMatchRequests.getCurrentOnlineMatch(onlineMatchId).then((onlineMatch) => {
+      currentOnlineMatch = onlineMatch;
+    }).catch((err) => {
+      console.error('Could not get online match in Large Bot: ', err);
+    });
     const currentUserUid = firebase.auth().currentUser.uid;
 
     const bot = {...this.props.bot};
@@ -29,7 +35,7 @@ class LargeBot extends Component {
         currentOnlineMatch.enemyRobot = bot;
         currentOnlineMatch.enemyStaticRobot = bot;
       }
-      onlineMatchRequests.joinGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
+      onlineMatchRequests.updateOnlineGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
         onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
           this.props.setCurrentOnlineMatch(onlineMatch);
           if (onlineMatch.userProfile.uid && onlineMatch.enemyProfile.uid) {
