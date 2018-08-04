@@ -6,6 +6,7 @@ import specialAttacks from '../../specialAttacks.js';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
+import basicAttack from '../../basicAttack.js';
 
 class FightArena extends Component {
   state = {
@@ -338,6 +339,7 @@ class FightArena extends Component {
 
   componentDidMount () {
     let gameObject = {};
+
     if (!this.props.onlinePlay) {
       gameObject = {...this.state.gameObject};
       gameObject.userProfile = {...this.props.userProfile};
@@ -346,46 +348,23 @@ class FightArena extends Component {
       gameObject.enemyRobot = {...this.props.enemyRobot};
       gameObject.userStaticRobot = {...this.props.userRobot};
       gameObject.enemyStaticRobot = {...this.props.enemyRobot};
-      gameObject.userRobot.swing = function () {
-        const isCritical = Math.floor((Math.random() * 101));
-        if (isCritical <= this.critChance) {
-          return (this.attack * this.critMulti);
-        } else {
-          return this.attack;
-        }
-      };
-      gameObject.enemyRobot.swing = function () {
-        const isCritical = Math.floor((Math.random() * 101));
-        if (isCritical <= this.critChance) {
-          return (this.attack * this.critMulti);
-        } else {
-          return this.attack;
-        }
-      };
+
+      gameObject.userRobot.swing = basicAttack.swing;
+      gameObject.enemyRobot.swing = basicAttack.swing;
+
       this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
       gameObject = {...this.props.currentOnlineMatch};
       onlineMatchRequests.joinGame(gameObject.id, gameObject).then(() => {
+
         const rootRef = firebase.database();
         const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
         gameRef.on('value', (snapshot) => {
           const newGameObject = snapshot.val();
-          newGameObject.userRobot.swing = function () {
-            const isCritical = Math.floor((Math.random() * 101));
-            if (isCritical <= this.critChance) {
-              return (this.attack * this.critMulti);
-            } else {
-              return this.attack;
-            }
-          };
-          newGameObject.enemyRobot.swing = function () {
-            const isCritical = Math.floor((Math.random() * 101));
-            if (isCritical <= this.critChance) {
-              return (this.attack * this.critMulti);
-            } else {
-              return this.attack;
-            }
-          };
+
+          newGameObject.userRobot.swing = basicAttack.swing;
+          newGameObject.enemyRobot.swing = basicAttack.swing;
+
           Object.keys(specialAttacks).forEach((key) => {
             if (key === newGameObject.userRobot.id) {
               newGameObject.userRobot.specialAttack = specialAttacks[key];
@@ -393,7 +372,22 @@ class FightArena extends Component {
               newGameObject.enemyRobot.specialAttack = specialAttacks[key];
             }
           });
-          this.setState({gameObject: newGameObject});
+
+          // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and able to play again.
+
+          if (newGameObject.userRobot.health <= 0) {
+            this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
+            this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+            this.setState({gameObject: newGameObject});
+            this.props.history.push('/winnerscreen');
+          } else if (newGameObject.enemyRobot.health <= 0) {
+            this.props.setWinnerProfile(this.state.gameObject.userProfile);
+            this.props.setWinnerBot(this.state.gameObject.userRobot);
+            this.setState({gameObject: newGameObject});
+            this.props.history.push('/winnerscreen');
+          } else {
+            this.setState({gameObject: newGameObject});
+          }
         });
       }).catch((err) => {
         console.error('Failed to updated firebase gameobject: ', err);
@@ -422,7 +416,7 @@ class FightArena extends Component {
   render () {
     // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
-    if (!this.props.onlinePlay || (this.state.gameObject.userProfile.uid && this.state.gameObject.enemyProfile.uid)) {
+    if (!this.props.onlinePlay || (this.state.gameObject.userRobot.name && this.state.gameObject.enemyRobot.name)) {
       return (
         <div className="FightArena">
           <h1 className="FightArena-title">FightArena</h1>
