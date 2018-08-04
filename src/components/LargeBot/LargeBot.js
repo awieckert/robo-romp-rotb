@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import './LargeBot.css';
 
@@ -10,12 +12,53 @@ class LargeBot extends Component {
   };
 
   setUserBot = () => {
-    this.setState({isSelected: true});
+    const onlineMatchId = this.props.currentOnlineMatch.id;
+    let currentOnlineMatch = {};
+    const currentUserUid = firebase.auth().currentUser.uid;
     const bot = {...this.props.bot};
-    bot.user = 'user1';
-    this.props.setUserRobot(bot);
-    this.props.disableSmallBots();
-    this.findFavoriteBot(bot);
+    // breaking because not all data in promise
+    onlineMatchRequests.getCurrentOnlineMatch(onlineMatchId).then((onlineMatch) => {
+      currentOnlineMatch = onlineMatch;
+      if (this.props.onlinePlay) {
+        if (currentUserUid === currentOnlineMatch.userProfile.uid) {
+          bot.user = 'user1';
+        } else {
+          bot.user = 'enemy';
+        }
+        if (currentUserUid === currentOnlineMatch.userProfile.uid) {
+          currentOnlineMatch.userRobot = bot;
+          currentOnlineMatch.userStaticRobot = bot;
+        } else {
+          currentOnlineMatch.enemyRobot = bot;
+          currentOnlineMatch.enemyStaticRobot = bot;
+        }
+        onlineMatchRequests.updateOnlineGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
+          onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
+            this.props.setCurrentOnlineMatch(onlineMatch);
+            if (onlineMatch.userProfile.uid && onlineMatch.enemyProfile.uid) {
+              this.props.setPlayersReady();
+            } else {
+              this.props.setPlayersNotReady();
+            }
+          }).catch((err) => {
+            console.error('Could not get current Online Match: ', err);
+          });
+          // need to get the unique game object and set state with it.
+          // check if the user profile's have both been set here and set a flag in state accordingly
+        }).catch((err) => {
+          console.error('Failed to update Online game object: ', err);
+        });
+      } else {
+        bot.user = 'user1';
+      }
+      this.props.setUserRobot(bot);
+      this.props.disableSmallBots();
+      this.findFavoriteBot(bot);
+      this.setState({isSelected: true});
+    }).catch((err) => {
+      console.error('Could not get online match in Large Bot: ', err);
+    });
+
   };
 
   findFavoriteBot = (robot) => {

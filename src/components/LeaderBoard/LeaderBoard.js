@@ -63,7 +63,7 @@ class LeaderBoard extends Component {
                 <h5 className='header-line'>Wins</h5>
               </div>
               <div>
-                <h5 className='header=line'>Win %</h5>
+                <h5 className='header-line'>Win %</h5>
               </div>
             </div>
             {spLeaderBoard}
