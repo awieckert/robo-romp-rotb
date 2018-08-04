@@ -57,10 +57,14 @@ class GameMode extends Component {
         const onlineGameObject = onlineMatches.find((x) => {
           return x.id === uniqueId.data.name;
         });
-        this.props.setCurrentOnlineMatch(onlineGameObject);
-        this.props.setOnlinePlay();
-        this.setState({onlineMatches: onlineMatches});
-        this.props.history.push('/selectionscreen');
+        onlineMatchRequests.updateOnlineGame(onlineGameObject.id, onlineGameObject).then(() => {
+          this.props.setCurrentOnlineMatch(onlineGameObject);
+          this.props.setOnlinePlay();
+          this.setState({onlineMatches: onlineMatches});
+          this.props.history.push('/selectionscreen');
+        }).catch((err) => {
+          console.log('Failed to update created game with unique ID: ', err);
+        });
       }).catch((err) => {
         console.error('Failed to get online matches from firebase: ', err);
       });

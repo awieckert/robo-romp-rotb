@@ -382,12 +382,33 @@ class FightArena extends Component {
       gameObject.userRobot.swing = basicAttack.swing;
       gameObject.enemyRobot.swing = basicAttack.swing;
 
+      const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
+      userUsed.transaction(function (used) {
+        return used + 1;
+      });
+
+      const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
+      enemyUsed.transaction(function (used) {
+        return used + 1;
+      });
+
       this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
       const gameObjectId = this.props.currentOnlineMatch.id;
       // I think the below two requests are redundant now because I am updated firebase with the largebot confirmation
       onlineMatchRequests.getCurrentOnlineMatch(gameObjectId).then((currentOnlineMatchObject) => {
         gameObject = currentOnlineMatchObject;
+
+        const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
+        userUsed.transaction(function (used) {
+          return used + 1;
+        });
+
+        const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
+        enemyUsed.transaction(function (used) {
+          return used + 1;
+        });
+
         onlineMatchRequests.updateOnlineGame(gameObjectId, gameObject).then(() => {
 
           const rootRef = firebase.database();
@@ -432,17 +453,6 @@ class FightArena extends Component {
     }
 
     // Issue! Cannot send functions to firebase, will need to figure out a way to have the swing and special attacks added to the robots everytime
-
-    const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
-    userUsed.transaction(function (used) {
-      return used + 1;
-    });
-
-    const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
-    enemyUsed.transaction(function (used) {
-      return used + 1;
-    });
-
     window.addEventListener('keypress', this.attackFunction);
   };
 

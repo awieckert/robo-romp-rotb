@@ -36,7 +36,7 @@ class SelectionScreen extends Component {
 
   // I have the most up-to-date currentOnlineMatch coming into selectionScreen and being set in state that way we can update firebase from there.
   componentDidMount () {
-    const currentOnlineMatch = {...this.props.currentOnlineMatch};
+    const {currentOnlineMatch} = {...this.props};
     onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
       const onlinePlay = this.props.onlinePlay;
       robotRequests.getRobots().then((robots) => {
