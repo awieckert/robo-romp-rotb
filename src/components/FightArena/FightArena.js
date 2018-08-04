@@ -129,7 +129,7 @@ class FightArena extends Component {
     gameObject.attackDamage = damageDealt;
     gameObject.userRobot = userRobot;
     gameObject.enemyRobot = enemyRobot;
-    if (e.code === 'KeyW') {
+    if (e.key === 'w') {
       enemyRobot.health = 0;
     }
     if (enemyRobot.health <= 0) {
@@ -272,25 +272,25 @@ class FightArena extends Component {
     const currentUid = firebase.auth().currentUser.uid;
 
     if (this.props.onlinePlay) {
-      if ((gameObject.turn === 'user') && (e.code === 'KeyA') && (currentUid === userProfile.uid)) {
+      if ((gameObject.turn === 'user') && (e.key === 'a') && (currentUid === userProfile.uid)) {
         this.userAttack(e);
-      } else if ((gameObject.turn === 'user') && (e.code === 'KeyS') && (currentUid === userProfile.uid) && (userRobot.attackCount >= userRobot.specialCount)) {
+      } else if ((gameObject.turn === 'user') && (e.key === 's') && (currentUid === userProfile.uid) && (userRobot.attackCount >= userRobot.specialCount)) {
         this.useSpecialAttack();
-      } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyA') && (currentUid === enemyProfile.uid)) {
+      } else if ((gameObject.turn === 'enemy') && (e.key === 'a') && (currentUid === enemyProfile.uid)) {
         this.enemyAttack(e);
-      } else if ((gameObject.turn === 'enemy') && (e.code === 'KeyS') && (currentUid === enemyProfile.uid) && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
+      } else if ((gameObject.turn === 'enemy') && (e.key === 's') && (currentUid === enemyProfile.uid) && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
         this.useSpecialAttack();
       }
     } else {
-      if ((this.state.gameObject.turn === 'user') && e.code === 'KeyA') {
+      if ((this.state.gameObject.turn === 'user') && e.key === 'a') {
         this.userAttack(e);
-      } else if ((this.state.gameObject.turn === 'user') && (e.code === 'KeyS') && (userRobot.attackCount >= userRobot.specialCount)) {
+      } else if ((this.state.gameObject.turn === 'user') && (e.key === 's') && (userRobot.attackCount >= userRobot.specialCount)) {
         this.useSpecialAttack();
-      } else if ((this.state.gameObject.turn === 'user') && e.code === 'KeyW') {
+      } else if ((this.state.gameObject.turn === 'user') && e.key === 'w') {
         this.userAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && e.code === 'KeyA') {
+      } else if ((this.state.gameObject.turn === 'enemy') && e.key === 'a') {
         this.enemyAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && (e.code === 'KeyS') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
+      } else if ((this.state.gameObject.turn === 'enemy') && (e.key === 's') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
         this.useSpecialAttack();
       }
     }
