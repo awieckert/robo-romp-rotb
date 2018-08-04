@@ -398,16 +398,19 @@ class FightArena extends Component {
       // I think the below two requests are redundant now because I am updated firebase with the largebot confirmation
       onlineMatchRequests.getCurrentOnlineMatch(gameObjectId).then((currentOnlineMatchObject) => {
         gameObject = currentOnlineMatchObject;
+        const currentUserUid = firebase.auth().currentUser.uid;
 
-        const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
-        userUsed.transaction(function (used) {
-          return used + 1;
-        });
-
-        const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
-        enemyUsed.transaction(function (used) {
-          return used + 1;
-        });
+        if (currentUserUid === gameObject.userProfile.uid) {
+          const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
+          userUsed.transaction(function (used) {
+            return used + 1;
+          });
+        } else if (currentUserUid === gameObject.enemyProfile.uid) {
+          const enemyUsed = firebase.database().ref(`mostUsed/${gameObject.enemyRobot.id}/used`);
+          enemyUsed.transaction(function (used) {
+            return used + 1;
+          });
+        }
 
         onlineMatchRequests.updateOnlineGame(gameObjectId, gameObject).then(() => {
 
