@@ -53,6 +53,22 @@ class LoginModal extends React.Component {
     this.setState({ show: true });
   }
 
+  componentDidMount () {
+    window.addEventListener('keypress', (e) => {
+      if ((e.charCode === 13) && this.state.userSignIn) {
+        this.signIn();
+      }
+    });
+  };
+
+  componentWillUnmount () {
+    window.removeEventListener('keypress', (e) => {
+      if ((e.charCode === 13) && this.state.userSignIn) {
+        this.signIn();
+      }
+    });
+  };
+
   render () {
 
     return (

@@ -137,6 +137,22 @@ class RegisterModal extends React.Component {
     this.setState({ show: true });
   }
 
+  componentDidMount () {
+    window.addEventListener('keypress', (e) => {
+      if ((e.charCode === 13) && this.state.registerProfile.email !== '') {
+        this.createUserAccount();
+      }
+    });
+  };
+
+  componentWillUnmount () {
+    window.removeEventListener('keypress', (e) => {
+      if ((e.charCode === 13) && this.state.registerProfile.email !== '') {
+        this.createUserAccount();
+      }
+    });
+  };
+
   render () {
 
     return (
