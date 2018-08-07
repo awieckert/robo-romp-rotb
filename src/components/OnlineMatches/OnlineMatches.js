@@ -47,7 +47,7 @@ class OnlineMatches extends React.Component {
       );
     });
     return (
-      <div className="LeaderBoard">
+      <div className="OnlineMatches">
         <div className="panel panel-default">
           <div className="panel-heading flex-header">
             <h3 className="panel-title">Single Player Champions</h3>
