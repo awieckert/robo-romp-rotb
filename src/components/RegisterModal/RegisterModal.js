@@ -157,13 +157,13 @@ class RegisterModal extends React.Component {
 
     return (
       <div>
-        <Button bsStyle='danger' bsSize='large' onClick={this.handleShow}>
+        <Button bsStyle='danger' bsSize='large' className='join-fight-button' onClick={this.handleShow}>
           Join the Fight
         </Button>
 
-        <Modal show={this.state.show} onHide={this.handleClose} bsSize='large' aria-labelledby='contained-modal-title-lg'>
+        <Modal className='RegisterModal' show={this.state.show} onHide={this.handleClose} bsSize='large' aria-labelledby='contained-modal-title-lg'>
           <Modal.Header closeButton>
-            <Modal.Title id='contained-modal-title-lg'>Battle Account Creation</Modal.Title>
+            <Modal.Title className='myModal-title' id='contained-modal-title-lg'>Battle Account Creation</Modal.Title>
           </Modal.Header>
           {/* <Modal.Body> */}
           <div className='row modal-row'>
@@ -172,19 +172,19 @@ class RegisterModal extends React.Component {
             <div className='col-xs-6 register-form'>
               <form className='form-horizontal'>
                 <div className='form-group'>
-                  <label htmlFor='inputEmail' className='col-xs-3 control-label'>Email</label>
+                  <label htmlFor='inputEmail' className='col-xs-3 control-label myLabel'>Email</label>
                   <div className='col-xs-8'>
                     <input type='email' className='form-control' id='inputEmail' placeholder='Email' onChange={this.registerEmailInfo}></input>
                   </div>
                 </div>
                 <div className='form-group'>
-                  <label htmlFor='inputUsername' className='col-xs-3 control-label'>User Name</label>
+                  <label htmlFor='inputUsername' className='col-xs-3 control-label myLabel'>User Name</label>
                   <div className='col-xs-8'>
                     <input type='userName' className='form-control' id='inputUsername' placeholder='User Name' onChange={this.registerUserNameInfo}></input>
                   </div>
                 </div>
                 <div className='form-group'>
-                  <label htmlFor='inputPassword' className='col-xs-3 control-label'>Password</label>
+                  <label htmlFor='inputPassword' className='col-xs-3 control-label myLabel'>Password</label>
                   <div className='col-xs-8'>
                     <input type='password' className='form-control' id='inputPassword' placeholder='Password' onChange={this.registerPasswordInfo}></input>
                   </div>

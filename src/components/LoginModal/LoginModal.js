@@ -73,13 +73,13 @@ class LoginModal extends React.Component {
 
     return (
       <div>
-        <Button bsStyle="danger" bsSize="large" onClick={this.handleShow}>
+        <Button bsStyle="danger" bsSize="large" className='enter-fray-button' onClick={this.handleShow}>
           Enter the Fray
         </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose} bsSize="large" aria-labelledby="contained-modal-title-lg">
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">Battle Account Creation</Modal.Title>
+            <Modal.Title className='myModal-title' id="contained-modal-title-lg">Join the Battle!</Modal.Title>
           </Modal.Header>
           {/* <Modal.Body> */}
           <div className='row modal-row'>
@@ -88,13 +88,13 @@ class LoginModal extends React.Component {
             <div className='col-xs-6 login-form'>
               <form className="form-horizontal">
                 <div className="form-group">
-                  <label htmlFor="inputEmail" className="col-xs-3 control-label">Email</label>
+                  <label htmlFor="inputEmail" className="col-xs-3 control-label myLabel">Email</label>
                   <div className="col-xs-8">
                     <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={this.loginEmailInfo}></input>
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="inputPassword" className="col-xs-3 control-label">Password</label>
+                  <label htmlFor="inputPassword" className="col-xs-3 control-label myLabel">Password</label>
                   <div className="col-xs-8">
                     <input type="password" className="form-control" id="inputPassword" placeholder="Password" onChange={this.loginPasswordInfo}></input>
                   </div>
