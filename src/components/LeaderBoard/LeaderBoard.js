@@ -32,9 +32,9 @@ class LeaderBoard extends Component {
       }
       return (
         <div key={player.id} data-id={player.id} className="panel-body flex-panel">
-          <div className='col-xs-2 flex-user'>{player.username}</div>
-          <div className='col-xs-2 flex-wins'>{player.spWins}</div>
-          <div className='col-xs-2 flex-percent'>{percentage.toFixed(1)}%</div>
+          <div className='flex-user'>{player.username}</div>
+          <div className='flex-wins'>{player.spWins}</div>
+          <div className='flex-percent'>{percentage.toFixed(1)}%</div>
         </div>
       );
     });
@@ -46,9 +46,9 @@ class LeaderBoard extends Component {
       }
       return (
         <div key={player.id} data-id={player.id} className="panel-body flex-panel">
-          <div className='col-xs-2 flex-user'>{player.username}</div>
-          <div className='col-xs-2 flex-wins'>{player.olWins}</div>
-          <div className='col-xs-2 flex-percent'>{percentage.toFixed(1)}%</div>
+          <div className='flex-user'>{player.username}</div>
+          <div className='flex-wins'>{player.olWins}</div>
+          <div className='flex-percent'>{percentage.toFixed(1)}%</div>
         </div>
       );
     });
@@ -59,11 +59,11 @@ class LeaderBoard extends Component {
           <div className="panel panel-default">
             <div className="panel-heading flex-header">
               <h3 className="panel-title">Single Player Champions</h3>
-              <div className=''>
-                <h5 className='header-line'>Wins</h5>
+              <div className='header-wins'>
+                <h5>Wins</h5>
               </div>
-              <div>
-                <h5 className='header-line'>Win %</h5>
+              <div className='header-percent'>
+                <h5>Win %</h5>
               </div>
             </div>
             {spLeaderBoard}
@@ -73,11 +73,11 @@ class LeaderBoard extends Component {
           <div className="panel panel-default">
             <div className="panel-heading flex-header">
               <h3 className="panel-title">Online Play Champions</h3>
-              <div className=''>
-                <h5 className='header-line'>Wins</h5>
+              <div className='header-wins'>
+                <h5>Wins</h5>
               </div>
-              <div>
-                <h5 className='header=line'>Win %</h5>
+              <div className='header-percent'>
+                <h5>Win %</h5>
               </div>
             </div>
             {olLeaderBoard}

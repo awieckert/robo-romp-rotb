@@ -39,18 +39,18 @@ class OnlineMatches extends React.Component {
     const matchesToMap = [...this.props.onlineMatches];
     const onlineMatches = matchesToMap.map((match, i) => {
       return (
-        <div key={match.id} id={match.id} className="panel-body">
-          <div className='col-xs-2'>Match {i + 1}</div>
-          <div className='col-xs-2'>Challenger: {match.userProfile.username}</div>
-          <button className='btn btn-danger' id={match.id} onClick={this.joinGame}>Join Game</button>
+        <div key={match.id} id={match.id} className="panel-body flex-body">
+          <div className='match'>Match {i + 1}</div>
+          <div className='challenger'>Challenger: {match.userProfile.username}</div>
+          <button className='btn btn-danger join-button' id={match.id} onClick={this.joinGame}>Join Game</button>
         </div>
       );
     });
     return (
-      <div className="LeaderBoard">
+      <div className="OnlineMatches">
         <div className="panel panel-default">
           <div className="panel-heading flex-header">
-            <h3 className="panel-title">Single Player Champions</h3>
+            <h3 className="panel-title">Online Matches</h3>
           </div>
           {onlineMatches}
         </div>
