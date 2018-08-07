@@ -1,22 +1,28 @@
-.flex-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.LeaderBoard {
+  .flex-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
 
-.flex-panel {
-  display: flex;
-  flex-direction: row;
-}
+  .flex-panel {
+    display: flex;
+    flex-direction: row;
+  }
 
-.flex-user {
-  align-items: flex-start;
-}
+  .flex-user {
+    margin-right: auto;
+  }
 
-.flex-wins {
-  align-self: center;
-}
+  .flex-wins {
+    margin-right: 32.5%;
+  }
 
-.flex-percent {
-  align-self: flex-end;
+  .header-wins {
+    margin-left: auto;
+  }
+
+  .header-percent {
+    margin-left: auto;
+  }
 }
