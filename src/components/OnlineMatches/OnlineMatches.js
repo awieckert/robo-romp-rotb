@@ -42,7 +42,7 @@ class OnlineMatches extends React.Component {
         <div key={match.id} id={match.id} className="panel-body flex-body">
           <div className='match'>Match {i + 1}</div>
           <div className='challenger'>Challenger: {match.userProfile.username}</div>
-          <button className='btn btn-danger join-button' id={match.id} onClick={this.joinGame}>Join Game</button>
+          <button className='bttn-unite bttn-md bttn-warning bttn-no-outline' id={match.id} onClick={this.joinGame}>Join Game</button>
         </div>
       );
     });

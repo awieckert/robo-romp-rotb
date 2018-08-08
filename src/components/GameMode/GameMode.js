@@ -111,10 +111,10 @@ class GameMode extends Component {
           <div className='col-xs-6'>
             <div className='row flex-buttons'>
               <div className='col-xs-6'>
-                <button className='btn btn-danger button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
               </div>
               <div className='col-xs-6'>
-                <button className='btn btn-danger button-container' onClick={this.createOnlineMatch}>Create Online Match</button>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.createOnlineMatch}>Create Online Match</button>
               </div>
             </div>
 

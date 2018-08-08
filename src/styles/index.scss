@@ -45,7 +45,9 @@ body {
   color: #1d89ff;
 }
 .bttn-warning {
-  color: #feab3a;
+  color: #fff;
+  background: #C9302C;
+  font-size: 16px;
 }
 .bttn-danger {
   color: #C9302C;
@@ -239,19 +241,21 @@ body {
   background: #1d89ff;
 }
 .bttn-unite.bttn-warning {
-  border-color: #feab3a;
-  color: #feab3a;
+  border-color: #C9302C;
+  color: #fff;
+  background: #C9302C;
+  font-size: 16px;
 }
 .bttn-unite.bttn-warning:hover,
 .bttn-unite.bttn-warning:focus {
-  background: #feab3a;
-  color: #fff;
+  background: #fff;
+  color: #C9302C;
 }
 .bttn-unite.bttn-warning:before {
-  background: #f89001;
+  background: #fff;
 }
 .bttn-unite.bttn-warning:after {
-  background: #feab3a;
+  background: whitesmoke;
 }
 .bttn-unite.bttn-danger {
   border-color: #C9302C;
