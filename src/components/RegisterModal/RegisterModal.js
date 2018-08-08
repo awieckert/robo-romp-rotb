@@ -157,7 +157,7 @@ class RegisterModal extends React.Component {
 
     return (
       <div>
-        <Button bsStyle='danger' bsSize='large' className='join-fight-button' onClick={this.handleShow}>
+        <Button bsSize='large' className='join-fight-button bttn-unite bttn-md bttn-danger bttn-no-outline' onClick={this.handleShow}>
           Join the Fight
         </Button>
 

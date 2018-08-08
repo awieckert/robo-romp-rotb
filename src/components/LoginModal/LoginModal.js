@@ -73,7 +73,7 @@ class LoginModal extends React.Component {
 
     return (
       <div>
-        <Button bsStyle="danger" bsSize="large" className='enter-fray-button' onClick={this.handleShow}>
+        <Button bsSize="large" className='enter-fray-button bttn-unite bttn-md bttn-danger bttn-no-outline' onClick={this.handleShow}>
           Enter the Fray
         </Button>
 
