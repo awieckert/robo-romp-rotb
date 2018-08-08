@@ -1,3 +1,11 @@
+.RegisterModal {
+  .modal-content {
+    background-image: url('../../img/background1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
 .modal-row {
   position: relative;
 }
@@ -10,6 +18,12 @@
   position: absolute;
   top: 0;
   left: 15px;
+}
+
+
+
+.join-fight-button {
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
 }
 
 .register-form {

@@ -1,10 +1,35 @@
+.GameMode {
+  position: relative;
+  h2 {
+    margin-bottom: 17.5px;
+    color: #C9302C;
+  }
+  .flex-title {
+    display: flex;
+    justify-content: center;
+  }
+
+  .GameMode-title {
+    color: #C9302C;
+  }
+
+  .user-profile-bttn {
+    position: absolute;
+    top: 24px;
+    left: 0px;
+  }
+}
+
+
+
 .button-container {
   margin-top: 20px;
   margin-bottom: 10px;
-  width: 50%;
+  // width: 50%;
 }
 
 .flex-buttons {
   display: flex;
   justify-content: space-between;
 }
+

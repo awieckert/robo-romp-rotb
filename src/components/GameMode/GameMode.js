@@ -103,18 +103,22 @@ class GameMode extends Component {
   render () {
     return (
       <div className="GameMode">
-        <h1 className="GameMode-title">GameMode</h1>
-        <div>
-          <button className='btn btn-primary' onClick={this.toUserProfile}>User Profile</button>
+        <div className='user-profile-bttn'>
+          <button className='bttn-fill bttn-md bttn-primary bttn-no-outline ' onClick={this.toUserProfile}>User Profile</button>
         </div>
+
+        <div className='flex-title'>
+          <h1 className="GameMode-title">Game Mode</h1>
+        </div>
+
         <div className='row'>
           <div className='col-xs-6'>
             <div className='row flex-buttons'>
               <div className='col-xs-6'>
-                <button className='btn btn-danger button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
               </div>
               <div className='col-xs-6'>
-                <button className='btn btn-danger button-container' onClick={this.createOnlineMatch}>Create Online Match</button>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.createOnlineMatch}>Create Online Match</button>
               </div>
             </div>
 
