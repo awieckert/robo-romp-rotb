@@ -20,14 +20,14 @@ class Home extends Component {
           <h1>Robo-Romp: Revenge of the Bots</h1>
           <div className='row'>
             <div className='col-sm-6'>
-              <div className='col-sm-8 col-xs-offset-2 enterFray'>
+              <div className='col-sm-8 col-xs-offset-2 enterFray animated zoomInLeft'>
                 <div className='vertical-align'>
                   <LoginModal history={this.props.history} />
                 </div>
               </div>
             </div>
             <div className='col-sm-6'>
-              <div className='col-sm-8 col-xs-offset-2 joinFight'>
+              <div className='col-sm-8 col-xs-offset-2 joinFight animated zoomInRight'>
                 <div className='vertical-align'>
                   <RegisterModal history={this.props.history} />
                 </div>
