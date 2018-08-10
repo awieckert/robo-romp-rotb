@@ -1,7 +1,8 @@
 .OnlineMatches {
-  height: 50vh;
+  height: 33vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-right: 0px;
 
   .flex-header {
     display: flex;
@@ -17,6 +18,7 @@
     margin-right: auto;
     font-size: 16px;
   }
+
 }
 
 .flex-body {
@@ -24,5 +26,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-

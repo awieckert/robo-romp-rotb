@@ -113,16 +113,17 @@ class GameMode extends Component {
 
         <div className='row'>
           <div className='col-xs-6'>
-            <div className='row flex-buttons'>
-              <div className='col-xs-6'>
-                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player</button>
-              </div>
-              <div className='col-xs-6'>
-                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.createOnlineMatch}>Create Online Match</button>
+            <div className='row'>
+              <div className='col-xs-12'>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.toSinglePlayerSelectionScreen}>Single Player Game</button>
               </div>
             </div>
-
-            <OnlineMatches history={this.props.history} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} userProfile={this.state.userProfile} onlineMatches={this.state.onlineMatches} setOnlinePlay={this.props.setOnlinePlay}/>
+            <div className='row'>
+              <div className='col-xs-12 vertical-align-online'>
+                <button className='bttn-unite bttn-md bttn-danger bttn-no-outline button-container' onClick={this.createOnlineMatch}>Create Online Game</button>
+              </div>
+              <OnlineMatches history={this.props.history} setCurrentOnlineMatch={this.props.setCurrentOnlineMatch} userProfile={this.state.userProfile} onlineMatches={this.state.onlineMatches} setOnlinePlay={this.props.setOnlinePlay}/>
+            </div>
           </div>
           <div className='col-xs-6'>
             <h2>Leader Boards</h2>
