@@ -83,25 +83,25 @@ class LargeBot extends Component {
     let botToPrint = '';
     if ((bot.name && (this.state.isSelected === false)) && !bot.computer) {
       botToPrint =  <div>
-        <div className='info col-xs-6'>
-          <h4>{bot.name}</h4>
-          <h5>Health: {bot.health}</h5>
-          <h5>Attack: {bot.attack}</h5>
-          <h5>Armor: {bot.armor}</h5>
-          <h5>Crit Chance: {bot.critChance}%</h5>
-          <h5>Evasion: {bot.evasion}%</h5>
-          <h5>Attacks for Special: {bot.specialCount}</h5>
-          <h5>Special Attack: {bot.superDescription}</h5>
-          <p>{bot.description}</p>
-        </div>
         <div className='col-xs-6'>
           <div className='flex-center'>
             <img src={bot.img} alt='bigRobot'/>
           </div>
           <div className='flex-center'>
-            <button className='btn btn-danger btn-margin-top' onClick={this.setUserBot}>Confirm Selection</button>
+            <button className='bttn-unite bttn-md bttn-warning bttn-no-outline btn-margin-top' onClick={this.setUserBot}>Confirm Selection</button>
           </div>
+        </div>
 
+        <div className='info col-xs-6'>
+          <h4><strong>{bot.name}</strong></h4>
+          <h5><strong>Health:</strong> {bot.health}</h5>
+          <h5><strong>Attack:</strong> {bot.attack}</h5>
+          <h5><strong>Armor:</strong> {bot.armor}</h5>
+          <h5><strong>Crit Chance:</strong> {bot.critChance}%</h5>
+          <h5><strong>Evasion:</strong> {bot.evasion}%</h5>
+          <h5><strong>Attacks for Special:</strong> {bot.specialCount}</h5>
+          <h5><strong>Special Attack:</strong> {bot.superDescription}</h5>
+          <p>{bot.description}</p>
         </div>
       </div>;
     } else if ((bot.name && (this.state.isSelected)) || bot.computer) {
@@ -114,7 +114,7 @@ class LargeBot extends Component {
       botToPrint = <div></div>;
     }
     return (
-      <div className="LargeBot row">
+      <div className="LargeBot">
         {botToPrint}
       </div>
     );

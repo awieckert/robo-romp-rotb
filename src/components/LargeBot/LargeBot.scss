@@ -1,12 +1,22 @@
 .LargeBot {
+  color: whitesmoke;
+  margin-top: 5%;
+
   img {
-    height: 150px;
-    width: 150px;
+    height: 250px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow:  7px 7px 5px rgba(0,0,0,0.7);
   }
 }
 
 .info {
   display: inline-block;
+  color: black;
+  background: whitesmoke;
+  margin-left: -10px;
+  border-radius: 10px;
+  box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
 }
 
 .flex-center {
@@ -17,4 +27,5 @@
 
 .btn-margin-top {
   margin-top: 10px;
+  box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
 }

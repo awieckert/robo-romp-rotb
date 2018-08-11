@@ -61,7 +61,20 @@ class App extends Component {
     currentOnlineMatch: {},
     onlinePlay: false,
     playersReady: false,
+    backgroundAudio: {},
+    countDownAudio: {},
   }
+
+  pauseCountDownAudio = () => {
+    this.state.countDownAudio.pause();
+    const audioUrl = '../../audio/countDownAndFight.mp3';
+    const newCountDown = new Audio(audioUrl);
+    this.setState({countDownAudio: newCountDown});
+  };
+
+  pauseBackgroundAudio = () => {
+    this.state.backgroundAudio.pause();
+  };
 
   setPlayersReady = () => {
     this.setState({playersReady: true});
@@ -116,9 +129,13 @@ class App extends Component {
   };
 
   componentDidMount () {
+    const backgroundMusicUrl = '../../audio/daftPunk.mp3';
+    const backgroundAudio = new Audio(backgroundMusicUrl);
+    const countDownAudio = '../../audio/countDownAndFight.mp3';
+    const countDown = new Audio(countDownAudio);
     this.checkUserState = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({authed: true});
+        this.setState({authed: true, backgroundAudio: backgroundAudio, countDownAudio: countDown});
       } else {
         this.setState({authed: false});
       }
@@ -136,8 +153,8 @@ class App extends Component {
           <div className='container-fluid main-container'>
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
-              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setOnlinePlay={this.setOnlinePlay} />
-              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady} />
+              <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setOnlinePlay={this.setOnlinePlay} backgroundAudio={this.state.backgroundAudio} pauseCountDownAudio={this.pauseCountDownAudio}/>
+              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady} pauseBackgroundAudio={this.pauseBackgroundAudio} countDownAudio={this.state.countDownAudio}/>
               <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} playersReady={this.state.playersReady} currentOnlineMatch={this.state.currentOnlineMatch} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
               <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} setAuthedFalse={this.setAuthedFalse} sortedFavorites={this.state.sortedFavorites} />

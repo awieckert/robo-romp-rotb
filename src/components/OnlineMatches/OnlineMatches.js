@@ -47,7 +47,7 @@ class OnlineMatches extends React.Component {
       );
     });
     return (
-      <div className="OnlineMatches">
+      <div className="OnlineMatches col-xs-12">
         <div className="panel panel-default">
           <div className="panel-heading flex-header">
             <h3 className="panel-title">Online Matches</h3>
