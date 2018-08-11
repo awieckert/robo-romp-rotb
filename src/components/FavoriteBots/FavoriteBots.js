@@ -33,7 +33,7 @@ class FavoriteBots extends React.Component {
       );
     });
     return (
-      <div className='favorite-bots'>
+      <div className='FavoriteBots'>
         {botsToPrint}
       </div>
     );
