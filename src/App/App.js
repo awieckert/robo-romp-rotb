@@ -67,9 +67,9 @@ class App extends Component {
 
   pauseCountDownAudio = () => {
     this.state.countDownAudio.pause();
-    // const currentCountDown = {...this.state.countDownAudio};
-    // currentCountDown.currentTime = 0;
-    // this.setState({countDownAudio: currentCountDown});
+    const audioUrl = '../../audio/countDownAndFight.mp3';
+    const newCountDown = new Audio(audioUrl);
+    this.setState({countDownAudio: newCountDown});
   };
 
   pauseBackgroundAudio = () => {
