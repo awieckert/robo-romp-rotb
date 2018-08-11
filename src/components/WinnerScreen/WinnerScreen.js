@@ -40,7 +40,7 @@ class WinnerScreen extends Component {
           </div>
           <div className='col-xs-6 margin-top'>
             <WinnerBot winnerBot={this.props.winnerBot} winnerProfile={this.props.winnerProfile}/>
-            <div className='col-xs-10 col-xs-offset-1 margin-top'>
+            <div className='col-xs-10 col-xs-offset-1 margin-top-more'>
               <UsedBots mostUsedBots={this.state.robotStats.mostUsedBots}/>
             </div>
             <div className='col-xs-10 col-xs-offset-1 margin-top'>

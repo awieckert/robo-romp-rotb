@@ -1,3 +1,29 @@
-.margin-top {
-  margin-top: 20px;
+.WinnerScreen {
+
+  .WinnerBot {
+    img {
+      height: 250px;
+      width: 250px;
+      border-radius: 10px;
+      transform: skew(0deg);
+      box-shadow:  7px 7px 5px rgba(0,0,0,0.7);
+    }
+  }
+
+  .margin-top {
+    margin-top: 20px;
+  }
+
+  .margin-top-more {
+    margin-top: 40px;
+  }
+
+  img {
+    height: 90px;
+    width: 90px;
+    border-radius: 3px;
+    transform: skew(-9deg);
+    box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+  }
 }
+
