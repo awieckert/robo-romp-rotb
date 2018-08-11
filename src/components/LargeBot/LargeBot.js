@@ -114,7 +114,7 @@ class LargeBot extends Component {
       botToPrint = <div></div>;
     }
     return (
-      <div className="LargeBot row">
+      <div className="LargeBot">
         {botToPrint}
       </div>
     );

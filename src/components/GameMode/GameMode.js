@@ -87,6 +87,10 @@ class GameMode extends Component {
   };
 
   componentDidMount () {
+    this.props.pauseCountDownAudio();
+    const {backgroundAudio} = {...this.props};
+    backgroundAudio.play();
+
     const currentUser = firebase.auth().currentUser.uid;
 
     Promise.all([userRequests.getUser(currentUser), favoriteRequests.getUserFavorites(currentUser), favoriteRequests.getUserSortedFavorites(currentUser), onlineMatchRequests.getOnlineMatches()]).then((userInfoArray) => {

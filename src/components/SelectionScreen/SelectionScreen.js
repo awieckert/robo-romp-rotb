@@ -19,11 +19,14 @@ class SelectionScreen extends Component {
   };
 
   goToFightArena = () => {
+    this.props.pauseBackgroundAudio();
+    const {countDownAudio} = {...this.props};
+    countDownAudio.play();
     const toArena = () => {
       this.props.history.push('/fightarena');
     };
 
-    window.setTimeout(toArena, 3000);
+    window.setTimeout(toArena, 7500);
   };
 
   disableSmallBots = () => {
