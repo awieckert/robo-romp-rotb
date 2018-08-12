@@ -358,11 +358,15 @@ class FightArena extends Component {
   };
 
   displayDamage = () => {
-    let displayDamage = {};
+    let displayDamage = [];
     if (this.state.gameObject.attacking) {
       displayDamage = <AttackResult attackDamage={this.state.gameObject.attackDamage} evaded={this.state.gameObject.evaded} isCritical={this.state.gameObject.isCritical}/>;
     } else {
-      displayDamage = <div></div>;
+      if (this.state.turn === 'user') {
+        displayDamage = <div><h2>Player 1 Start!</h2></div>;
+      } else if (this.state.turn === 'enemy') {
+        displayDamage = <div><h2>Player 2 Start!</h2></div>;
+      }
     }
     return displayDamage;
   };
@@ -469,15 +473,14 @@ class FightArena extends Component {
     if (!this.props.onlinePlay || (this.state.gameObject.userRobot.name && this.state.gameObject.enemyRobot.name)) {
       return (
         <div className="FightArena">
-          <h1 className="FightArena-title">FightArena</h1>
-          <div className='row'>
+          <div className='row attack-result'>
             <div className='col-xs-12'>
               <div className='col-xs-4 col-sm-offset-4 text-center'>
                 {attackDamage}
               </div>
             </div>
           </div>
-          <div className='row'>
+          <div className='row flex-arena'>
             <BattleBot bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
             <BattleBot bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
           </div>

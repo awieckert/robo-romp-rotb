@@ -45,7 +45,7 @@ class UserProfile extends React.Component {
     const {userProfile} = {...this.props};
     const damage = userProfile.dmgDealt;
     return (
-      <div className='container'>
+      <div className='UserProfile container'>
         <div className='row'>
           <button className='btn btn-primary' onClick={this.toGameMode}>Back</button>
           <div className='col-sm-12 text-center'>
@@ -60,7 +60,9 @@ class UserProfile extends React.Component {
             <h4>Wins: {userProfile.olWins}</h4>
             <h4>Loses: {userProfile.olLoses}</h4>
             <br/>
-            <h3>Global Stats</h3>
+            <h3>Career Stats</h3>
+            <h4>Total Games Played: {userProfile.spGames + userProfile.olGames}</h4>
+            <h4>Total Wins: {userProfile.spWins + userProfile.olWins}</h4>
             <h4>Total Damage Dealt: {damage.toFixed(1)}</h4>
             <br/>
             <FavoriteBots favoriteBots={this.state.sortedFavoriteBots} />

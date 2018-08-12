@@ -14,7 +14,7 @@ class UsedBots extends React.Component {
       );
     });
     return (
-      <div>
+      <div className='UsedBots'>
         {botsToPrint}
       </div>
     );

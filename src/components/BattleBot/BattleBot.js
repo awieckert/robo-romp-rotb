@@ -38,15 +38,14 @@ class BattleBot extends Component {
     const specialBar = this.setSpecialBar(bot);
     return (
       <div className="BattleBot col-xs-6">
-        <div className="progress">
-          <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={healthRemaining}>
+        <div className="progress health-bar col-xs-6">
+          <div className="progress-bar health-color" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={healthRemaining}>
             <span className="sr-only">60% Complete</span>
           </div>
         </div>
         <img className='robot-img' src={bot.img} alt="robot"/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
-
           {specialBar}
         </div>
       </div>

@@ -14,7 +14,7 @@ class WinningBots extends React.Component {
       );
     });
     return (
-      <div>
+      <div className='WinningBots'>
         {botsToPrint}
       </div>
     );

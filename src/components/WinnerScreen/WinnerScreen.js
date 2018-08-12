@@ -33,21 +33,20 @@ class WinnerScreen extends Component {
   render () {
     return (
       <div className="WinnerScreen">
-        <h1 className="WinnerScreen-title">WinnerScreen</h1>
         <div className='row'>
-          <div className='col-xs-4 col-sm-offset-4'>
-            <Button onClick={this.sendToGameMode}>Select Game Mode</Button>
+          <div className='col-xs-4 col-sm-offset-4 margin-top-more'>
+            <Button className='bttn-unite bttn-md bttn-danger bttn-no-outline' onClick={this.sendToGameMode}>Select Game Mode</Button>
           </div>
           <div className='col-xs-6 margin-top'>
             <WinnerBot winnerBot={this.props.winnerBot} winnerProfile={this.props.winnerProfile}/>
-            <div className='col-xs-10 col-xs-offset-1 margin-top-more'>
+            <div className='col-xs-10 col-xs-offset-1 margin-top'>
               <UsedBots mostUsedBots={this.state.robotStats.mostUsedBots}/>
             </div>
             <div className='col-xs-10 col-xs-offset-1 margin-top'>
               <WinningBots winningBots={this.state.robotStats.mostWinsBots} />
             </div>
           </div>
-          <div className='col-xs-6 margin-top'>
+          <div className='col-xs-6 margin-top-more'>
             <LeaderBoard />
           </div>
         </div>
