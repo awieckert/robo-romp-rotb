@@ -1,6 +1,7 @@
 .WinnerScreen {
 
   .WinnerBot {
+    color: whitesmoke;
     img {
       height: 250px;
       width: 250px;
@@ -10,12 +11,21 @@
     }
   }
 
+  .UsedBots {
+    color: whitesmoke;
+  }
+
+
   .margin-top {
     margin-top: 20px;
   }
 
   .margin-top-more {
     margin-top: 40px;
+  }
+
+  h1 {
+    color: whitesmoke;
   }
 
   img {

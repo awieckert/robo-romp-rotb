@@ -3,6 +3,16 @@
   flex-direction: column;
   justify-content: space-between;
 
+  .health-bar {
+    align-self: center;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .health-color {
+    background: #C9302C;
+  }
+
   img {
     height: 300px;
     width: 300px;
@@ -16,6 +26,15 @@
   flex-direction: row;
   margin-top: 15px;
   justify-content: center;
+
+    .special-bar-individual {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .special-bar-color {
+      background: rgb(230, 230, 28);
+    }
 }
 
 .robot-img {

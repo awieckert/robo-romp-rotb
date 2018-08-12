@@ -1,0 +1,14 @@
+.FightArena {
+  color: whitesmoke;
+
+  .flex-arena {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .attack-result {
+    margin-top: 5%;
+    margin-bottom: 2%;
+  }
+}
