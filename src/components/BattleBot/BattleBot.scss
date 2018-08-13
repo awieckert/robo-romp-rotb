@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 
   .health-bar {
     align-self: center;
@@ -11,6 +12,37 @@
 
   .health-color {
     background: #C9302C;
+  }
+
+  .small-picture-right {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -40px;
+    right: 22%;
+    border-radius: 10px;
+    z-index: 5;
+    box-shadow: -7px 7px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .small-picture-left {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -40px;
+    left: 22%;
+    border-radius: 10px;
+    z-index: 5;
+  }
+
+  .debuffs {
+    background-color: rgb(87, 37, 83);
+    color: rgb(175, 175, 175);
+    height: 150px;
+    width: 50%;
+    border-radius: 10px;
+    align-self: center;
+    box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
   }
 
   img {
@@ -27,6 +59,7 @@
   margin-top: 15px;
   justify-content: center;
 
+
     .special-bar-individual {
       padding-left: 0px;
       padding-right: 0px;
@@ -37,6 +70,6 @@
     }
 }
 
-.robot-img {
+.robot-image {
   align-self: center;
 }
