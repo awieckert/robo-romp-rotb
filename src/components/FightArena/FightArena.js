@@ -481,8 +481,8 @@ class FightArena extends Component {
             </div>
           </div>
           <div className='row flex-arena'>
-            <BattleBot bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
-            <BattleBot bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
           </div>
         </div>
       );

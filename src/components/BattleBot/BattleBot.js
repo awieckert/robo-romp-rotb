@@ -58,6 +58,19 @@ class BattleBot extends Component {
     return currentDebuffs;
   };
 
+  determineAttackAnimation = (bot) => {
+    const turn = this.props.turn;
+    let attackAnimation = '';
+    if ((turn === 'enemy') && (bot.user === 'user1')) {
+      attackAnimation = 'animated fadeInLeftBig';
+    } else if ((turn === 'user') && (bot.user === 'user2')) {
+      attackAnimation = 'animated fadeInRightBig';
+    } else {
+      attackAnimation = '';
+    }
+    return attackAnimation;
+  };
+
   render () {
     const staticBot = {...this.props.staticBot};
     const bot = {...this.props.bot};
@@ -66,6 +79,11 @@ class BattleBot extends Component {
     const healthRemaining = this.determineHealth(bot, staticBot);
     const specialBar = this.setSpecialBar(bot);
     const debuffs = this.determineDebuffs(bot, staticBot);
+    const attackAnimation = this.determineAttackAnimation(bot);
+    let robotImg = 'robot-image';
+    if (this.props.attacking) {
+      robotImg += ` ${attackAnimation}`;
+    }
     return (
       <div className="BattleBot col-xs-6">
         {
@@ -80,7 +98,7 @@ class BattleBot extends Component {
             {currentHealthPercent}%
           </div>
         </div>
-        <img className='robot-img' src={bot.img} alt="robot"/>
+        <img className={robotImg} src={bot.img} alt="robot"/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
           {specialBar}
