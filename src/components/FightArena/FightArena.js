@@ -7,6 +7,7 @@ import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import basicAttack from '../../basicAttack.js';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class FightArena extends Component {
   state = {

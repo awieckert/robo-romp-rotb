@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SpecialBar from '../SpecialBar/SpecialBar.js';
 import './BattleBot.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class BattleBot extends Component {
 
@@ -62,9 +63,9 @@ class BattleBot extends Component {
     const turn = this.props.turn;
     let attackAnimation = '';
     if ((turn === 'enemy') && (bot.user === 'user1')) {
-      attackAnimation = 'animated fadeInLeftBig';
+      attackAnimation = 'animated slideInLeft';
     } else if ((turn === 'user') && (bot.user === 'user2')) {
-      attackAnimation = 'animated fadeInRightBig';
+      attackAnimation = 'animated slideInRight';
     } else {
       attackAnimation = '';
     }

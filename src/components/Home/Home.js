@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RegisterModal from '../RegisterModal/RegisterModal.js';
 import LoginModal from '../LoginModal/LoginModal.js';
 import './Home.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class Home extends Component {
 
