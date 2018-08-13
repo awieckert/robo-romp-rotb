@@ -31,22 +31,63 @@ class BattleBot extends Component {
     return specialBars;
   };
 
+  determineDebuffs = (bot, staticBot) => {
+    const currentDebuffs = [];
+    if (bot.debuff > 0) {
+      if (bot.critChance < staticBot.critChance) {
+        const currentCrit = <h4>Crit Reduction:  - {staticBot.critChance - bot.critChance}%</h4>;
+        currentDebuffs.push(currentCrit);
+      }
+      if (bot.critMulti < staticBot.critMulti) {
+        const currentCritMulti = <h4>Crit Multiplier:  {bot.critMulti}</h4>;
+        currentDebuffs.push(currentCritMulti);
+      }
+      if (bot.armor < staticBot.armor) {
+        const currentArmor = <h4>Armor Reduction:  - {staticBot.armor - bot.armor}</h4>;
+        currentDebuffs.push(currentArmor);
+      }
+      if (bot.evasion < staticBot.evasion) {
+        const currentEvasion = <h4>Evasion Reduction:  - {staticBot.evasion - bot.evasion}%</h4>;
+        currentDebuffs.push(currentEvasion);
+      }
+    } else {
+      const noDebuffs = <h3>No Debuffs</h3>;
+      currentDebuffs.push(noDebuffs);
+      return currentDebuffs;
+    }
+    return currentDebuffs;
+  };
+
   render () {
     const staticBot = {...this.props.staticBot};
     const bot = {...this.props.bot};
+    const currentHealth =  ((bot.health / staticBot.health) * 100);
+    const currentHealthPercent = currentHealth.toFixed(0);
     const healthRemaining = this.determineHealth(bot, staticBot);
     const specialBar = this.setSpecialBar(bot);
+    const debuffs = this.determineDebuffs(bot, staticBot);
     return (
       <div className="BattleBot col-xs-6">
+        {
+          (bot.user === 'user1') ? (
+            <img className='small-picture-left' src={bot.imgSmall} alt='robot head-shot' />
+          ) : (
+            <img className='small-picture-right' src={bot.imgSmall} alt='robot head-shot' />
+          )
+        }
         <div className="progress health-bar col-xs-6">
           <div className="progress-bar health-color" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={healthRemaining}>
-            <span className="sr-only">60% Complete</span>
+            {currentHealthPercent}%
           </div>
         </div>
         <img className='robot-img' src={bot.img} alt="robot"/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
           {specialBar}
+        </div>
+        <div className='debuffs'>
+          <h3>Current Debuffs</h3>
+          {debuffs}
         </div>
       </div>
     );

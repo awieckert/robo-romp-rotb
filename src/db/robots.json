@@ -16,6 +16,7 @@
     "superDescription": "Lead Foot! Stripes enemy of their armor and dramatically reduces their Crit Chance. Deals a smudge of damage.",
     "id": "GoliathATV",
     "img": "../../img/goliath.jpg",
+    "imgSmall": "../../img/goliathSmall.jpg",
     "description": "The Goliath-ATV is a slow monstrosity of a machine. Otherwise known as `Beef Eater` this ATV has loads of health, tough armor and moderate attack damage."
   },
   "merlin": {
@@ -35,6 +36,7 @@
     "superDescription": "Mind Fray! Deals substantial damage and slightly decreases enemy evasion for a short period.",
     "id": "MerlinATV",
     "img": "../../img/merlin.png",
+    "imgSmall": "../../img/merlinSmall.png",
     "description": "The Merlin-ATV is a glass cannon. Expect high damage output from this ATV, but keep your distance these ATVs have lower health and even lower resistance to attacks."
   },
   "gryphon": {
@@ -54,6 +56,7 @@
     "superDescription": "Hearty Hit! Reduces armor of heavily armored enemies. Deals moderate damage and increase enemies time to next special.",
     "id": "Gryphon",
     "img": "../../img/gryphon2.jpg",
+    "imgSmall": "../../img/gryphon2Small.jpg",
     "description": "The Gryphon, AKA Mr. Generic. This flying robot is your standard front line soldier. Solid across all stats. Expect steady damage output, moderate armor and substantial health. Slightly higher crit chance than they Goliath-ATV"
   },
   "stinger": {
@@ -72,6 +75,7 @@
     "user": "",
     "superDescription": "Missile Launch! Deals moderate damage but decreases time until next special can be used.",
     "img": "../../img/stinger.jpg",
+    "imgSmall": "../../img/stingerSmall.jpg",
     "id": "Stinger",
     "description": "The Stinger is a nimble, lightly armored flying bot. Above average base attack and crit chance. These bots have relatively low health but can devastate the battle field"
   },
@@ -92,6 +96,7 @@
     "superDescription": "Flurry of Knives! Deals moderate to high damage, deminishes enemies critical multiplier and increase the time for enemies to use their specials.",
     "id": "CombatRogue",
     "img": "../../img/combat-rogue.jpg",
+    "imgSmall": "../../img/combat-rogueSmall.jpg",
     "description": "The Combat-Rogue wields two swords. Fast and in your face. Rogue's don't have much armor and the lowest base attack of any bot class but crit regularly. Combat-Rogues have higher base attack than Assassination-Rogues but crit slightly less."
   },
   "assassinationRogue": {
@@ -111,6 +116,7 @@
     "superDescription": "Deadly Poison Strike! Erodes enemy armor, cripples their ability to evade and deals moderate damage.",
     "id": "AssassinationRogue",
     "img": "../../img/assass-rogue.jpg",
+    "imgSmall": "../../img/assass-rogueSmall.jpg",
     "description": "The Assassination-Rogue unleashes devastating flurries of attacks with his two daggers. Lowest base attack but highest crit chance and crit multiplier of any bot. Take a chance...it may pay off."
   },
   "paladin": {
@@ -131,6 +137,7 @@
     "user": "",
     "superDescription": "Hammer of Light! Deals minimal damage but heals user moderately.",
     "img": "../../img/bender.gif",
+    "imgSmall": "../../img/benderSmall.gif",
     "id": "PaladinDrone",
     "description": "The steadfast Paladin-Drone has built in nano-tech that can repair the Paladin in times of need. These drones are built to weather the storm instead of bring the heat."
   },
@@ -151,6 +158,7 @@
     "superDescription": "Awesome-o 3000 Blast! Slightly reduces enemy armor and Crit Chance. Deals moderate damage.",
     "id": "SuperAwesomeBot",
     "img": "../../img/awesomeo.jpeg",
+    "imgSmall": "../../img/awesomeoSmall.jpg",
     "description": "This bot is awesome...enough said."
   }
 }

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 
   .health-bar {
     align-self: center;
@@ -11,6 +12,35 @@
 
   .health-color {
     background: #C9302C;
+  }
+
+  .small-picture-right {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -40px;
+    right: 22%;
+    border-radius: 10px;
+    z-index: 5000;
+  }
+
+  .small-picture-left {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -40px;
+    left: 22%;
+    border-radius: 10px;
+    z-index: 5000;
+  }
+
+  .debuffs {
+    background-color: rgb(87, 37, 83);
+    color: rgb(175, 175, 175);
+    height: 150px;
+    width: 50%;
+    border-radius: 10px;
+    align-self: center;
   }
 
   img {
