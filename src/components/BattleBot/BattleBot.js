@@ -72,6 +72,19 @@ class BattleBot extends Component {
     return attackAnimation;
   };
 
+  determineSpecial = (bot) => {
+    const turn = this.props.turn;
+    let specialAttack = '';
+    if ((turn === 'enemy') && (bot.user === 'user1')) {
+      specialAttack = 'special-attack-visible-user1';
+    } else if ((turn === 'user') && (bot.user === 'user2')) {
+      specialAttack = 'special-attack-visible-user2';
+    } else {
+      specialAttack = 'special-attack-not-visible';
+    }
+    return specialAttack;
+  };
+
   render () {
     const staticBot = {...this.props.staticBot};
     const bot = {...this.props.bot};
@@ -84,6 +97,11 @@ class BattleBot extends Component {
     let robotImg = 'robot-image';
     if (this.props.attacking) {
       robotImg += ` ${attackAnimation}`;
+    }
+
+    let specialAttack = 'special-attack-not-visible';
+    if (this.props.attacking) {
+      specialAttack = this.determineSpecial(bot);
     }
     return (
       <div className="BattleBot col-xs-6">
@@ -100,6 +118,7 @@ class BattleBot extends Component {
           </div>
         </div>
         <img className={robotImg} src={bot.img} alt="robot"/>
+        <img className={specialAttack} src="../../img/beam.png" alt='beam'/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
           {specialBar}
