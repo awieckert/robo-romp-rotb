@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SpecialBar from '../SpecialBar/SpecialBar.js';
 import './BattleBot.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class BattleBot extends Component {
 
