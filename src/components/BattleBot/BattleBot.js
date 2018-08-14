@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SpecialBar from '../SpecialBar/SpecialBar.js';
 import './BattleBot.css';
-import '../../../node_modules/animate.css/animate.min.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class BattleBot extends Component {
 
@@ -63,9 +63,17 @@ class BattleBot extends Component {
     const turn = this.props.turn;
     let attackAnimation = '';
     if ((turn === 'enemy') && (bot.user === 'user1')) {
-      attackAnimation = 'animated slideInLeft';
+      if (this.props.specialUsed) {
+        attackAnimation = 'animated shake';
+      } else {
+        attackAnimation = 'animated slideInLeft';
+      }
     } else if ((turn === 'user') && (bot.user === 'user2')) {
-      attackAnimation = 'animated slideInRight';
+      if (this.props.specialUsed) {
+        attackAnimation = 'animated shake2';
+      } else {
+        attackAnimation = 'animated slideInRight';
+      }
     } else {
       attackAnimation = '';
     }
@@ -100,7 +108,7 @@ class BattleBot extends Component {
     }
 
     let specialAttack = 'special-attack-not-visible';
-    if (this.props.attacking) {
+    if (this.props.specialUsed) {
       specialAttack = this.determineSpecial(bot);
     }
     return (

@@ -23,6 +23,7 @@ class FightArena extends Component {
       isCritical: false,
       evaded: false,
       attacking: false,
+      specialUsed: false,
     },
   };
 
@@ -30,6 +31,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    gameObject.specialUsed = true;
     if (gameObject.turn === 'user') {
       const updatedGameObject =  userRobot.specialAttack(userRobot, enemyRobot, gameObject);
       if (updatedGameObject.enemyRobot.health <= 0) {
@@ -138,6 +140,7 @@ class FightArena extends Component {
 
   userAttack = (e) => {
     const {gameObject} = {...this.state};
+    gameObject.specialUsed = false;
     if (!this.state.gameObject.attacking) {
       gameObject.attacking = true;
     }
@@ -237,6 +240,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    gameObject.specialUsed = false;
     if (!this.props.onlinePlay && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
       this.useSpecialAttack();
       return;
@@ -482,8 +486,8 @@ class FightArena extends Component {
             </div>
           </div>
           <div className='row flex-arena'>
-            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
-            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} specialUsed={this.state.gameObject.specialUsed} turn={this.state.gameObject.turn} bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} specialUsed={this.state.gameObject.specialUsed} turn={this.state.gameObject.turn} bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
           </div>
         </div>
       );

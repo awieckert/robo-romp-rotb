@@ -51,6 +51,7 @@ class GameMode extends Component {
       evaded: false,
       attacking: false,
       online: true,
+      specialUsed: false,
     };
     onlineMatchRequests.createOnlineMatch(gameObject).then((uniqueId) => {
       onlineMatchRequests.getOnlineMatches().then((onlineMatches) => {
