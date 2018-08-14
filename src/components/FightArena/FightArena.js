@@ -7,6 +7,7 @@ import userRequests from '../../firebaseRequests/userRequests.js';
 import './FightArena.css';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import basicAttack from '../../basicAttack.js';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class FightArena extends Component {
   state = {
@@ -22,6 +23,7 @@ class FightArena extends Component {
       isCritical: false,
       evaded: false,
       attacking: false,
+      specialUsed: false,
     },
   };
 
@@ -29,6 +31,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    gameObject.specialUsed = true;
     if (gameObject.turn === 'user') {
       const updatedGameObject =  userRobot.specialAttack(userRobot, enemyRobot, gameObject);
       if (updatedGameObject.enemyRobot.health <= 0) {
@@ -61,6 +64,9 @@ class FightArena extends Component {
               }).catch((err) => {
                 console.error('Failed to updated online game: ', err);
               });
+            } else {
+              this.setState({gameObject: updatedGameObject});
+              this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
@@ -113,6 +119,9 @@ class FightArena extends Component {
               }).catch((err) => {
                 console.error('Failed to update online game: ', err);
               });
+            } else {
+              this.setState({gameObject: updatedGameObject});
+              this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
@@ -137,6 +146,7 @@ class FightArena extends Component {
 
   userAttack = (e) => {
     const {gameObject} = {...this.state};
+    gameObject.specialUsed = false;
     if (!this.state.gameObject.attacking) {
       gameObject.attacking = true;
     }
@@ -236,6 +246,7 @@ class FightArena extends Component {
     const {gameObject} = {...this.state};
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
+    gameObject.specialUsed = false;
     if (!this.props.onlinePlay && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
       this.useSpecialAttack();
       return;
@@ -481,8 +492,8 @@ class FightArena extends Component {
             </div>
           </div>
           <div className='row flex-arena'>
-            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
-            <BattleBot attacking={this.state.gameObject.attacking} turn={this.state.gameObject.turn} bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} specialUsed={this.state.gameObject.specialUsed} turn={this.state.gameObject.turn} bot={this.state.gameObject.userRobot} staticBot={this.state.gameObject.userStaticRobot} />
+            <BattleBot attacking={this.state.gameObject.attacking} specialUsed={this.state.gameObject.specialUsed} turn={this.state.gameObject.turn} bot={this.state.gameObject.enemyRobot} staticBot={this.state.gameObject.enemyStaticRobot} />
           </div>
         </div>
       );

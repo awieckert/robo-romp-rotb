@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SpecialBar from '../SpecialBar/SpecialBar.js';
 import './BattleBot.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class BattleBot extends Component {
 
@@ -62,13 +63,34 @@ class BattleBot extends Component {
     const turn = this.props.turn;
     let attackAnimation = '';
     if ((turn === 'enemy') && (bot.user === 'user1')) {
-      attackAnimation = 'animated fadeInLeftBig';
+      if (this.props.specialUsed) {
+        attackAnimation = 'animated shake';
+      } else {
+        attackAnimation = 'animated slideInLeft';
+      }
     } else if ((turn === 'user') && (bot.user === 'user2')) {
-      attackAnimation = 'animated fadeInRightBig';
+      if (this.props.specialUsed) {
+        attackAnimation = 'animated shake2';
+      } else {
+        attackAnimation = 'animated slideInRight';
+      }
     } else {
       attackAnimation = '';
     }
     return attackAnimation;
+  };
+
+  determineSpecial = (bot) => {
+    const turn = this.props.turn;
+    let specialAttack = '';
+    if ((turn === 'enemy') && (bot.user === 'user1')) {
+      specialAttack = 'special-attack-visible-user1';
+    } else if ((turn === 'user') && (bot.user === 'user2')) {
+      specialAttack = 'special-attack-visible-user2';
+    } else {
+      specialAttack = 'special-attack-not-visible';
+    }
+    return specialAttack;
   };
 
   render () {
@@ -81,8 +103,19 @@ class BattleBot extends Component {
     const debuffs = this.determineDebuffs(bot, staticBot);
     const attackAnimation = this.determineAttackAnimation(bot);
     let robotImg = 'robot-image';
+    let beam = '';
+    if (bot.user === 'user1') {
+      beam = '../../img/beam.png';
+    } else if (bot.user === 'user2') {
+      beam = '../../img/laser2.png';
+    }
     if (this.props.attacking) {
       robotImg += ` ${attackAnimation}`;
+    }
+
+    let specialAttack = 'special-attack-not-visible';
+    if (this.props.specialUsed) {
+      specialAttack = this.determineSpecial(bot);
     }
     return (
       <div className="BattleBot col-xs-6">
@@ -99,6 +132,7 @@ class BattleBot extends Component {
           </div>
         </div>
         <img className={robotImg} src={bot.img} alt="robot"/>
+        <img className={specialAttack} src={beam} alt='beam'/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
           {specialBar}
