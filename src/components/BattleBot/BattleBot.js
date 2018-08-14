@@ -103,6 +103,12 @@ class BattleBot extends Component {
     const debuffs = this.determineDebuffs(bot, staticBot);
     const attackAnimation = this.determineAttackAnimation(bot);
     let robotImg = 'robot-image';
+    let beam = '';
+    if (bot.user === 'user1') {
+      beam = '../../img/beam.png';
+    } else if (bot.user === 'user2') {
+      beam = '../../img/laser2.png';
+    }
     if (this.props.attacking) {
       robotImg += ` ${attackAnimation}`;
     }
@@ -126,7 +132,7 @@ class BattleBot extends Component {
           </div>
         </div>
         <img className={robotImg} src={bot.img} alt="robot"/>
-        <img className={specialAttack} src="../../img/beam.png" alt='beam'/>
+        <img className={specialAttack} src={beam} alt='beam'/>
         <h3>Special Gauge</h3>
         <div className='special-bar'>
           {specialBar}

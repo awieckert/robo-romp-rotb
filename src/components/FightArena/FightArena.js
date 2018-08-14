@@ -64,6 +64,9 @@ class FightArena extends Component {
               }).catch((err) => {
                 console.error('Failed to updated online game: ', err);
               });
+            } else {
+              this.setState({gameObject: updatedGameObject});
+              this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
@@ -116,6 +119,9 @@ class FightArena extends Component {
               }).catch((err) => {
                 console.error('Failed to update online game: ', err);
               });
+            } else {
+              this.setState({gameObject: updatedGameObject});
+              this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
             console.error('Failed to update enemy profile: ', err);
