@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './SmallBot.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class SmallBot extends Component {
 
@@ -22,7 +23,7 @@ class SmallBot extends Component {
       );
     });
     return (
-      <div className='smallbots-flex'>
+      <div className='smallbots-flex animated fadeInUp'>
         {printBots}
       </div>
     );

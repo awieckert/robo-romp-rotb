@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import './LargeBot.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class LargeBot extends Component {
   state = {
@@ -83,7 +84,7 @@ class LargeBot extends Component {
     let botToPrint = '';
     if ((bot.name && (this.state.isSelected === false)) && !bot.computer) {
       botToPrint =  <div>
-        <div className='col-xs-6'>
+        <div className='col-xs-6 animated fadeInDown'>
           <div className='flex-center'>
             <img src={bot.img} alt='bigRobot'/>
           </div>
@@ -92,7 +93,7 @@ class LargeBot extends Component {
           </div>
         </div>
 
-        <div className='info col-xs-6'>
+        <div className='info col-xs-6 animated fadeInDown'>
           <h4><strong>{bot.name}</strong></h4>
           <h5><strong>Health:</strong> {bot.health}</h5>
           <h5><strong>Attack:</strong> {bot.attack}</h5>

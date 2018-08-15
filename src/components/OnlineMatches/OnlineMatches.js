@@ -1,6 +1,7 @@
 import React from 'react';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import './OnlineMatches.css';
+import '../../../node_modules/animate.css/animate.css';
 
 class OnlineMatches extends React.Component {
   state = {
@@ -47,7 +48,7 @@ class OnlineMatches extends React.Component {
       );
     });
     return (
-      <div className="OnlineMatches col-xs-12">
+      <div className="OnlineMatches col-xs-12 animated fadeIn delay-1s">
         <div className="panel panel-default">
           <div className="panel-heading flex-header">
             <h3 className="panel-title">Online Matches</h3>
