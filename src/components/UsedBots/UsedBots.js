@@ -1,5 +1,6 @@
 import React from 'react';
 import './UsedBots.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class UsedBots extends React.Component {
 
@@ -14,7 +15,7 @@ class UsedBots extends React.Component {
       );
     });
     return (
-      <div className='UsedBots'>
+      <div className='UsedBots animated fadeIn delay-2s'>
         {botsToPrint}
       </div>
     );

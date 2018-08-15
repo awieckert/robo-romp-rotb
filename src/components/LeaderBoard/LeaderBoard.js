@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './LeaderBoard.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class LeaderBoard extends Component {
   state = {
@@ -55,7 +56,7 @@ class LeaderBoard extends Component {
 
     return (
       <div>
-        <div className="LeaderBoard">
+        <div className="LeaderBoard animated bounceInDown">
           <div className="panel panel-default">
             <div className="panel-heading flex-header">
               <h3 className="panel-title">Single Player Champions</h3>
@@ -69,7 +70,7 @@ class LeaderBoard extends Component {
             {spLeaderBoard}
           </div>
         </div>
-        <div className="LeaderBoard">
+        <div className="LeaderBoard animated bounceInUp">
           <div className="panel panel-default">
             <div className="panel-heading flex-header">
               <h3 className="panel-title">Online Play Champions</h3>
