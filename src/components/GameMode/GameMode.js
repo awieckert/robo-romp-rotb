@@ -109,7 +109,7 @@ class GameMode extends Component {
     return (
       <div className="GameMode">
         <div className='user-profile-bttn'>
-          <button className='bttn-fill bttn-md bttn-primary bttn-no-outline ' onClick={this.toUserProfile}>User Profile</button>
+          <button className='bttn-unite bttn-md bttn-primary bttn-no-outline' onClick={this.toUserProfile}>User Profile</button>
         </div>
 
         <div className='flex-title'>

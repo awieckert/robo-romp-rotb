@@ -1,3 +1,29 @@
 .UserProfile {
-  color: whitesmoke;
+
+  .profile-info {
+    color: black;
+    background: #1d89ff;
+  }
+
+  .top-border {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .bottom-border {
+    border-radius: 0px 0px 10px 10px;
+  }
+
+  .top-bottom-margin {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  h3 {
+    margin-top: 8px;
+  }
+
+  h2 {
+    margin-top: 10px;
+  }
+
 }
