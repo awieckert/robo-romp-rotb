@@ -129,7 +129,7 @@ class App extends Component {
   };
 
   componentDidMount () {
-    const backgroundMusicUrl = '../../audio/daftPunk.mp3';
+    const backgroundMusicUrl = '../../audio/transformersBackground.mp3';
     const backgroundAudio = new Audio(backgroundMusicUrl);
     const countDownAudio = '../../audio/countDownAndFight.mp3';
     const countDown = new Audio(countDownAudio);
