@@ -169,6 +169,7 @@ class FightArena extends Component {
       damageDealt = (attackDamage - enemyRobot.armor);
       gameObject.evaded = false;
       gameObject.isCritical = false;
+      userRobot.attackCount += 1;
       if (attackDamage > userRobot.attack) {
         gameObject.isCritical = true;
         gameObject.evaded = false;
@@ -180,7 +181,7 @@ class FightArena extends Component {
     damageDealt = (damageDealt.toFixed(1) * 1);
     gameObject.userProfile.dmgDealt += damageDealt;
     enemyRobot.health = (enemyRobot.health - damageDealt);
-    userRobot.attackCount += 1;
+
     gameObject.attackDamage = damageDealt;
     gameObject.userRobot = userRobot;
     gameObject.enemyRobot = enemyRobot;
@@ -268,6 +269,7 @@ class FightArena extends Component {
       damageDealt = (attackDamage - userRobot.armor);
       gameObject.evaded = false;
       gameObject.isCritical = false;
+      enemyRobot.attackCount += 1;
       if (attackDamage > enemyRobot.attack) {
         gameObject.isCritical = true;
         gameObject.evaded = false;
@@ -278,7 +280,6 @@ class FightArena extends Component {
     }
     damageDealt = (damageDealt.toFixed(1) * 1);
     userRobot.health = (userRobot.health - damageDealt);
-    enemyRobot.attackCount += 1;
     gameObject.attackDamage = damageDealt;
     gameObject.userRobot = userRobot;
     gameObject.enemyRobot = enemyRobot;
