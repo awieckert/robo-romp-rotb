@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import userRequests from '../../firebaseRequests/userRequests.js';
 import './LeaderBoard.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class LeaderBoard extends Component {
   state = {

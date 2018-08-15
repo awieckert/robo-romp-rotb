@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import favoriteRequests from '../../firebaseRequests/favoriteRequests.js';
 import './LargeBot.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class LargeBot extends Component {
   state = {

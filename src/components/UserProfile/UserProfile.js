@@ -3,7 +3,7 @@ import userRequests from '../../firebaseRequests/userRequests.js';
 import firebase from 'firebase';
 import FavoriteBots from '../FavoriteBots/FavoriteBots.js';
 import './UserProfile.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class UserProfile extends React.Component {
   state = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import './UsedBots.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class UsedBots extends React.Component {
 

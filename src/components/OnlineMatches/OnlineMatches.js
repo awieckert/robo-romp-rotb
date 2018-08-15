@@ -1,7 +1,7 @@
 import React from 'react';
 import onlineMatchRequests from '../../firebaseRequests/onlineMatchRequests.js';
 import './OnlineMatches.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class OnlineMatches extends React.Component {
   state = {

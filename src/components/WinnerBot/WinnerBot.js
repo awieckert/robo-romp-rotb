@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './WinnerBot.css';
-import '../../../node_modules/animate.css/animate.css';
+import '../../../node_modules/animate.css/animate.min.css';
 
 class WinnerBot extends Component {
   state = {
