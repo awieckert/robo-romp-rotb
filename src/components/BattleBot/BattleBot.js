@@ -68,7 +68,7 @@ class BattleBot extends Component {
       } else {
         attackAnimation = 'animated slideInLeft';
       }
-    } else if ((turn === 'user') && (bot.user === 'user2')) {
+    } else if (((turn === 'user') && (bot.user === 'user2')) || ((turn === 'user') && (bot.user === 'enemy'))) {
       if (this.props.specialUsed) {
         attackAnimation = 'animated shake2';
       } else {
@@ -85,7 +85,7 @@ class BattleBot extends Component {
     let specialAttack = '';
     if ((turn === 'enemy') && (bot.user === 'user1')) {
       specialAttack = 'special-attack-visible-user1';
-    } else if ((turn === 'user') && (bot.user === 'user2')) {
+    } else if (((turn === 'user') && (bot.user === 'user2')) || ((turn === 'user') && (bot.user === 'enemy'))) {
       specialAttack = 'special-attack-visible-user2';
     } else {
       specialAttack = 'special-attack-not-visible';
@@ -106,7 +106,7 @@ class BattleBot extends Component {
     let beam = '';
     if (bot.user === 'user1') {
       beam = '../../img/beam.png';
-    } else if (bot.user === 'user2') {
+    } else if ((bot.user === 'user2') || (bot.user === 'enemy')) {
       beam = '../../img/laser2.png';
     }
     if (this.props.attacking) {
