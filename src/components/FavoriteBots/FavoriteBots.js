@@ -33,7 +33,7 @@ class FavoriteBots extends React.Component {
       );
     });
     return (
-      <div className='FavoriteBots'>
+      <div className='FavoriteBots col-sm-12 animated fadeInUp delay-3s'>
         {botsToPrint}
       </div>
     );
