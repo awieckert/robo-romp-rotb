@@ -60,12 +60,18 @@ class FightArena extends Component {
             if (this.props.onlinePlay) {
               onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
                 this.setState({gameObject: updatedGameObject});
+                const player1WinsUrl = '../../audio/player1-wins.mp3';
+                const playerWinsAudio = new Audio(player1WinsUrl);
+                window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
                 this.props.history.push('/winnerscreen');
               }).catch((err) => {
                 console.error('Failed to updated online game: ', err);
               });
             } else {
               this.setState({gameObject: updatedGameObject});
+              const player1WinsUrl = '../../audio/player1-wins.mp3';
+              const playerWinsAudio = new Audio(player1WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
@@ -115,12 +121,18 @@ class FightArena extends Component {
             if (this.props.onlinePlay) {
               onlineMatchRequests.updateOnlineGame(updatedGameObject.id, updatedGameObject).then(() => {
                 this.setState({gameObject: updatedGameObject});
+                const player2WinsUrl = '../../audio/player2-wins.mp3';
+                const playerWinsAudio = new Audio(player2WinsUrl);
+                window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
                 this.props.history.push('/winnerscreen');
               }).catch((err) => {
                 console.error('Failed to update online game: ', err);
               });
             } else {
               this.setState({gameObject: updatedGameObject});
+              const player2WinsUrl = '../../audio/player2-wins.mp3';
+              const playerWinsAudio = new Audio(player2WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             }
           }).catch((err) => {
@@ -214,12 +226,18 @@ class FightArena extends Component {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
           if (this.props.onlinePlay) {
             onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then(() => {
+              const player1WinsUrl = '../../audio/player1-wins.mp3';
+              const playerWinsAudio = new Audio(player1WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             }).catch((err) => {
               console.error('Failed to update online game: ', err);
             });
           } else {
             this.setState({gameObject: gameObject});
+            const player1WinsUrl = '../../audio/player1-wins.mp3';
+            const playerWinsAudio = new Audio(player1WinsUrl);
+            window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
             this.props.history.push('/winnerscreen');
           }
         }).catch((err) => {
@@ -308,12 +326,18 @@ class FightArena extends Component {
         userRequests.updateUserProfile(gameObject.enemyProfile.id, gameObject.enemyProfile).then(() => {
           if (this.props.onlinePlay) {
             onlineMatchRequests.updateOnlineGame(gameObject.id, gameObject).then(() => {
+              const player2WinsUrl = '../../audio/player2-wins.mp3';
+              const playerWinsAudio = new Audio(player2WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             }).catch((err) => {
               console.error('Failed to update online game: ', err);
             });
           } else {
             this.setState({gameObject: gameObject});
+            const player2WinsUrl = '../../audio/player2-wins.mp3';
+            const playerWinsAudio = new Audio(player2WinsUrl);
+            window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
             this.props.history.push('/winnerscreen');
           }
         }).catch((err) => {
@@ -453,11 +477,17 @@ class FightArena extends Component {
               this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
               this.props.setWinnerBot(this.state.gameObject.enemyRobot);
               this.setState({gameObject: newGameObject});
+              const player2WinsUrl = '../../audio/player2-wins.mp3';
+              const playerWinsAudio = new Audio(player2WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             } else if (newGameObject.enemyRobot.health <= 0) {
               this.props.setWinnerProfile(this.state.gameObject.userProfile);
               this.props.setWinnerBot(this.state.gameObject.userRobot);
               this.setState({gameObject: newGameObject});
+              const player1WinsUrl = '../../audio/player1-wins.mp3';
+              const playerWinsAudio = new Audio(player1WinsUrl);
+              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
               this.props.history.push('/winnerscreen');
             } else {
               this.setState({gameObject: newGameObject});
