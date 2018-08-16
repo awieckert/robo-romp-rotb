@@ -1,9 +1,14 @@
 .UserProfile {
 
-  .profile-info {
+  span {
     color: black;
-    background: #1d89ff;
+    font-weight: bold;
   }
+
+  .profile-info {
+    color: rgb(224, 224, 224);
+    background: #1d89ff;
+    }
 
   .top-border {
     border-radius: 10px 10px 0px 0px;
@@ -25,5 +30,4 @@
   h2 {
     margin-top: 10px;
   }
-
 }

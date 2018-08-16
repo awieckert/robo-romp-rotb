@@ -256,7 +256,7 @@ class FightArena extends Component {
         });
       } else {
         this.setState({gameObject: gameObject});
-        window.setTimeout(this.enemyAttack, 1000);
+        window.setTimeout(this.enemyAttack, 1300);
       }
     }
   };

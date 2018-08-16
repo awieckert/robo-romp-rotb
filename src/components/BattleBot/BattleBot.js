@@ -60,7 +60,7 @@ class BattleBot extends Component {
   };
 
   determineAttackAnimation = (bot) => {
-    if (this.props.attacking) {
+    if ((this.props.attacking) && (bot.health > 0)) {
       const turn = this.props.turn;
       let attackAnimation = '';
       if ((turn === 'enemy') && (bot.user === 'user1')) {
@@ -80,11 +80,11 @@ class BattleBot extends Component {
           attackAnimation = 'animated shake2';
         } else {
           const attackSoundUrl = '../../audio/attack.wav';
-          const hitSoundUrl = '../../audio/hit1.wav';
+          const hitSoundUrl = '../../audio/punch.mp3';
           const hitSound = new Audio(hitSoundUrl);
           const attackSound = new Audio(attackSoundUrl);
           attackSound.play();
-          window.setTimeout(() => { hitSound.play(); }, 250);
+          window.setTimeout(() => { hitSound.play(); }, 70);
           attackAnimation = 'animated slideInRight';
         }
       } else {

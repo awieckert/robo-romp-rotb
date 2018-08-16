@@ -53,21 +53,21 @@ class UserProfile extends React.Component {
             <div className='animated bounceInRight col-sm-offset-3 col-sm-6 profile-info top-border'>
               <h2>{userProfile.username}</h2>
               <h3>Single Player Stats</h3>
-              <h4>Games Played: {userProfile.spGames}</h4>
-              <h4>Wins: {userProfile.spWins}</h4>
-              <h4>Loses: {userProfile.spLoses}</h4>
+              <h4><span>Games Played:</span> {userProfile.spGames}</h4>
+              <h4><span>Wins:</span> {userProfile.spWins}</h4>
+              <h4><span>Loses:</span> {userProfile.spLoses}</h4>
             </div>
             <div className='animated bounceInLeft delay-1s col-sm-offset-3 col-sm-6 profile-info'>
               <h3>Online Stats</h3>
-              <h4>Games Played: {userProfile.olGames}</h4>
-              <h4>Wins: {userProfile.olWins}</h4>
-              <h4>Loses: {userProfile.olLoses}</h4>
+              <h4><span>Games Played:</span> {userProfile.olGames}</h4>
+              <h4><span>Wins:</span> {userProfile.olWins}</h4>
+              <h4><span>Loses:</span> {userProfile.olLoses}</h4>
             </div>
             <div className='animated bounceInRight delay-2s col-sm-offset-3 col-sm-6 profile-info bottom-border'>
               <h3>Career Stats</h3>
-              <h4>Total Games Played: {userProfile.spGames + userProfile.olGames}</h4>
-              <h4>Total Wins: {userProfile.spWins + userProfile.olWins}</h4>
-              <h4>Total Damage Dealt: {damage.toFixed(1)}</h4>
+              <h4><span>Total Games Played:</span> {userProfile.spGames + userProfile.olGames}</h4>
+              <h4><span>Total Wins:</span> {userProfile.spWins + userProfile.olWins}</h4>
+              <h4><span>Total Damage Dealt:</span> {damage.toFixed(1)}</h4>
             </div>
             <FavoriteBots favoriteBots={this.state.sortedFavoriteBots} />
             <div className='col-sm-offset-4 col-sm-4 animated fadeIn delay-4s'>
