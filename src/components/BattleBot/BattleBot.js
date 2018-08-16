@@ -60,32 +60,52 @@ class BattleBot extends Component {
   };
 
   determineAttackAnimation = (bot) => {
-    const turn = this.props.turn;
-    let attackAnimation = '';
-    if ((turn === 'enemy') && (bot.user === 'user1')) {
-      if (this.props.specialUsed) {
-        attackAnimation = 'animated shake';
+    if (this.props.attacking) {
+      const turn = this.props.turn;
+      let attackAnimation = '';
+      if ((turn === 'enemy') && (bot.user === 'user1')) {
+        if (this.props.specialUsed) {
+          attackAnimation = 'animated shake';
+        } else {
+          const attackSoundUrl = '../../audio/attack.wav';
+          const hitSoundUrl = '../../audio/hit1.wav';
+          const hitSound = new Audio(hitSoundUrl);
+          const attackSound = new Audio(attackSoundUrl);
+          attackSound.play();
+          window.setTimeout(() => { hitSound.play(); }, 250);
+          attackAnimation = 'animated slideInLeft';
+        }
+      } else if (((turn === 'user') && (bot.user === 'user2')) || ((turn === 'user') && (bot.user === 'enemy'))) {
+        if (this.props.specialUsed) {
+          attackAnimation = 'animated shake2';
+        } else {
+          const attackSoundUrl = '../../audio/attack.wav';
+          const hitSoundUrl = '../../audio/hit1.wav';
+          const hitSound = new Audio(hitSoundUrl);
+          const attackSound = new Audio(attackSoundUrl);
+          attackSound.play();
+          window.setTimeout(() => { hitSound.play(); }, 250);
+          attackAnimation = 'animated slideInRight';
+        }
       } else {
-        attackAnimation = 'animated slideInLeft';
+        attackAnimation = '';
       }
-    } else if (((turn === 'user') && (bot.user === 'user2')) || ((turn === 'user') && (bot.user === 'enemy'))) {
-      if (this.props.specialUsed) {
-        attackAnimation = 'animated shake2';
-      } else {
-        attackAnimation = 'animated slideInRight';
-      }
-    } else {
-      attackAnimation = '';
+      return attackAnimation;
     }
-    return attackAnimation;
   };
 
   determineSpecial = (bot) => {
     const turn = this.props.turn;
     let specialAttack = '';
     if ((turn === 'enemy') && (bot.user === 'user1')) {
+      const specialAttackUrl = '../../audio/hit2.wav';
+      const specialAttackSound = new Audio(specialAttackUrl);
+      specialAttackSound.play();
       specialAttack = 'special-attack-visible-user1';
     } else if (((turn === 'user') && (bot.user === 'user2')) || ((turn === 'user') && (bot.user === 'enemy'))) {
+      const specialAttackUrl = '../../audio/hit2.wav';
+      const specialAttackSound = new Audio(specialAttackUrl);
+      specialAttackSound.play();
       specialAttack = 'special-attack-visible-user2';
     } else {
       specialAttack = 'special-attack-not-visible';
