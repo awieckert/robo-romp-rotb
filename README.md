@@ -47,7 +47,6 @@ Winner Screen:\
 
 # How to Run:
 1. Clone down repo https://github.com/awieckert/robo-romp-rotb
-1. In root of cloned folder run `npx create-react-app react-setup`
 1. Rename `src/constants.js.example` to `src/constants.js`
 1. Create a free firebase database and add unique info to `src/constants.js`
 1. Use seed data in `src/db/` to start your database
