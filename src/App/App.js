@@ -13,6 +13,7 @@ import './App.css';
 firebaseConnection();
 
 const renderMergedProps = (component, ...rest) => {
+  // Returns a react element of the component being passed and well as the rest of the attributes/props being passed to the specific route
   const finalProps = Object.assign({}, ...rest);
   return (
     React.createElement(component, finalProps)
@@ -20,6 +21,7 @@ const renderMergedProps = (component, ...rest) => {
 };
 
 const PrivateRoute = ({component, authed, ...rest}) => {
+  // Returns a Route component with the passed in attributes as props IF authed is true
   return (
     <Route
       {...rest}
@@ -66,6 +68,7 @@ class App extends Component {
   }
 
   pauseCountDownAudio = () => {
+    // Function to pause the count down/ fight song. Need to recreate new instance of the song in state because, setCurrentTime = 0 will not work with how React stores the HTML element in state
     this.state.countDownAudio.pause();
     const audioUrl = '../../audio/countDownAndFight.mp3';
     const newCountDown = new Audio(audioUrl);
@@ -73,6 +76,7 @@ class App extends Component {
   };
 
   pauseBackgroundAudio = () => {
+    // Pause the original background music, not reacting a new instance of it because I do not want it to start over. It is long enough.
     this.state.backgroundAudio.pause();
   };
 
