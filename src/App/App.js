@@ -62,7 +62,6 @@ class App extends Component {
     sortedFavorites: [],
     currentOnlineMatch: {},
     onlinePlay: false,
-    playersReady: false,
     backgroundAudio: {},
     countDownAudio: {},
   }
@@ -78,14 +77,6 @@ class App extends Component {
   pauseBackgroundAudio = () => {
     // Pause the original background music, not reacting a new instance of it because I do not want it to start over. It is long enough.
     this.state.backgroundAudio.pause();
-  };
-
-  setPlayersReady = () => {
-    this.setState({playersReady: true});
-  };
-
-  setPlayersNotReady = () => {
-    this.setState({playersReady: false});
   };
 
   setOnlinePlay = () => {
@@ -158,8 +149,8 @@ class App extends Component {
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setOnlinePlay={this.setOnlinePlay} backgroundAudio={this.state.backgroundAudio} pauseCountDownAudio={this.pauseCountDownAudio}/>
-              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady} pauseBackgroundAudio={this.pauseBackgroundAudio} countDownAudio={this.state.countDownAudio}/>
-              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} playersReady={this.state.playersReady} currentOnlineMatch={this.state.currentOnlineMatch} />
+              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} pauseBackgroundAudio={this.pauseBackgroundAudio} countDownAudio={this.state.countDownAudio}/>
+              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
               <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} setAuthedFalse={this.setAuthedFalse} sortedFavorites={this.state.sortedFavorites} />
             </Switch>

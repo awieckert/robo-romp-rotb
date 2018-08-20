@@ -36,11 +36,6 @@ class LargeBot extends Component {
         onlineMatchRequests.updateOnlineGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
           onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
             this.props.setCurrentOnlineMatch(onlineMatch);
-            if (onlineMatch.userProfile.uid && onlineMatch.enemyProfile.uid) {
-              this.props.setPlayersReady();
-            } else {
-              this.props.setPlayersNotReady();
-            }
           }).catch((err) => {
             console.error('Could not get current Online Match: ', err);
           });
