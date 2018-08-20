@@ -86,6 +86,7 @@ class RegisterModal extends React.Component {
   }
 
   registerEmailInfo = (e) => {
+    // Function is triggered every time a keypress event happens in the email field. Sets state with the current value of that field
     const userEmail = e.target.value;
     const newRegisterProfile = {...this.state.registerProfile};
     newRegisterProfile.email = userEmail;
@@ -93,6 +94,7 @@ class RegisterModal extends React.Component {
   };
 
   registerUserNameInfo = (e) => {
+    // Function is triggered every time a keypress event happens in the username field. Sets state with the current value of that field
     const userName = e.target.value;
     const newUserProfile = {...this.state.userProfile};
     newUserProfile.username = userName;
@@ -100,6 +102,7 @@ class RegisterModal extends React.Component {
   };
 
   registerPasswordInfo = (e) => {
+    // Function is triggered every time a keypress event happens in the password field. Sets state with the current value of that field
     const userPassword = e.target.value;
     const newRegisterProfile = {...this.state.registerProfile};
     newRegisterProfile.password = userPassword;
@@ -107,12 +110,17 @@ class RegisterModal extends React.Component {
   };
 
   createUserAccount = () => {
+    // Closes the modal and registers the user in firebase
     this.handleClose();
     firebase.auth().createUserWithEmailAndPassword(this.state.registerProfile.email, this.state.registerProfile.password).then((data) => {
+
+      // Adds the uid and email address to the user Profile then sets state of the component with it.
       const newUserProfile = {...this.state.userProfile};
       newUserProfile.email = this.state.registerProfile.email;
       newUserProfile.uid = data.user.uid;
       this.setState({userProfile: newUserProfile});
+
+      // Creates a new user object with userData in firebase then creates a new favorite bot collection in firebase for the new user.
       userRequests.createUser(this.state.userProfile).then(() => {
         const {favoriteBots} = {...this.state};
         favoriteBots.uid = data.user.uid;
@@ -130,14 +138,17 @@ class RegisterModal extends React.Component {
   };
 
   handleClose () {
+    // Closes the modal
     this.setState({ show: false });
   }
 
   handleShow () {
+    // Shows Modal
     this.setState({ show: true });
   }
 
   componentDidMount () {
+    // Allows the use of enter keypress to log in. Must check the userSignIn so that this event is not fired elsewhere in the application
     window.addEventListener('keypress', (e) => {
       if ((e.charCode === 13) && this.state.registerProfile.email !== '') {
         this.createUserAccount();
@@ -146,6 +157,7 @@ class RegisterModal extends React.Component {
   };
 
   componentWillUnmount () {
+    // Removes the window event listener allowing for the use of eneter keypress to log in.
     window.removeEventListener('keypress', (e) => {
       if ((e.charCode === 13) && this.state.registerProfile.email !== '') {
         this.createUserAccount();
