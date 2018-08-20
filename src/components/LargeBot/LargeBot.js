@@ -13,11 +13,13 @@ class LargeBot extends Component {
   };
 
   setUserBot = () => {
+    // Function used to set the user selected robot information
     const onlineMatchId = this.props.currentOnlineMatch.id;
     let currentOnlineMatch = {};
     const currentUserUid = firebase.auth().currentUser.uid;
     const bot = {...this.props.bot};
-    // breaking because not all data in promise
+
+    // Grabbing the most current online game object from firebase. If there is no online game to get from firebase, the .then() still is triggered with onlineMatch = null. This allows for the code inside the then to run.
     onlineMatchRequests.getCurrentOnlineMatch(onlineMatchId).then((onlineMatch) => {
       currentOnlineMatch = onlineMatch;
       if (this.props.onlinePlay) {
@@ -33,14 +35,14 @@ class LargeBot extends Component {
           currentOnlineMatch.enemyRobot = bot;
           currentOnlineMatch.enemyStaticRobot = bot;
         }
+
+        // Updating the firebase online game object with the most up to date information. Then we are grabbing the most up to date information again. This looks and feels crappy. But it is done to make sure each client has the most up to date version of the online game object. It is possible that within this current then statement the online game object was updated by the second user, making our local copy of the online game object out of date.
         onlineMatchRequests.updateOnlineGame(currentOnlineMatch.id, currentOnlineMatch).then(() => {
           onlineMatchRequests.getCurrentOnlineMatch(currentOnlineMatch.id).then((onlineMatch) => {
             this.props.setCurrentOnlineMatch(onlineMatch);
           }).catch((err) => {
             console.error('Could not get current Online Match: ', err);
           });
-          // need to get the unique game object and set state with it.
-          // check if the user profile's have both been set here and set a flag in state accordingly
         }).catch((err) => {
           console.error('Failed to update Online game object: ', err);
         });
@@ -58,6 +60,7 @@ class LargeBot extends Component {
   };
 
   findFavoriteBot = (robot) => {
+    // Fucntion is called within the setUserBot function. This is used to find the bot selected within the collection of favorites, add 1 to the number of times used, and then update the firebase favoriteBots collection
     const favoriteBots = {...this.state.favoriteBots};
     Object.keys(favoriteBots).forEach((key) => {
       if (favoriteBots[key].id === robot.id) {
@@ -70,14 +73,18 @@ class LargeBot extends Component {
   };
 
   componentDidMount () {
+    // Sets components state with the favoriteBots for the specific user. These are passed down from App's state
     const favoriteBots = {...this.props.favoriteBots};
     this.setState({favoriteBots: favoriteBots});
   };
 
   render () {
+    // Different robot elements will be rendered depending on given states of the app
     const bot = {...this.props.bot};
     let botToPrint = '';
     if ((bot.name && (this.state.isSelected === false)) && !bot.computer) {
+
+      // Checks to see if there is a bot, that the user has not selected and that the bot is not a computer
       botToPrint =  <div>
         <div className='col-xs-6 animated fadeInDown'>
           <div className='flex-center'>
@@ -101,12 +108,16 @@ class LargeBot extends Component {
         </div>
       </div>;
     } else if ((bot.name && (this.state.isSelected)) || bot.computer) {
+
+      // This JSX is rendered when there is a bot and the user has selected, or when the bot is the computers bot.
       botToPrint = <div>
         <div className='large-bot-image col-xs-6'>
           <img src={bot.img} alt='bigRobot'/>
         </div>
       </div>;
     } else {
+
+      // When no small bot is clicked an empty div is the default
       botToPrint = <div></div>;
     }
     return (
