@@ -22,6 +22,7 @@ const getUserSortedFavorites = (uid) => {
         });
       }
       Object.keys(favoriteBots[0]).forEach((item) => {
+        // Because the data returned for a users favorite bots has unqiue identifiers on it, uid and id. This loop is to remove them from the data to be sorted
         if ((item !== 'uid') && (item !== 'id')) {
           favoritesArray.push(favoriteBots[0][item]);
         }

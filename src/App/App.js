@@ -80,50 +80,62 @@ class App extends Component {
   };
 
   setOnlinePlay = () => {
+    // Sets flag for determining if game is online game or not
     this.setState({onlinePlay: true});
   };
 
   setCurrentOnlineMatch = (currentMatch) => {
+    // Function that is passed throughout the application to make sure the currentOnlineMatch in App's state is always up to date
     this.setState({currentOnlineMatch: currentMatch});
   };
 
   setSortedFavorites = (sortedFavorites) => {
+    // Sets App's state with the sorted favorite bots grabbed from firebase for the logged in user
     this.setState({sortedFavorites: sortedFavorites});
   };
 
   setFavoriteBots = (favorites) => {
+    // Sets App's state with a list of all the bots and the number of times a user has used them. Used to update usage of a given bot later on.
     this.setState({favoriteBots: favorites});
   };
 
   setActiveUser = (activeUser) => {
+    // Set current user profile in the apps state. Grabbed from firebase once logged in.
     this.setState({userProfile: activeUser});
   };
 
   setUserRobot = (robot) => {
+    // Used to set the user selected robot in App's state
     this.setState({userRobot: robot});
   };
 
   setEnemyProfile = (enemyInfo) => {
+    // used to set the enemy profile in apps state
     this.setState({enemyProfile: enemyInfo});
   };
 
   setEnemyRobot = (robot) => {
+    // Used to set app's state with enemy selected robot
     this.setState({enemyRobot: robot});
   };
 
   setWinnerProfile = (winner) => {
+    // Set the winning user profile in App's state, used to pass into the WinnerScreen component
     this.setState({winnerProfile: winner});
   };
 
   setWinnerBot = (bot) => {
+    // Set the winning bot in the App's state, used to pass into the WinnerScreen component
     this.setState({winnerBot: bot});
   };
 
   setAuthedFalse = () => {
+    // Used for a logging out a user, no routes except loggin are visible to the user when authed is false. Currently no log out button :)
     this.setState({authed: false});
   };
 
   componentDidMount () {
+    // initializes the audio. Checks the firebase user state when the component mounts. Updates the App's authed state accordingly
     const backgroundMusicUrl = '../../audio/transformersBackground.mp3';
     const backgroundAudio = new Audio(backgroundMusicUrl);
     const countDownAudio = '../../audio/countDownAndFight.mp3';
@@ -138,10 +150,12 @@ class App extends Component {
   }
 
   componentWillUnmount () {
+    // Checks the firebase user state when the component unmounts.
     this.checkUserState();
   }
 
   render () {
+    // Below are the base routes needed for the application. As you can see many attributes are passed to each route.
     return (
       <div className="App">
         <BrowserRouter>
