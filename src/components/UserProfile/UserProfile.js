@@ -12,6 +12,7 @@ class UserProfile extends React.Component {
   };
 
   deleteAccount = () => {
+    // When delete account button is clicked. Requires user to confirm with a prompt. Deletes user from firebase completely and pushes them back to the home page after setting the authed state of App to false.
     const areYouSure = prompt('Are you sure you want to delete? If so type YES');
     if (areYouSure === 'YES') {
       userRequests.reallyDeleteTheAccount(this.state.userProfile.id).then(() => {
@@ -29,13 +30,14 @@ class UserProfile extends React.Component {
   };
 
   toGameMode = () => {
+    // Function called when the Back button is clicked. Sends th user back to the Game Mode screen.
     this.props.history.push('/gamemode');
   };
 
   componentWillMount () {
-    const {userProfile} = {...this.props};
+    // When the component mounts it sets it's own state with sorted bot information passed down to it from App's state.
     const sortedFavoriteBots = [...this.props.sortedFavorites];
-    this.setState({userProfile: userProfile, sortedFavoriteBots: sortedFavoriteBots});
+    this.setState({sortedFavoriteBots: sortedFavoriteBots});
   }
 
   componentDidMount () {
