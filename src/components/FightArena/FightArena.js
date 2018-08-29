@@ -361,6 +361,7 @@ class FightArena extends Component {
   };
 
   attackFunction = (e) => {
+
     const {gameObject} = {...this.state};
     const {userProfile} = {...this.state.gameObject};
     const {enemyProfile} = {...this.state.gameObject};
@@ -385,22 +386,19 @@ class FightArena extends Component {
         this.useSpecialAttack();
       } else if ((this.state.gameObject.turn === 'user') && e.key === 'w') {
         this.userAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && e.key === 'a') {
-        this.enemyAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && (e.key === 's') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
-        this.useSpecialAttack();
       }
     }
   };
 
   displayDamage = () => {
+    // Grabbing the attack damage from state and if attacking is true, displaying it by sending it into the AttackResult Component
     let displayDamage = [];
     if (this.state.gameObject.attacking) {
       displayDamage = <AttackResult attackDamage={this.state.gameObject.attackDamage} evaded={this.state.gameObject.evaded} isCritical={this.state.gameObject.isCritical}/>;
     } else {
-      if (this.state.turn === 'user') {
+      if (this.state.gameObject.turn === 'user') {
         displayDamage = <div><h2>Player 1 Start!</h2></div>;
-      } else if (this.state.turn === 'enemy') {
+      } else if (this.state.gameObject.turn === 'enemy') {
         displayDamage = <div><h2>Player 2 Start!</h2></div>;
       }
     }
@@ -458,17 +456,19 @@ class FightArena extends Component {
           });
         }
 
-        // onlineMatchRequests.updateOnlineGame(gameObjectId, gameObject).then(() => {
-
+        // Creating reference to firebase database, gameRef is the specific reference for the current online game.
         const rootRef = firebase.database();
         const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
 
+        // setting up a listener on the game object in firebase. Any time data is changed on the gameObject in firebase, the entire object is sent back to the client with the updated data
         gameRef.on('value', (snapshot) => {
           const newGameObject = snapshot.val();
 
+          // firebase does not store functions, so the attack functions on the bots no longer exist when data is sent back from firebase. One way around this is to add back the attack functions once you get the bots back from firebase. Another is to stringify the functions when updating firebase, and parse the strings when data is returned.
           newGameObject.userRobot.swing = basicAttack.swing;
           newGameObject.enemyRobot.swing = basicAttack.swing;
 
+          // Adds correct special attack to the current robots from the imported specialAttack file.
           Object.keys(specialAttacks).forEach((key) => {
             if (key === newGameObject.userRobot.id) {
               newGameObject.userRobot.specialAttack = specialAttacks[key];
@@ -477,8 +477,9 @@ class FightArena extends Component {
             }
           });
 
-          // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and able to play again.
+          // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and unable to play again.
 
+          // If the returned game object has a robot with less than or equal to 0 health, set the winner profile and bot, initialize winner audio and push to next component (WinnerScreen)
           if (newGameObject.userRobot.health <= 0) {
             this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
             this.props.setWinnerBot(this.state.gameObject.enemyRobot);
@@ -499,9 +500,6 @@ class FightArena extends Component {
             this.setState({gameObject: newGameObject});
           }
         });
-        // }).catch((err) => {
-        //   console.error('Failed to updated firebase gameobject: ', err);
-        // });
       }).catch((err) => {
         console.error('Faield to get the online game object Fightarena componentDidMount: ', err);
       });
@@ -517,6 +515,8 @@ class FightArena extends Component {
 
   render () {
     const attackDamage = this.displayDamage();
+
+    // Condition is determining if the game mode is online play or single player. If online play, only display the fight arena when both user and enemy robots have a name (are selected). Otherwise show waiting screen. If it is not online play the first condition evaluates to true and shows the fight arena right away.
     if (!this.props.onlinePlay || (this.state.gameObject.userRobot.name && this.state.gameObject.enemyRobot.name)) {
       return (
         <div className="FightArena">
