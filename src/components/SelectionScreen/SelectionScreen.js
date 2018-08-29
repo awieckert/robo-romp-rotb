@@ -70,7 +70,7 @@ class SelectionScreen extends Component {
     if ((this.state.disableSmallBots && !this.state.completed) && !this.state.onlinePlay) {
 
       // If statement is verifying that the game mode is single player, that user1 has selected and the computer has not selected
-      // disableSmallBots because true when user1 confirms bot selection, completed because true when both user and computer have selected, onlinePlay is false when single player game is selected
+      // disableSmallBots becomes true when user1 confirms bot selection, completed becomes true when both user and computer have selected, onlinePlay is false when single player game is selected
       const computerBots = [];
       const playerBot = {...this.state.largeBot};
       const allBots = [...this.state.allRobots];

@@ -84,7 +84,7 @@ class LargeBot extends Component {
     let botToPrint = '';
     if ((bot.name && (this.state.isSelected === false)) && !bot.computer) {
 
-      // Checks to see if there is a bot, that the user has not selected and that the bot is not a computer
+      // Checks to see if there is a bot, and that the user has not selected and that the bot is not a computer
       botToPrint =  <div>
         <div className='col-xs-6 animated fadeInDown'>
           <div className='flex-center'>
