@@ -157,14 +157,19 @@ class FightArena extends Component {
   };
 
   userAttack = (e) => {
+    // This function is used to do all attack calculations and update the state/firebase online game object if needed
     const {gameObject} = {...this.state};
+    // Special used is flag to determine special attack animation
     gameObject.specialUsed = false;
+    // For first attack of the game the gameObject flag of attacking needs to be set to true in order to display the damage
     if (!this.state.gameObject.attacking) {
       gameObject.attacking = true;
     }
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
-    const {enemyStaticRobot} = {...gameObject};
+    const {enemyStaticRobot} = {...gameObject}; // Static robot is created so that we can do stat comparisons relative to the initial state of the robots stats.
+
+    // If there is nolonger a debuff on the enemy set the fighting robot's stats back to their initial state, except for health of course
     if (enemyRobot.debuff === 0) {
       enemyRobot.armor = enemyStaticRobot.armor;
       enemyRobot.evasion = enemyStaticRobot.evasion;
@@ -174,14 +179,20 @@ class FightArena extends Component {
     } else {
       enemyRobot.debuff -= 1;
     }
+
+    // Generate random number betweeon 0 and 100 for evasion number needed to evade the income attack.
     const enemyEvasion = Math.floor(Math.random() * 101);
+    // Call robots attack function
     const attackDamage = userRobot.swing();
     let damageDealt = 0;
+
+    // If the enemyRobot's evasion is less than the needed evasion number (enemyEvasion) than the attack lands
     if (enemyEvasion > enemyRobot.evasion) {
       damageDealt = (attackDamage - enemyRobot.armor);
       gameObject.evaded = false;
       gameObject.isCritical = false;
       userRobot.attackCount += 1;
+      // if the attackDamage after swing is greate than the robots base damage we know that it was a critical strike
       if (attackDamage > userRobot.attack) {
         gameObject.isCritical = true;
         gameObject.evaded = false;
@@ -191,7 +202,10 @@ class FightArena extends Component {
       gameObject.evaded = true;
     }
     damageDealt = (damageDealt.toFixed(1) * 1);
+
+    // Updating career damage dealt for the user profile
     gameObject.userProfile.dmgDealt += damageDealt;
+
     enemyRobot.health = (enemyRobot.health - damageDealt);
 
     gameObject.attackDamage = damageDealt;
@@ -369,6 +383,7 @@ class FightArena extends Component {
     const {enemyRobot} = {...this.state.gameObject};
     const currentUid = firebase.auth().currentUser.uid;
 
+    // Determines the identity fo the player, whose turn it is and which key was pressed. Appropriate attack function is called if all criteria are met.
     if (this.props.onlinePlay) {
       if ((gameObject.turn === 'user') && (e.key === 'a') && (currentUid === userProfile.uid)) {
         this.userAttack(e);
@@ -380,6 +395,7 @@ class FightArena extends Component {
         this.useSpecialAttack();
       }
     } else {
+      // In single player mode the enemy attack logic is not needed here as it is called directly after the user attacks
       if ((this.state.gameObject.turn === 'user') && e.key === 'a') {
         this.userAttack(e);
       } else if ((this.state.gameObject.turn === 'user') && (e.key === 's') && (userRobot.attackCount >= userRobot.specialCount)) {
