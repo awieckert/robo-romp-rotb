@@ -13,6 +13,7 @@ import './App.css';
 firebaseConnection();
 
 const renderMergedProps = (component, ...rest) => {
+  // Returns a react element of the component being passed and well as the rest of the attributes/props being passed to the specific route
   const finalProps = Object.assign({}, ...rest);
   return (
     React.createElement(component, finalProps)
@@ -20,6 +21,7 @@ const renderMergedProps = (component, ...rest) => {
 };
 
 const PrivateRoute = ({component, authed, ...rest}) => {
+  // Returns a Route component with the passed in attributes as props IF authed is true
   return (
     <Route
       {...rest}
@@ -60,12 +62,12 @@ class App extends Component {
     sortedFavorites: [],
     currentOnlineMatch: {},
     onlinePlay: false,
-    playersReady: false,
     backgroundAudio: {},
     countDownAudio: {},
   }
 
   pauseCountDownAudio = () => {
+    // Function to pause the count down/ fight song. Need to recreate new instance of the song in state because, setCurrentTime = 0 will not work with how React stores the HTML element in state
     this.state.countDownAudio.pause();
     const audioUrl = '../../audio/countDownAndFight.mp3';
     const newCountDown = new Audio(audioUrl);
@@ -73,62 +75,67 @@ class App extends Component {
   };
 
   pauseBackgroundAudio = () => {
+    // Pause the original background music, not reacting a new instance of it because I do not want it to start over. It is long enough.
     this.state.backgroundAudio.pause();
   };
 
-  setPlayersReady = () => {
-    this.setState({playersReady: true});
-  };
-
-  setPlayersNotReady = () => {
-    this.setState({playersReady: false});
-  };
-
   setOnlinePlay = () => {
+    // Sets flag for determining if game is online game or not
     this.setState({onlinePlay: true});
   };
 
   setCurrentOnlineMatch = (currentMatch) => {
+    // Function that is passed throughout the application to make sure the currentOnlineMatch in App's state is always up to date
     this.setState({currentOnlineMatch: currentMatch});
   };
 
   setSortedFavorites = (sortedFavorites) => {
+    // Sets App's state with the sorted favorite bots grabbed from firebase for the logged in user
     this.setState({sortedFavorites: sortedFavorites});
   };
 
   setFavoriteBots = (favorites) => {
+    // Sets App's state with a list of all the bots and the number of times a user has used them. Used to update usage of a given bot later on.
     this.setState({favoriteBots: favorites});
   };
 
   setActiveUser = (activeUser) => {
+    // Set current user profile in the apps state. Grabbed from firebase once logged in.
     this.setState({userProfile: activeUser});
   };
 
   setUserRobot = (robot) => {
+    // Used to set the user selected robot in App's state
     this.setState({userRobot: robot});
   };
 
   setEnemyProfile = (enemyInfo) => {
+    // used to set the enemy profile in apps state
     this.setState({enemyProfile: enemyInfo});
   };
 
   setEnemyRobot = (robot) => {
+    // Used to set app's state with enemy selected robot
     this.setState({enemyRobot: robot});
   };
 
   setWinnerProfile = (winner) => {
+    // Set the winning user profile in App's state, used to pass into the WinnerScreen component
     this.setState({winnerProfile: winner});
   };
 
   setWinnerBot = (bot) => {
+    // Set the winning bot in the App's state, used to pass into the WinnerScreen component
     this.setState({winnerBot: bot});
   };
 
   setAuthedFalse = () => {
+    // Used for a logging out a user, no routes except loggin are visible to the user when authed is false. Currently no log out button :)
     this.setState({authed: false});
   };
 
   componentDidMount () {
+    // initializes the audio. Checks the firebase user state when the component mounts. Updates the App's authed state accordingly
     const backgroundMusicUrl = '../../audio/transformersBackground.mp3';
     const backgroundAudio = new Audio(backgroundMusicUrl);
     const countDownAudio = '../../audio/countDownAndFight.mp3';
@@ -143,10 +150,12 @@ class App extends Component {
   }
 
   componentWillUnmount () {
+    // Checks the firebase user state when the component unmounts.
     this.checkUserState();
   }
 
   render () {
+    // Below are the base routes needed for the application. As you can see many attributes are passed to each route.
     return (
       <div className="App">
         <BrowserRouter>
@@ -154,8 +163,8 @@ class App extends Component {
             <Switch>
               <Route path='/' exact render={(props) => <Home {...props} />} />
               <PrivateRoute path='/gamemode' authed={this.state.authed} component={GameMode} setFavoriteBots={this.setFavoriteBots} setActiveUser={this.setActiveUser} setEnemyProfile={this.setEnemyProfile} setSortedFavorites={this.setSortedFavorites} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setOnlinePlay={this.setOnlinePlay} backgroundAudio={this.state.backgroundAudio} pauseCountDownAudio={this.pauseCountDownAudio}/>
-              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} setPlayersReady={this.setPlayersReady} setPlayersNotReady={this.setPlayersNotReady} pauseBackgroundAudio={this.pauseBackgroundAudio} countDownAudio={this.state.countDownAudio}/>
-              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} playersReady={this.state.playersReady} currentOnlineMatch={this.state.currentOnlineMatch} />
+              <PrivateRoute path='/selectionscreen' authed={this.state.authed} component={SelectionScreen} activeUser={this.state.userProfile} setUserRobot={this.setUserRobot} setEnemyProfile={this.setEnemyProfile} setEnemyRobot={this.setEnemyRobot} favoriteBots={this.state.favoriteBots} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} setCurrentOnlineMatch={this.setCurrentOnlineMatch} pauseBackgroundAudio={this.pauseBackgroundAudio} countDownAudio={this.state.countDownAudio}/>
+              <PrivateRoute path='/fightarena' authed={this.state.authed} component={FightArena} enemyRobot={this.state.enemyRobot} userRobot={this.state.userRobot} userProfile={this.state.userProfile} enemyProfile={this.state.enemyProfile} setWinnerProfile={this.setWinnerProfile} setWinnerBot={this.setWinnerBot} onlinePlay={this.state.onlinePlay} currentOnlineMatch={this.state.currentOnlineMatch} />
               <PrivateRoute path='/winnerscreen' authed={this.state.authed} component={WinnerScreen} winnerBot={this.state.winnerBot} winnerProfile={this.state.winnerProfile}/>
               <PrivateRoute path='/userprofile' authed={this.state.authed} component={UserProfile} userProfile={this.state.userProfile} setAuthedFalse={this.setAuthedFalse} sortedFavorites={this.state.sortedFavorites} />
             </Switch>

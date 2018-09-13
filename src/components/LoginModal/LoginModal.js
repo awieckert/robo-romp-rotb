@@ -23,6 +23,7 @@ class LoginModal extends React.Component {
   }
 
   loginEmailInfo = (e) => {
+    // Function is triggered every time a keypress event happens in the email field. Sets state with the current value of that field
     const userEmail = e.target.value;
     const userToSignIn = {...this.state.userSignIn};
     userToSignIn.email = userEmail;
@@ -30,6 +31,7 @@ class LoginModal extends React.Component {
   };
 
   loginPasswordInfo = (e) => {
+    // Function is triggered every time a keypress event happens in the password field. Sets state with the current value of that field
     const userPassword = e.target.value;
     const userToSignIn = {...this.state.userSignIn};
     userToSignIn.password = userPassword;
@@ -37,6 +39,7 @@ class LoginModal extends React.Component {
   };
 
   signIn = () => {
+    // Closes the modal and signs in the user with the current email and password saved in this component's state.
     this.handleClose();
     firebase.auth().signInWithEmailAndPassword(this.state.userSignIn.email, this.state.userSignIn.password).then(() => {
       this.props.history.push('/gamemode');
@@ -46,14 +49,17 @@ class LoginModal extends React.Component {
   }
 
   handleClose () {
+    // Closes the modal
     this.setState({ show: false });
   }
 
   handleShow () {
+    // Opens the modal
     this.setState({ show: true });
   }
 
   componentDidMount () {
+    // Allows the use of enter keypress to log in. Must check the userSignIn so that this event is not fired elsewhere in the application
     window.addEventListener('keypress', (e) => {
       if ((e.charCode === 13) && this.state.userSignIn) {
         this.signIn();
@@ -62,6 +68,7 @@ class LoginModal extends React.Component {
   };
 
   componentWillUnmount () {
+    // Removes the window event listener allowing for the use of eneter keypress to log in.
     window.removeEventListener('keypress', (e) => {
       if ((e.charCode === 13) && this.state.userSignIn) {
         this.signIn();

@@ -9,8 +9,11 @@ class OnlineMatches extends React.Component {
   };
 
   joinGame = (e) => {
+    // Function called after Create Online Game button is clicked.
     const gameToTarget = e.target.id;
     const {userProfile} = {...this.props};
+
+    // Get all online matches from firebase, find the match with same ID as the match user selected to join. Add the users profile to this match as "enemyProfile", effectively user2.
     onlineMatchRequests.getOnlineMatches().then((allOnlineMatches) => {
       let matchToJoin = {};
       allOnlineMatches.forEach((match) => {
@@ -19,6 +22,8 @@ class OnlineMatches extends React.Component {
           matchToJoin = match;
         }
       });
+
+      // Update the firebase online game object with the new user profile that was just added to it above. Set state of App with the most recent online game object. Then send the user to the selection screen
       onlineMatchRequests.joinGame(gameToTarget, matchToJoin).then(() => {
         this.props.setCurrentOnlineMatch(matchToJoin);
         this.props.setOnlinePlay();
@@ -31,12 +36,8 @@ class OnlineMatches extends React.Component {
     });
   };
 
-  // componentDidUpdate () {
-  //   const onlineMatches = [...this.props.onlineMatches];
-  //   this.setState({onlineMatches: onlineMatches});
-  // };
-
   render () {
+    // All online matches are passed to component from Game Mode, when rendered map over all online games and create the necessary JSX to be rendered.
     const matchesToMap = [...this.props.onlineMatches];
     const onlineMatches = matchesToMap.map((match, i) => {
       return (

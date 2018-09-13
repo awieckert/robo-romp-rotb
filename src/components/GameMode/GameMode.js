@@ -28,6 +28,7 @@ class GameMode extends Component {
   };
 
   createOnlineMatch = () => {
+    // Creates an object with the necessary place-holder fields for the online play game. Sends this information to firebase
     const {userProfile} = {...this.state};
     const gameObject = {
       userProfile: userProfile,
@@ -53,12 +54,14 @@ class GameMode extends Component {
       online: true,
       specialUsed: false,
     };
+    // In order to create an online game object with the unique identifier on it right away, need to create the online match in firebase, GET all online match from firebase, add the firebase unique id to each match, filter for the online match just created and then lastly update the new online game object in firebase with the online game object that possesses the unique ID on it as a property value.
     onlineMatchRequests.createOnlineMatch(gameObject).then((uniqueId) => {
       onlineMatchRequests.getOnlineMatches().then((onlineMatches) => {
         const onlineGameObject = onlineMatches.find((x) => {
           return x.id === uniqueId.data.name;
         });
         onlineMatchRequests.updateOnlineGame(onlineGameObject.id, onlineGameObject).then(() => {
+          // Set's client side state with most current online game object, set's state of app to online and sends user to selection screen.
           this.props.setCurrentOnlineMatch(onlineGameObject);
           this.props.setOnlinePlay();
           this.setState({onlineMatches: onlineMatches});
@@ -75,6 +78,7 @@ class GameMode extends Component {
   };
 
   toSinglePlayerSelectionScreen = () => {
+    // Function is called after single player mode is selected. Pushes user to the selection screen and sets the enemy Profile with the CPU profile from firebase.
     this.props.history.push('/selectionscreen');
     userRequests.getUser('Mackiller').then((computer) => {
       this.props.setEnemyProfile(computer);
@@ -84,16 +88,19 @@ class GameMode extends Component {
   }
 
   toUserProfile = () => {
+    // Sends user to the user profile component when the user profile button is clicked
     this.props.history.push('/userprofile');
   };
 
   componentDidMount () {
+    // When the component mounts, count down audio is paused in case user is coming back to game mode screen from the winner screen. Starts the background audio
     this.props.pauseCountDownAudio();
     const {backgroundAudio} = {...this.props};
     backgroundAudio.play();
 
     const currentUser = firebase.auth().currentUser.uid;
 
+    // Promise.all grabs the current user profile, their favorite bot collection, their sorted favorite bot collection and all the online matches available. Set's the app's state accordingly.
     Promise.all([userRequests.getUser(currentUser), favoriteRequests.getUserFavorites(currentUser), favoriteRequests.getUserSortedFavorites(currentUser), onlineMatchRequests.getOnlineMatches()]).then((userInfoArray) => {
       this.props.setActiveUser(userInfoArray[0]);
       this.props.setFavoriteBots(userInfoArray[1]);

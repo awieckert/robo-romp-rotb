@@ -9,16 +9,11 @@ class LeaderBoard extends Component {
     olLeaderBoard: [],
   };
 
-  componentWillUnmount () {
-    console.log('Leaderboard unmounted, need this console maybe?');
-  }
-
   componentDidMount () {
-    console.log('Leaderboard mounted on win screen');
+    // When the component mounts grab the data for both leader boards from firebase and set components state with that data.
     Promise.all([userRequests.getUsersBySpWins(), userRequests.getUsersByOlWins()]).then((leaderBoards) => {
       this.setState({spLeaderBoard: leaderBoards[0]});
       this.setState({olLeaderBoard: leaderBoards[1]});
-      console.log('Leaderboard promise finished');
     });
   };
 
@@ -26,6 +21,7 @@ class LeaderBoard extends Component {
     const spLeaders = [...this.state.spLeaderBoard];
     const olLeaders = [...this.state.olLeaderBoard];
 
+    // Map over the single player leader board data, for each player determine their win pecentage, and return JSX required to display the info
     const spLeaderBoard = spLeaders.map((player) => {
       let percentage = (player.spWins / player.spGames) * 100;
       if (isNaN(percentage)) {
@@ -40,6 +36,7 @@ class LeaderBoard extends Component {
       );
     });
 
+    // Map over the online play leader board data, for each player determine their win pecentage, and return JSX required to display the info
     const olLeaderBoard = olLeaders.map((player) => {
       let percentage = (player.olWins / player.olGames) * 100;
       if (isNaN(percentage)) {

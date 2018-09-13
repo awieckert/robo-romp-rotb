@@ -157,14 +157,19 @@ class FightArena extends Component {
   };
 
   userAttack = (e) => {
+    // This function is used to do all attack calculations and update the state/firebase online game object if needed
     const {gameObject} = {...this.state};
+    // Special used is flag to determine special attack animation
     gameObject.specialUsed = false;
+    // For first attack of the game the gameObject flag of attacking needs to be set to true in order to display the damage
     if (!this.state.gameObject.attacking) {
       gameObject.attacking = true;
     }
     const {userRobot} = {...gameObject};
     const {enemyRobot} = {...gameObject};
-    const {enemyStaticRobot} = {...gameObject};
+    const {enemyStaticRobot} = {...gameObject}; // Static robot is created so that we can do stat comparisons relative to the initial state of the robots stats.
+
+    // If there is nolonger a debuff on the enemy set the fighting robot's stats back to their initial state, except for health of course
     if (enemyRobot.debuff === 0) {
       enemyRobot.armor = enemyStaticRobot.armor;
       enemyRobot.evasion = enemyStaticRobot.evasion;
@@ -174,14 +179,20 @@ class FightArena extends Component {
     } else {
       enemyRobot.debuff -= 1;
     }
+
+    // Generate random number betweeon 0 and 100 for evasion number needed to evade the income attack.
     const enemyEvasion = Math.floor(Math.random() * 101);
+    // Call robots attack function
     const attackDamage = userRobot.swing();
     let damageDealt = 0;
+
+    // If the enemyRobot's evasion is less than the needed evasion number (enemyEvasion) than the attack lands
     if (enemyEvasion > enemyRobot.evasion) {
       damageDealt = (attackDamage - enemyRobot.armor);
       gameObject.evaded = false;
       gameObject.isCritical = false;
       userRobot.attackCount += 1;
+      // if the attackDamage after swing is greate than the robots base damage we know that it was a critical strike
       if (attackDamage > userRobot.attack) {
         gameObject.isCritical = true;
         gameObject.evaded = false;
@@ -191,7 +202,10 @@ class FightArena extends Component {
       gameObject.evaded = true;
     }
     damageDealt = (damageDealt.toFixed(1) * 1);
+
+    // Updating career damage dealt for the user profile
     gameObject.userProfile.dmgDealt += damageDealt;
+
     enemyRobot.health = (enemyRobot.health - damageDealt);
 
     gameObject.attackDamage = damageDealt;
@@ -361,6 +375,7 @@ class FightArena extends Component {
   };
 
   attackFunction = (e) => {
+
     const {gameObject} = {...this.state};
     const {userProfile} = {...this.state.gameObject};
     const {enemyProfile} = {...this.state.gameObject};
@@ -368,6 +383,7 @@ class FightArena extends Component {
     const {enemyRobot} = {...this.state.gameObject};
     const currentUid = firebase.auth().currentUser.uid;
 
+    // Determines the identity fo the player, whose turn it is and which key was pressed. Appropriate attack function is called if all criteria are met.
     if (this.props.onlinePlay) {
       if ((gameObject.turn === 'user') && (e.key === 'a') && (currentUid === userProfile.uid)) {
         this.userAttack(e);
@@ -379,28 +395,26 @@ class FightArena extends Component {
         this.useSpecialAttack();
       }
     } else {
+      // In single player mode the enemy attack logic is not needed here as it is called directly after the user attacks
       if ((this.state.gameObject.turn === 'user') && e.key === 'a') {
         this.userAttack(e);
       } else if ((this.state.gameObject.turn === 'user') && (e.key === 's') && (userRobot.attackCount >= userRobot.specialCount)) {
         this.useSpecialAttack();
       } else if ((this.state.gameObject.turn === 'user') && e.key === 'w') {
         this.userAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && e.key === 'a') {
-        this.enemyAttack(e);
-      } else if ((this.state.gameObject.turn === 'enemy') && (e.key === 's') && (enemyRobot.attackCount >= enemyRobot.specialCount)) {
-        this.useSpecialAttack();
       }
     }
   };
 
   displayDamage = () => {
+    // Grabbing the attack damage from state and if attacking is true, displaying it by sending it into the AttackResult Component
     let displayDamage = [];
     if (this.state.gameObject.attacking) {
       displayDamage = <AttackResult attackDamage={this.state.gameObject.attackDamage} evaded={this.state.gameObject.evaded} isCritical={this.state.gameObject.isCritical}/>;
     } else {
-      if (this.state.turn === 'user') {
+      if (this.state.gameObject.turn === 'user') {
         displayDamage = <div><h2>Player 1 Start!</h2></div>;
-      } else if (this.state.turn === 'enemy') {
+      } else if (this.state.gameObject.turn === 'enemy') {
         displayDamage = <div><h2>Player 2 Start!</h2></div>;
       }
     }
@@ -410,7 +424,9 @@ class FightArena extends Component {
   componentDidMount () {
     let gameObject = {};
 
+    // Upon entering this component the below code checks to see if the game-play is single player or online play. If single player the gameObject in state is set from the local information in App's state based down to this component.
     if (!this.props.onlinePlay) {
+      // sets locally scoped gameObject to the template in state, then adds all the required information to it from App
       gameObject = {...this.state.gameObject};
       gameObject.userProfile = {...this.props.userProfile};
       gameObject.enemyProfile = {...this.props.enemyProfile};
@@ -419,9 +435,11 @@ class FightArena extends Component {
       gameObject.userStaticRobot = {...this.props.userRobot};
       gameObject.enemyStaticRobot = {...this.props.enemyRobot};
 
+      // basicAttack is an imported file that defines .swing(). Each robot is having their basic attack added to them.
       gameObject.userRobot.swing = basicAttack.swing;
       gameObject.enemyRobot.swing = basicAttack.swing;
 
+      // The two firebase transactions below are updating the most used section of the database with the currently selected robots.
       const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
       userUsed.transaction(function (used) {
         return used + 1;
@@ -435,11 +453,13 @@ class FightArena extends Component {
       this.setState({gameObject: gameObject});
     } else if (this.props.onlinePlay) {
       const gameObjectId = this.props.currentOnlineMatch.id;
-      // I think the below two requests are redundant now because I am updated firebase with the largebot confirmation
+
+      // If online play make sure we have the most up to date online gameObject by grabbing it from firebase
       onlineMatchRequests.getCurrentOnlineMatch(gameObjectId).then((currentOnlineMatchObject) => {
         gameObject = currentOnlineMatchObject;
         const currentUserUid = firebase.auth().currentUser.uid;
 
+        // Condition checking to see which profile (user or enemy) the local user is connected to. Updating the most used section of the database with their currently selected bot.
         if (currentUserUid === gameObject.userProfile.uid) {
           const userUsed = firebase.database().ref(`mostUsed/${gameObject.userRobot.id}/used`);
           userUsed.transaction(function (used) {
@@ -452,49 +472,49 @@ class FightArena extends Component {
           });
         }
 
-        onlineMatchRequests.updateOnlineGame(gameObjectId, gameObject).then(() => {
+        // Creating reference to firebase database, gameRef is the specific reference for the current online game.
+        const rootRef = firebase.database();
+        const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
 
-          const rootRef = firebase.database();
-          const gameRef = rootRef.ref('onlineMatches/' + gameObject.id);
+        // setting up a listener on the game object in firebase. Any time data is changed on the gameObject in firebase, the entire object is sent back to the client with the updated data
+        gameRef.on('value', (snapshot) => {
+          const newGameObject = snapshot.val();
 
-          gameRef.on('value', (snapshot) => {
-            const newGameObject = snapshot.val();
+          // firebase does not store functions, so the attack functions on the bots no longer exist when data is sent back from firebase. One way around this is to add back the attack functions once you get the bots back from firebase. Another is to stringify the functions when updating firebase, and parse the strings when data is returned.
+          newGameObject.userRobot.swing = basicAttack.swing;
+          newGameObject.enemyRobot.swing = basicAttack.swing;
 
-            newGameObject.userRobot.swing = basicAttack.swing;
-            newGameObject.enemyRobot.swing = basicAttack.swing;
-
-            Object.keys(specialAttacks).forEach((key) => {
-              if (key === newGameObject.userRobot.id) {
-                newGameObject.userRobot.specialAttack = specialAttacks[key];
-              } else if (key === newGameObject.enemyRobot.id) {
-                newGameObject.enemyRobot.specialAttack = specialAttacks[key];
-              }
-            });
-
-            // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and able to play again.
-
-            if (newGameObject.userRobot.health <= 0) {
-              this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
-              this.props.setWinnerBot(this.state.gameObject.enemyRobot);
-              this.setState({gameObject: newGameObject});
-              const player2WinsUrl = '../../audio/player2-wins.mp3';
-              const playerWinsAudio = new Audio(player2WinsUrl);
-              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
-              this.props.history.push('/winnerscreen');
-            } else if (newGameObject.enemyRobot.health <= 0) {
-              this.props.setWinnerProfile(this.state.gameObject.userProfile);
-              this.props.setWinnerBot(this.state.gameObject.userRobot);
-              this.setState({gameObject: newGameObject});
-              const player1WinsUrl = '../../audio/player1-wins.mp3';
-              const playerWinsAudio = new Audio(player1WinsUrl);
-              window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
-              this.props.history.push('/winnerscreen');
-            } else {
-              this.setState({gameObject: newGameObject});
+          // Adds correct special attack to the current robots from the imported specialAttack file.
+          Object.keys(specialAttacks).forEach((key) => {
+            if (key === newGameObject.userRobot.id) {
+              newGameObject.userRobot.specialAttack = specialAttacks[key];
+            } else if (key === newGameObject.enemyRobot.id) {
+              newGameObject.enemyRobot.specialAttack = specialAttacks[key];
             }
           });
-        }).catch((err) => {
-          console.error('Failed to updated firebase gameobject: ', err);
+
+          // This if statement is needed for the losing player. Without checking the state of the firebase object that is returned after it's updated, the loser will not be pushed to the winnerscreen and unable to play again.
+
+          // If the returned game object has a robot with less than or equal to 0 health, set the winner profile and bot, initialize winner audio and push to next component (WinnerScreen)
+          if (newGameObject.userRobot.health <= 0) {
+            this.props.setWinnerProfile(this.state.gameObject.enemyProfile);
+            this.props.setWinnerBot(this.state.gameObject.enemyRobot);
+            this.setState({gameObject: newGameObject});
+            const player2WinsUrl = '../../audio/player2-wins.mp3';
+            const playerWinsAudio = new Audio(player2WinsUrl);
+            window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
+            this.props.history.push('/winnerscreen');
+          } else if (newGameObject.enemyRobot.health <= 0) {
+            this.props.setWinnerProfile(this.state.gameObject.userProfile);
+            this.props.setWinnerBot(this.state.gameObject.userRobot);
+            this.setState({gameObject: newGameObject});
+            const player1WinsUrl = '../../audio/player1-wins.mp3';
+            const playerWinsAudio = new Audio(player1WinsUrl);
+            window.setTimeout(() => { playerWinsAudio.play(); }, 1000);
+            this.props.history.push('/winnerscreen');
+          } else {
+            this.setState({gameObject: newGameObject});
+          }
         });
       }).catch((err) => {
         console.error('Faield to get the online game object Fightarena componentDidMount: ', err);
@@ -510,8 +530,9 @@ class FightArena extends Component {
   };
 
   render () {
-    // Need to check to see if onlinePlay is true && playersReady is true, if so then we will display the fight arena. If onlinePlay is true and playerReady is false, show waiting. if onlinePlay is false so singlePlayer screen.
     const attackDamage = this.displayDamage();
+
+    // Condition is determining if the game mode is online play or single player. If online play, only display the fight arena when both user and enemy robots have a name (are selected). Otherwise show waiting screen. If it is not online play the first condition evaluates to true and shows the fight arena right away.
     if (!this.props.onlinePlay || (this.state.gameObject.userRobot.name && this.state.gameObject.enemyRobot.name)) {
       return (
         <div className="FightArena">

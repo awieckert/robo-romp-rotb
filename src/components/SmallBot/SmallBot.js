@@ -14,6 +14,7 @@ class SmallBot extends Component {
   }
 
   render () {
+    // all bot information is grabbed from firebase upon entering the SelectionScreen component. It is passed down into this SmallBot component so it can be sorted through and displayed.
     const bots = [...this.props.bots];
     const printBots = bots.map((bot) => {
       return (
